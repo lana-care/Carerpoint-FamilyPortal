@@ -36,7 +36,8 @@ onMounted(async () => {
   try {
     const base = String(config.public.apiUrl || '').replace(/\/+$/, '')
     const res = await $fetch<{ valid?: boolean; carePlan?: Record<string, unknown> | null }>(
-      `${base}/api/v1/family-portal/care-plan?token=${encodeURIComponent(token.value)}`,
+      `${base}/api/v1/family-portal/care-plan`,
+      { headers: { Authorization: `Bearer ${token.value}` } },
     )
     if (res?.valid) carePlan.value = res.carePlan ?? null
   } catch {

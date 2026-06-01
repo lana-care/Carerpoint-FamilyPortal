@@ -40,7 +40,8 @@ onMounted(async () => {
   try {
     const base = String(config.public.apiUrl || '').replace(/\/+$/, '')
     const res = await $fetch<{ valid?: boolean; data?: unknown[] }>(
-      `${base}/api/v1/family-portal/medications?token=${encodeURIComponent(token.value)}`,
+      `${base}/api/v1/family-portal/medications`,
+      { headers: { Authorization: `Bearer ${token.value}` } },
     )
     meds.value = res?.data || []
   } catch {

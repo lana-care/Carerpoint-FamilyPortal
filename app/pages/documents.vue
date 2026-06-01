@@ -107,7 +107,8 @@ onMounted(async () => {
   try {
     const base = String(config.public.apiUrl || '').replace(/\/+$/, '')
     const res = await $fetch<DocumentsResponse>(
-      `${base}/api/v1/family-portal/documents?token=${encodeURIComponent(token.value)}`,
+      `${base}/api/v1/family-portal/documents`,
+      { headers: { Authorization: `Bearer ${token.value}` } },
     )
     if (!res?.valid) {
       error.value = res?.error || 'Could not load documents.'

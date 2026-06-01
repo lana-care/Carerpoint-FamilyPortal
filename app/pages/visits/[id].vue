@@ -111,7 +111,8 @@ async function loadNotes(visitId: string) {
   try {
     const base = String(config.public.apiUrl || '').replace(/\/+$/, '')
     const res = await $fetch<{ valid?: boolean; data?: typeof familyNotes.value }>(
-      `${base}/api/v1/family-portal/visits/${visitId}/notes?token=${encodeURIComponent(token.value)}`,
+      `${base}/api/v1/family-portal/visits/${visitId}/notes`,
+      { headers: { Authorization: `Bearer ${token.value}` } },
     )
     familyNotes.value = res?.valid && Array.isArray(res.data) ? res.data : []
   } catch {
@@ -126,8 +127,12 @@ async function submitNote() {
   try {
     const base = String(config.public.apiUrl || '').replace(/\/+$/, '')
     await $fetch(
-      `${base}/api/v1/family-portal/visits/${id}/notes?token=${encodeURIComponent(token.value)}`,
-      { method: 'POST', body: { note: noteDraft.value.trim() } },
+      `${base}/api/v1/family-portal/visits/${id}/notes`,
+      {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token.value}` },
+        body: { note: noteDraft.value.trim() },
+      },
     )
     noteDraft.value = ''
     await loadNotes(id)
@@ -145,7 +150,8 @@ onMounted(async () => {
   if (token.value) {
     try {
       const summary = await $fetch<{ valid?: boolean; visit?: FamilyPortalVisit & { id: string } }>(
-        `${base}/api/v1/family-portal/visits/${id}?token=${encodeURIComponent(token.value)}`,
+        `${base}/api/v1/family-portal/visits/${id}`,
+        { headers: { Authorization: `Bearer ${token.value}` } },
       )
       if (summary?.valid && summary.visit) {
         visit.value = { ...summary.visit, id }

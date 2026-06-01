@@ -150,7 +150,8 @@ async function load() {
     const base = String(config.public.apiUrl || '').replace(/\/+$/, '')
     const ch = activeChannel.value
     const res = await $fetch<{ valid?: boolean; messages?: MsgRow[] }>(
-      `${base}/api/v1/family-portal/messages?token=${encodeURIComponent(token.value)}&channel=${ch}`,
+      `${base}/api/v1/family-portal/messages?channel=${ch}`,
+      { headers: { Authorization: `Bearer ${token.value}` } },
     )
     if (res?.valid && Array.isArray(res.messages)) {
       thread.value = res.messages
@@ -194,9 +195,10 @@ async function send() {
   try {
     const base = String(config.public.apiUrl || '').replace(/\/+$/, '')
     const res = await $fetch<{ success?: boolean; error?: string }>(
-      `${base}/api/v1/family-portal/messages?token=${encodeURIComponent(token.value)}`,
+      `${base}/api/v1/family-portal/messages`,
       {
         method: 'POST',
+        headers: { Authorization: `Bearer ${token.value}` },
         body: {
           message: draft.value.trim(),
           channel_type: activeChannel.value,

@@ -51,7 +51,8 @@ export function usePortalAuth() {
     try {
       const base = String(config.public.apiUrl || '').replace(/\/+$/, '')
       const res = await $fetch<FamilyPortalData>(
-        `${base}/api/v1/auth/family-portal?token=${encodeURIComponent(tok)}`,
+        `${base}/api/v1/auth/family-portal`,
+        { headers: { Authorization: `Bearer ${tok}` } },
       )
       if (res?.valid) {
         portalData.value = res

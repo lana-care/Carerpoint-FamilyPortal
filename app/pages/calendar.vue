@@ -151,7 +151,8 @@ async function loadScheduleForMonth() {
       valid?: boolean
       upcomingVisits?: FamilyPortalVisit[]
     }>(
-      `${base}/api/v1/family-portal/schedule?token=${encodeURIComponent(token.value)}&year=${currentYear.value}&month=${apiMonth}`,
+      `${base}/api/v1/family-portal/schedule?year=${currentYear.value}&month=${apiMonth}`,
+      { headers: { Authorization: `Bearer ${token.value}` } },
     )
     if (res?.valid && Array.isArray(res.upcomingVisits)) {
       monthVisits.value = res.upcomingVisits as FamilyPortalVisit[]

@@ -68,10 +68,9 @@
           <label class="text-xs font-medium text-muted-foreground">
             {{ activeChannel === 'private' ? 'Message the agency (private)' : 'Message the agency' }}
           </label>
-          <textarea
+          <Textarea
             v-model="draft"
             rows="3"
-            class="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
             placeholder="Type your message…"
           />
           <button
@@ -91,6 +90,7 @@
 <script setup lang="ts">
 import { io, type Socket } from 'socket.io-client'
 import { toast } from 'vue-sonner'
+import { Textarea } from '~/components/ui/textarea'
 
 definePageMeta({ layout: false })
 

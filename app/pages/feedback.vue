@@ -13,15 +13,17 @@
       <div v-if="step === 1" class="space-y-4">
         <div>
           <label class="text-xs font-medium">Category</label>
-          <select
-            v-model="category"
-            class="mt-1 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-          >
-            <option value="visit_feedback">Visit feedback</option>
-            <option value="compliment">Compliment</option>
-            <option value="complaint">Complaint</option>
-            <option value="general">General</option>
-          </select>
+          <Select v-model="category">
+            <SelectTrigger class="mt-1 w-full">
+              <SelectValue placeholder="Select category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="visit_feedback">Visit feedback</SelectItem>
+              <SelectItem value="compliment">Compliment</SelectItem>
+              <SelectItem value="complaint">Complaint</SelectItem>
+              <SelectItem value="general">General</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
         <div>
           <label class="text-xs font-medium">Rating (1–5)</label>
@@ -34,23 +36,25 @@
       <div v-else class="space-y-4">
         <div>
           <label class="text-xs font-medium">Your message</label>
-          <textarea
+          <Textarea
             v-model="message"
             rows="5"
-            class="mt-1 flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            class="mt-1"
             placeholder="Tell us more…"
           />
         </div>
         <div>
           <label class="text-xs font-medium">Contact preference</label>
-          <select
-            v-model="contactPreference"
-            class="mt-1 flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-          >
-            <option value="email">Email</option>
-            <option value="phone">Phone</option>
-            <option value="none">No follow-up needed</option>
-          </select>
+          <Select v-model="contactPreference">
+            <SelectTrigger class="mt-1 w-full">
+              <SelectValue placeholder="Select preference" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="email">Email</SelectItem>
+              <SelectItem value="phone">Phone</SelectItem>
+              <SelectItem value="none">No follow-up needed</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
         <div class="flex gap-2">
           <Button variant="outline" class="flex-1" @click="step = 1">Back</Button>
@@ -64,6 +68,8 @@
 <script setup lang="ts">
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
+import { Textarea } from '~/components/ui/textarea'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
 import { toast } from 'vue-sonner'
 
 definePageMeta({ layout: false })

@@ -46,10 +46,9 @@
             <p class="text-[10px] text-muted-foreground mt-2">{{ formatDt(n.created_at) }}</p>
           </div>
           <template v-if="canAddNote">
-            <textarea
+            <Textarea
               v-model="noteDraft"
               rows="3"
-              class="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
               placeholder="Leave a note for the care team…"
             />
             <button
@@ -70,6 +69,7 @@
 <script setup lang="ts">
 import { Badge } from '~/components/ui/badge'
 import { Card, CardHeader, CardTitle, CardContent } from '~/components/ui/card'
+import { Textarea } from '~/components/ui/textarea'
 import type { FamilyPortalVisit } from '~/composables/usePortalAuth'
 
 definePageMeta({ layout: false })

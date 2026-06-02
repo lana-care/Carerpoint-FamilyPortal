@@ -1,21 +1,23 @@
 <template>
   <div class="min-h-screen flex flex-col items-center justify-center px-4 bg-background">
-    <div class="w-full max-w-md space-y-6">
-      <div class="text-center space-y-2">
-        <div class="w-12 h-12 mx-auto rounded-lg bg-primary/10 flex items-center justify-center">
-          <LucideHeart class="w-6 h-6 text-primary" />
+    <div class="w-full max-w-md">
+      <div class="rounded-2xl border bg-card p-6 shadow-sm space-y-6 sm:p-8">
+        <div class="text-center space-y-2">
+          <div class="w-12 h-12 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center">
+            <LucideHeart class="w-6 h-6 text-primary" />
+          </div>
+          <h1 class="text-xl font-bold">Family Portal</h1>
+          <p class="text-sm text-muted-foreground">Paste the access token from your invitation email.</p>
         </div>
-        <h1 class="text-xl font-bold">Family Portal</h1>
-        <p class="text-sm text-muted-foreground">Paste the access token from your invitation email.</p>
-      </div>
-      <div class="space-y-4">
-        <div>
-          <label class="text-xs font-medium text-muted-foreground">Access token</label>
-          <Input v-model="pasteToken" class="mt-1 font-mono text-sm" placeholder="token…" />
+        <div class="space-y-4">
+          <div>
+            <label class="text-xs font-medium text-muted-foreground">Access token</label>
+            <Input v-model="pasteToken" class="mt-1 font-mono text-sm" placeholder="token…" />
+          </div>
+          <Button class="w-full rounded-full" :disabled="!pasteToken?.trim()" @click="submit">Continue</Button>
         </div>
-        <Button class="w-full" :disabled="!pasteToken?.trim()" @click="submit">Continue</Button>
+        <p v-if="err" class="text-sm text-destructive text-center">{{ err }}</p>
       </div>
-      <p v-if="err" class="text-sm text-destructive text-center">{{ err }}</p>
     </div>
   </div>
 </template>

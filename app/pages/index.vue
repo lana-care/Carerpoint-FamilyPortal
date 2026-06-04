@@ -112,7 +112,7 @@
                   v-for="link in quickLinks"
                   :key="link.to"
                   :to="link.to"
-                  class="group rounded-xl border bg-card p-5 shadow-sm hover:shadow-md hover:border-primary/30 transition-all"
+                  class="group glass-card hairline-border rounded-xl p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all"
                 >
                   <div class="flex items-start gap-4">
                     <div

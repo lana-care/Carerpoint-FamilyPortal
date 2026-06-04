@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-background">
-    <header class="border-b px-4 py-3 flex items-center gap-3 sticky top-0 bg-background/95 z-10">
+    <header class="glass-bar border-b border-border/60 px-4 py-3 flex items-center gap-3 sticky top-0 z-10">
       <NuxtLink to="/" class="text-sm text-primary">← Home</NuxtLink>
       <h1 class="text-sm font-semibold">Visit detail</h1>
     </header>

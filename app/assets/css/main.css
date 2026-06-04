@@ -348,6 +348,217 @@
   }
 }
 
+/* ============================================================
+   Liquid Glass design system — shared with the CarerPoint
+   website (the component-style reference). These utilities back
+   the <GlassCard> and <PillButton> components and any elevated,
+   frosted surface (sticky headers, toolbars, overlays).
+
+   Keep these values in sync with Luna-Website's main.css so a
+   glass surface looks identical across the website, dashboard,
+   family portal and mobile app.
+   ============================================================ */
+@layer utilities {
+  /* Glass surface — backdrop-blurred translucent card.
+     Falls back to a more opaque surface where backdrop-filter
+     isn't supported (mobile Safari quirks). */
+  .glass-card {
+    background: color-mix(in oklab, var(--card) 55%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+    box-shadow: 0 1px 0 0 color-mix(in oklab, var(--foreground) 4%, transparent) inset;
+  }
+  .dark .glass-card {
+    background: color-mix(in oklab, var(--card) 60%, transparent);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 1px 0 0 rgba(255, 255, 255, 0.04) inset,
+      0 24px 48px -16px rgba(0, 0, 0, 0.4);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass-card {
+      background: var(--card);
+    }
+  }
+
+  .glass-pill {
+    background: color-mix(in oklab, var(--card) 60%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+    border-radius: 9999px;
+  }
+  .dark .glass-pill {
+    background: color-mix(in oklab, var(--card) 70%, transparent);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass-pill {
+      background: var(--card);
+    }
+  }
+
+  /* Frosted bar — for sticky top navs / toolbars sitting over content. */
+  .glass-bar {
+    background: color-mix(in oklab, var(--background) 72%, transparent);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+  }
+  .dark .glass-bar {
+    background: color-mix(in oklab, var(--background) 70%, transparent);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass-bar {
+      background: var(--background);
+    }
+  }
+
+  /* Pill button — luna→lime gradient with a soft glow.
+     display is intentionally omitted so Tailwind's `hidden` / `inline-flex`
+     utilities can control visibility without specificity battles. */
+  .btn-pill {
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
+    will-change: transform;
+  }
+  .btn-pill-primary {
+    background: linear-gradient(135deg, #3b7ed1 0%, #1e5cab 50%, #4a78b8 100%);
+    color: #ffffff;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.18) inset,
+      0 1px 0 0 rgba(255, 255, 255, 0.32) inset,
+      0 14px 36px -8px rgba(30, 60, 110, 0.35),
+      0 4px 12px -2px rgba(30, 60, 110, 0.18),
+      0 0 50px -10px rgba(219, 242, 109, 0.4);
+  }
+  .btn-pill-primary:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.22) inset,
+      0 1px 0 0 rgba(255, 255, 255, 0.42) inset,
+      0 22px 44px -8px rgba(30, 60, 110, 0.4),
+      0 6px 16px -2px rgba(30, 60, 110, 0.22),
+      0 0 80px -10px rgba(219, 242, 109, 0.55);
+  }
+  .btn-pill-primary:active {
+    transform: translateY(0);
+  }
+  .dark .btn-pill-primary {
+    background: linear-gradient(135deg, #2f6cc0 0%, #1e5cab 45%, #5583b7 100%);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+      0 1px 0 0 rgba(255, 255, 255, 0.2) inset,
+      0 12px 32px -10px rgba(30, 92, 171, 0.55),
+      0 0 60px -10px rgba(219, 242, 109, 0.35);
+  }
+  .dark .btn-pill-primary:hover {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.12) inset,
+      0 1px 0 0 rgba(255, 255, 255, 0.28) inset,
+      0 18px 40px -10px rgba(30, 92, 171, 0.65),
+      0 0 80px -10px rgba(219, 242, 109, 0.5);
+  }
+
+  .btn-pill-glass {
+    background: color-mix(in oklab, var(--card) 50%, transparent);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    color: var(--foreground);
+    border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+  }
+  .btn-pill-glass:hover {
+    background: color-mix(in oklab, var(--card) 70%, transparent);
+    transform: translateY(-1px);
+  }
+
+  .btn-pill-ghost {
+    background: transparent;
+    color: var(--foreground);
+  }
+  .btn-pill-ghost:hover {
+    background: color-mix(in oklab, var(--foreground) 6%, transparent);
+  }
+
+  /* Glow utilities for floating frames (cards, previews). */
+  .glow-luna {
+    box-shadow:
+      0 0 0 1px rgba(170, 199, 235, 0.18) inset,
+      0 24px 80px -24px rgba(30, 92, 171, 0.5),
+      0 8px 32px -16px rgba(85, 131, 183, 0.4);
+  }
+  .dark .glow-luna {
+    box-shadow:
+      0 0 0 1px rgba(170, 199, 235, 0.10) inset,
+      0 32px 100px -24px rgba(30, 92, 171, 0.7),
+      0 8px 48px -16px rgba(85, 131, 183, 0.45);
+  }
+  .glow-lime {
+    box-shadow:
+      0 0 0 1px rgba(219, 242, 109, 0.25) inset,
+      0 24px 80px -24px rgba(219, 242, 109, 0.4);
+  }
+
+  /* Soft tinted surfaces for bento / summary cards. */
+  .tint-lime {
+    background: color-mix(in oklab, #fafee8 92%, transparent);
+  }
+  .tint-luna {
+    background: color-mix(in oklab, #eef4fb 92%, transparent);
+  }
+  .tint-sage {
+    background: color-mix(in oklab, #f0f7f7 92%, transparent);
+  }
+  .dark .tint-lime {
+    background: color-mix(in oklab, #2a3110 35%, transparent);
+  }
+  .dark .tint-luna {
+    background: color-mix(in oklab, #11305a 35%, transparent);
+  }
+  .dark .tint-sage {
+    background: color-mix(in oklab, #1f3838 35%, transparent);
+  }
+
+  /* Hairline gradient border — applied via ::before with mask-composite.
+     Use on a relatively-positioned element. */
+  .hairline-border {
+    position: relative;
+  }
+  .hairline-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--foreground) 18%, transparent) 0%,
+      color-mix(in oklab, var(--foreground) 4%, transparent) 50%,
+      color-mix(in oklab, var(--foreground) 18%, transparent) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+  .dark .hairline-border::before {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.18) 0%,
+      rgba(255, 255, 255, 0.04) 50%,
+      rgba(219, 242, 109, 0.18) 100%
+    );
+  }
+}
+
 /* Sonner toasts: use app theme (--background, --foreground, --border) so they match light/dark mode */
 [data-sonner-toaster] {
   --normal-bg: var(--background);

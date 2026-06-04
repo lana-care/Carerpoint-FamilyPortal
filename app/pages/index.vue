@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-gradient-to-b from-primary/10 via-background to-background">
     <header
-      class="border-b bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/70 sticky top-0 z-10 shadow-sm"
+      class="glass-bar border-b border-border/60 sticky top-0 z-10 shadow-sm"
     >
       <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center gap-3 min-w-0">

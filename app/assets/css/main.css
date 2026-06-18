@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300..700&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -556,6 +556,76 @@
       rgba(255, 255, 255, 0.04) 50%,
       rgba(219, 242, 109, 0.18) 100%
     );
+  }
+
+  .font-display {
+    font-family: 'Oddval', 'Space Grotesk', serif;
+  }
+
+  .aurora-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .aurora-bg::before,
+  .aurora-bg::after {
+    content: '';
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(120px);
+  }
+  .aurora-bg::before {
+    width: 70%;
+    height: 70%;
+    top: -20%;
+    right: -10%;
+    background: radial-gradient(circle at center, rgba(85, 131, 183, 0.30), rgba(85, 131, 183, 0));
+  }
+  .aurora-bg::after {
+    width: 60%;
+    height: 60%;
+    bottom: -20%;
+    left: -10%;
+    background: radial-gradient(circle at center, rgba(219, 242, 109, 0.40), rgba(219, 242, 109, 0));
+  }
+  .beam-grid-wrap {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+  }
+  .beam-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, currentColor 1px, transparent 1px),
+      linear-gradient(to bottom, currentColor 1px, transparent 1px);
+    background-size: 56px 56px;
+    opacity: 0.10;
+  }
+  .beam-grid-spotlight {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, var(--color-luna-500) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-luna-500) 1px, transparent 1px);
+    background-size: 56px 56px;
+    opacity: 0.6;
+    mask-image: radial-gradient(circle 260px at var(--mouse-x) var(--mouse-y), black 0%, transparent 75%);
+    -webkit-mask-image: radial-gradient(circle 260px at var(--mouse-x) var(--mouse-y), black 0%, transparent 75%);
+  }
+  .beam-grid-halo {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle 340px at var(--mouse-x) var(--mouse-y),
+      color-mix(in oklab, var(--color-luna-400) 22%, transparent) 0%,
+      transparent 70%
+    );
+    mix-blend-mode: screen;
   }
 }
 

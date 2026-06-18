@@ -1,5 +1,6 @@
 <template>
-  <div class="min-h-screen bg-background">
+  <div class="relative min-h-screen bg-background">
+    <SharedShellBackground intensity="soft" />
     <NuxtPage />
     <ClientOnly>
       <Toaster position="top-center" rich-colors />

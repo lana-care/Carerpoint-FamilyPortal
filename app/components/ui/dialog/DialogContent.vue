@@ -40,13 +40,13 @@ function handlePointerDownOutside(event: CustomEvent) {
     <DialogOverlay
       :class="cn(
         'fixed inset-0 z-50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-        props.noOverlay ? 'pointer-events-none invisible' : 'bg-black/80 backdrop-blur-sm'
+        props.noOverlay ? 'pointer-events-none invisible' : 'bg-black/50 backdrop-blur-md'
       )"
     />
     <DialogContent
       v-bind="forwarded"
       :class="cn(
-        'fixed left-1/2 top-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 gap-4 border bg-background p-6 shadow-lg duration-200 sm:rounded-lg',
+        'glass-card hairline-border fixed left-1/2 top-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 gap-4 border-0 p-6 shadow-none duration-200 rounded-2xl sm:rounded-3xl',
         'max-h-[85dvh] overflow-y-auto',
         'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
         sizeClasses[props.size || 'default'],

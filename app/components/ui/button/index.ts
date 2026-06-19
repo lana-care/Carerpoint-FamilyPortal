@@ -9,9 +9,11 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         default: 'btn-pill btn-pill-primary rounded-full',
-        destructive: 'rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm',
+        destructive: 'btn-pill btn-pill-destructive rounded-full',
+        success: 'btn-pill btn-pill-success rounded-full',
+        warning: 'btn-pill btn-pill-warning rounded-full',
         outline: 'btn-pill btn-pill-glass rounded-full',
-        secondary: 'rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-border/60',
+        secondary: 'btn-pill btn-pill-glass rounded-full text-foreground',
         ghost: 'btn-pill btn-pill-ghost rounded-full',
         link: 'text-primary underline-offset-4 hover:underline font-medium h-auto p-0 rounded-none shadow-none',
       },
@@ -25,8 +27,10 @@ export const buttonVariants = cva(
     compoundVariants: [
       { variant: 'ghost', size: 'icon', class: '!bg-transparent hover:bg-foreground/[0.06]' },
       { variant: 'default', size: 'icon', class: 'btn-pill-primary min-w-10' },
+      { variant: 'destructive', size: 'icon', class: 'btn-pill-destructive min-w-10' },
+      { variant: 'success', size: 'icon', class: 'btn-pill-success min-w-10' },
+      { variant: 'warning', size: 'icon', class: 'btn-pill-warning min-w-10' },
       { variant: 'outline', size: 'icon', class: 'btn-pill-glass' },
-      { variant: 'destructive', size: 'icon', class: 'min-w-10' },
       { variant: 'link', size: ['default', 'sm', 'lg', 'icon'], class: '!h-auto !w-auto !px-0 !py-0' },
     ],
     defaultVariants: {

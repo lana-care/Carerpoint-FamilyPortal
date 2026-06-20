@@ -25,7 +25,7 @@ const modelValue = useVModel(props, 'modelValue', emits, {
 
 const base = 'flex h-10 w-full px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50'
 const variants = {
-  default: 'rounded-md border border-input bg-background ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+  default: 'rounded-xl border border-input/80 bg-background/80 backdrop-blur-sm ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:border-luna-400/40 transition-colors',
   ghost: 'bg-transparent',
 }
 

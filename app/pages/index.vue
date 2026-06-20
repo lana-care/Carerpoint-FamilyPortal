@@ -1,9 +1,8 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-b from-primary/10 via-background to-background">
-    <header
-      class="glass-bar border-b border-border/60 sticky top-0 z-10 shadow-sm"
-    >
-      <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+  <div class="relative min-h-screen">
+    <header class="sticky top-0 z-10 px-3 sm:px-6 pt-3 pb-2">
+      <div class="glass-pill max-w-5xl mx-auto shadow-[0_8px_30px_-12px_rgba(8,26,56,0.18)] dark:shadow-[0_8px_30px_-10px_rgba(0,0,0,0.45)]">
+      <div class="px-4 py-3 flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center gap-3 min-w-0">
           <div class="w-9 h-9 rounded-xl bg-primary/15 flex items-center justify-center shrink-0">
             <LucideHeart class="w-4 h-4 text-primary" />
@@ -17,16 +16,17 @@
         </div>
         <template v-if="portalData?.valid">
           <Separator class="hidden sm:block h-6 shrink-0" orientation="vertical" />
-          <nav class="flex flex-wrap gap-x-3 gap-y-1 text-xs font-medium">
-            <NuxtLink to="/schedule" class="text-primary hover:underline">Schedule</NuxtLink>
-            <NuxtLink to="/calendar" class="text-primary hover:underline">Calendar</NuxtLink>
-            <NuxtLink to="/messages" class="text-primary hover:underline">Messages</NuxtLink>
-            <NuxtLink to="/care-plan" class="text-primary hover:underline">Care plan</NuxtLink>
-            <NuxtLink to="/medications" class="text-primary hover:underline">Medications</NuxtLink>
-            <NuxtLink to="/documents" class="text-primary hover:underline">Documents</NuxtLink>
-            <NuxtLink to="/feedback" class="text-primary hover:underline">Feedback</NuxtLink>
+          <nav class="flex flex-wrap gap-1 text-xs font-medium">
+            <NuxtLink to="/schedule" class="px-3 py-1.5 rounded-full text-foreground/75 hover:text-foreground hover:bg-foreground/[0.06] transition-colors">Schedule</NuxtLink>
+            <NuxtLink to="/calendar" class="px-3 py-1.5 rounded-full text-foreground/75 hover:text-foreground hover:bg-foreground/[0.06] transition-colors">Calendar</NuxtLink>
+            <NuxtLink to="/messages" class="px-3 py-1.5 rounded-full text-foreground/75 hover:text-foreground hover:bg-foreground/[0.06] transition-colors">Messages</NuxtLink>
+            <NuxtLink to="/care-plan" class="px-3 py-1.5 rounded-full text-foreground/75 hover:text-foreground hover:bg-foreground/[0.06] transition-colors">Care plan</NuxtLink>
+            <NuxtLink to="/medications" class="px-3 py-1.5 rounded-full text-foreground/75 hover:text-foreground hover:bg-foreground/[0.06] transition-colors">Medications</NuxtLink>
+            <NuxtLink to="/documents" class="px-3 py-1.5 rounded-full text-foreground/75 hover:text-foreground hover:bg-foreground/[0.06] transition-colors">Documents</NuxtLink>
+            <NuxtLink to="/feedback" class="px-3 py-1.5 rounded-full text-foreground/75 hover:text-foreground hover:bg-foreground/[0.06] transition-colors">Feedback</NuxtLink>
           </nav>
         </template>
+      </div>
       </div>
     </header>
 
@@ -48,7 +48,7 @@
 
     <div v-else-if="portalData?.valid" class="max-w-5xl mx-auto px-4 py-8 space-y-10 pb-16">
       <!-- Hero -->
-      <div class="rounded-2xl border bg-card shadow-md overflow-hidden">
+      <div class="glass-card hairline-border rounded-2xl overflow-hidden glow-luna">
         <div class="bg-gradient-to-br from-primary/12 via-card to-card px-6 sm:px-8 pt-8 pb-6">
           <div class="flex flex-col sm:flex-row sm:items-start gap-6">
             <Avatar class="h-24 w-24 shrink-0 ring-4 ring-background shadow-lg">

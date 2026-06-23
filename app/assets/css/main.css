@@ -241,6 +241,15 @@
     @apply border-border outline-ring/50;
   }
 
+  /* Tailwind v4 Preflight ships interactive controls with `cursor: default`.
+     Restore the expected pointer on enabled buttons (disabled ones keep the
+     default arrow via `pointer-events-none`). */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  label[for] {
+    cursor: pointer;
+  }
+
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

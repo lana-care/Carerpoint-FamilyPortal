@@ -67,6 +67,7 @@
 </template>
 
 <script setup lang="ts">
+import { toast } from 'vue-sonner'
 import { Badge } from '~/components/ui/badge'
 import { Card, CardHeader, CardTitle, CardContent } from '~/components/ui/card'
 import { Textarea } from '~/components/ui/textarea'
@@ -126,7 +127,7 @@ async function submitNote() {
   noteSaving.value = true
   try {
     const base = String(config.public.apiUrl || '').replace(/\/+$/, '')
-    await $fetch(
+    const res = await $fetch<{ success?: boolean; error?: string }>(
       `${base}/api/v1/family-portal/visits/${id}/notes`,
       {
         method: 'POST',
@@ -134,8 +135,15 @@ async function submitNote() {
         body: { note: noteDraft.value.trim() },
       },
     )
+    if (!res?.success) {
+      toast.error(res?.error || 'Could not save your note.')
+      return
+    }
     noteDraft.value = ''
     await loadNotes(id)
+  } catch (e: unknown) {
+    const err = e as { data?: { message?: unknown }; message?: string }
+    toast.error(normalizePortalError(err?.data?.message) || err?.message || 'Could not save your note.')
   } finally {
     noteSaving.value = false
   }

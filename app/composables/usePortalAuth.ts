@@ -1,5 +1,12 @@
 export const FAMILY_PORTAL_TOKEN_COOKIE = 'carerpoint_family_portal_token'
 
+// NestJS validation errors return `message` as a string[]; flatten it so toasts
+// don't render "[object Object]".
+export function normalizePortalError(m: unknown): string | undefined {
+  if (Array.isArray(m)) return m.join(', ')
+  return typeof m === 'string' ? m : undefined
+}
+
 export interface FamilyPortalVisit {
   id?: string
   date: string
@@ -61,10 +68,10 @@ export function usePortalAuth() {
       portalData.value = { valid: false, error: res?.error || 'Invalid or expired access link.' }
       return portalData.value
     } catch (e: unknown) {
-      const err = e as { data?: { message?: string }; message?: string }
+      const err = e as { data?: { message?: unknown }; message?: string }
       portalData.value = {
         valid: false,
-        error: err?.data?.message || err?.message || 'Failed to load portal.',
+        error: normalizePortalError(err?.data?.message) || err?.message || 'Failed to load portal.',
       }
       return portalData.value
     }

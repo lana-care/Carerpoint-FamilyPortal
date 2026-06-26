@@ -1,5 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  // Shared CarerPoint design system — registers @lana-care/ui components as a
+  // Nuxt layer (auto-imported <Button>, <GlassCard>, …; app components win).
+  extends: ['@lana-care/ui'],
+  build: { transpile: ['@lana-care/ui'] },
   compatibilityDate: '2024-12-01',
   ssr: true,
   future: {

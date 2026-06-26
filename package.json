@@ -18,6 +18,8 @@
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {
+    "@lana-care/design-tokens": "^0.1.0",
+    "@lana-care/ui": "^0.1.0",
     "@headlessui/vue": "^1.7.23",
     "@heroicons/vue": "^2.2.0",
     "@nuxtjs/i18n": "^10.2.3",

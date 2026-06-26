@@ -7,7 +7,8 @@
       "dependencies": {
         "@headlessui/vue": "^1.7.23",
         "@heroicons/vue": "^2.2.0",
-        "@lana-care/design-tokens": "^0.1.0",
+        "@lana-care/design-tokens": "^0.1.3",
+        "@lana-care/ui": "^0.1.3",
         "@nuxtjs/i18n": "^10.2.3",
         "@pinia/nuxt": "^0.11.3",
         "@tailwindcss/postcss": "^4.2.0",
@@ -279,7 +280,9 @@
 
     "@kwsites/promise-deferred": ["@kwsites/promise-deferred@1.1.1", "", {}, "sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw=="],
 
-    "@lana-care/design-tokens": ["@lana-care/design-tokens@0.1.0", "https://npm.pkg.github.com/download/@lana-care/design-tokens/0.1.0/0b88f4ba5db0fe6fad097902e4103cfe750c3b7e", {}, "sha512-AxtMhouEBwCKrtASGgNZEJdzySEX95BCoAbRJmFA4Q3i3BBl17SrO4faOAUcYJ5qLWk4GTVXN+A7YuFTD3SwuQ=="],
+    "@lana-care/design-tokens": ["@lana-care/design-tokens@0.1.3", "https://npm.pkg.github.com/download/@lana-care/design-tokens/0.1.3/3939e1a126a4bc05ded3d538de9def12f41c536f", {}, "sha512-Lfq6z8K+abNWEuqbW7VQBEKKLUIDqE6AxvAMRfJg3Nximd8G2a4aWmupyLe7WISqb4DjERN8v7OVfqCbTSGMsA=="],
+
+    "@lana-care/ui": ["@lana-care/ui@0.1.3", "https://npm.pkg.github.com/download/@lana-care/ui/0.1.3/b7487ea46c6f2212565f7056ebf71c25bf919c35", { "dependencies": { "@lana-care/design-tokens": "0.1.1" }, "peerDependencies": { "@vueuse/core": "^11.0.0 || ^12.0.0 || ^13.0.0 || ^14.0.0", "class-variance-authority": "^0.7.0", "clsx": "^2.0.0", "lucide-vue-next": "^0.575.0 || >=0.400.0", "reka-ui": "^2.8.0", "tailwind-merge": "^2.0.0 || ^3.0.0", "vue": "^3.5.0" } }, "sha512-mg7y0u8qtwRijH7LTomCFkhkDKhAKCP5z8jx+LYoDu6qdfvOdtB4SbmEij3XA6Qo38uDZGQcgaC/MifM6vFx+Q=="],
 
     "@mapbox/node-pre-gyp": ["@mapbox/node-pre-gyp@2.0.3", "", { "dependencies": { "consola": "^3.2.3", "detect-libc": "^2.0.0", "https-proxy-agent": "^7.0.5", "node-fetch": "^2.6.7", "nopt": "^8.0.0", "semver": "^7.5.3", "tar": "^7.4.0" }, "bin": { "node-pre-gyp": "bin/node-pre-gyp" } }, "sha512-uwPAhccfFJlsfCxMYTwOdVfOz3xqyj8xYL3zJj8f0pb30tLohnnFPhLuqp4/qoEz8sNxe4SESZedcBojRefIzg=="],
 
@@ -2106,6 +2109,8 @@
     "@isaacs/cliui/strip-ansi": ["strip-ansi@7.2.0", "", { "dependencies": { "ansi-regex": "^6.2.2" } }, "sha512-yDPMNjp4WyfYBkHnjIRLfca1i6KMyGCtsVgoKe/z1+6vukgaENdgGBZt+ZmKPc4gavvEZ5OgHfHdrazhgNyG7w=="],
 
     "@isaacs/cliui/wrap-ansi": ["wrap-ansi@8.1.0", "", { "dependencies": { "ansi-styles": "^6.1.0", "string-width": "^5.0.1", "strip-ansi": "^7.0.1" } }, "sha512-si7QWI6zUMq56bESFvagtmzMdGOtoxfR+Sez11Mobfc7tm+VkUckk9bW2UeffTGVUbOksxmSw0AA2gs8g71NCQ=="],
+
+    "@lana-care/ui/@lana-care/design-tokens": ["@lana-care/design-tokens@0.1.1", "https://npm.pkg.github.com/download/@lana-care/design-tokens/0.1.1/6eb21c41670a3205b98f9364f28ac43be717045d", {}, "sha512-3xGpVQmhj8zNrf5qcgDYp6BcYyFnIfsODIHOCjKhm3LIY56f6rb3nHcvxxkHe4vRHYjEOyNXn+PI7acLXpGnOA=="],
 
     "@mapbox/node-pre-gyp/nopt": ["nopt@8.1.0", "", { "dependencies": { "abbrev": "^3.0.0" }, "bin": { "nopt": "bin/nopt.js" } }, "sha512-ieGu42u/Qsa4TFktmaKEwM6MQH0pOWnaB3htzh0JRtx84+Mebc0cbZYN5bC+6WTZ4+77xrL9Pn5m7CV6VIkV7A=="],
 

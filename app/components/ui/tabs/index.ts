@@ -1,4 +1,4 @@
-export { default as Tabs } from './Tabs.vue'
-export { default as TabsList } from './TabsList.vue'
-export { default as TabsTrigger } from './TabsTrigger.vue'
-export { default as TabsContent } from './TabsContent.vue'
+export { default as Tabs } from '@lana-care/ui/components/tabs/Tabs.vue'
+export { default as TabsList } from '@lana-care/ui/components/tabs/TabsList.vue'
+export { default as TabsTrigger } from '@lana-care/ui/components/tabs/TabsTrigger.vue'
+export { default as TabsContent } from '@lana-care/ui/components/tabs/TabsContent.vue'

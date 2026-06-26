@@ -1,5 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  extends: ['@lana-care/ui'],
+  build: { transpile: ['@lana-care/ui'] },
   compatibilityDate: '2024-12-01',
   ssr: true,
   future: {

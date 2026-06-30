@@ -60,7 +60,7 @@
               <div>
                 <p class="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Care overview</p>
                 <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mt-1">{{ clientName }}</h2>
-                <Badge variant="secondary" class="text-[10px] mt-2">{{ String(portalData.client?.status || 'Active') }}</Badge>
+                <SharedStatusBadge :status="String(portalData.client?.status || 'active')" class="mt-2" />
               </div>
               <div
                 v-if="portalData.client?.medicalConditions || portalData.client?.allergies"
@@ -170,16 +170,7 @@
                   <div class="flex-1 min-w-0 text-left">
                     <div class="flex items-center gap-2 flex-wrap">
                       <span class="text-sm font-medium">{{ formatDate(visit.date) }}</span>
-                      <Badge
-                        variant="secondary"
-                        class="text-[9px]"
-                        :class="{
-                          'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300':
-                            visit.status === 'completed',
-                        }"
-                      >
-                        {{ visit.status }}
-                      </Badge>
+                      <SharedStatusBadge :status="visit.status" />
                     </div>
                     <p v-if="visit.mood" class="text-xs text-muted-foreground mt-0.5">
                       Mood: {{ moodLabel(String(visit.mood)) }}
@@ -247,7 +238,6 @@ import {
   LayoutGrid as LucideLayoutGrid,
 } from 'lucide-vue-next'
 import { Avatar, AvatarFallback } from '~/components/ui/avatar'
-import { Badge } from '~/components/ui/badge'
 import { Card, CardHeader, CardTitle, CardContent } from '~/components/ui/card'
 import { Separator } from '~/components/ui/separator'
 import { Skeleton } from '~/components/ui/skeleton'

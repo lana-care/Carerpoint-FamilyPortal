@@ -6,23 +6,17 @@
     </header>
     <div class="max-w-3xl mx-auto px-4 py-6">
       <div class="flex items-center justify-between gap-2 mb-4">
-        <button
-          type="button"
-          class="text-sm text-primary font-medium px-2 py-1 rounded-md hover:bg-muted/80"
-          @click="prevMonth"
-        >
-          ← Prev
-        </button>
+        <Button variant="ghost" size="sm" @click="prevMonth">
+          <LucideChevronLeft />
+          Prev
+        </Button>
         <p class="text-sm font-semibold tabular-nums">
           {{ monthLabel }}
         </p>
-        <button
-          type="button"
-          class="text-sm text-primary font-medium px-2 py-1 rounded-md hover:bg-muted/80"
-          @click="nextMonth"
-        >
-          Next →
-        </button>
+        <Button variant="ghost" size="sm" @click="nextMonth">
+          Next
+          <LucideChevronRight />
+        </Button>
       </div>
       <p class="text-xs text-muted-foreground mb-4">
         Visit days this month (from your schedule)
@@ -53,6 +47,8 @@
 </template>
 
 <script setup lang="ts">
+import { ChevronLeft as LucideChevronLeft, ChevronRight as LucideChevronRight } from 'lucide-vue-next'
+import { Button } from '~/components/ui/button'
 import type { FamilyPortalVisit } from '~/composables/usePortalAuth'
 
 definePageMeta({ layout: false })

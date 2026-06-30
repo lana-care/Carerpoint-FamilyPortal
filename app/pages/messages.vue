@@ -73,14 +73,15 @@
             rows="3"
             placeholder="Type your message…"
           />
-          <button
-            type="button"
-            class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground"
-            :disabled="sending || !draft.trim()"
-            @click="send"
-          >
-            {{ sending ? 'Sending…' : 'Send' }}
-          </button>
+          <div class="flex justify-end">
+            <Button
+              size="sm"
+              :disabled="sending || !draft.trim()"
+              @click="send"
+            >
+              {{ sending ? 'Sending…' : 'Send' }}
+            </Button>
+          </div>
         </div>
       </template>
     </div>
@@ -90,6 +91,7 @@
 <script setup lang="ts">
 import { io, type Socket } from 'socket.io-client'
 import { toast } from 'vue-sonner'
+import { Button } from '~/components/ui/button'
 import { Textarea } from '~/components/ui/textarea'
 
 definePageMeta({ layout: false })

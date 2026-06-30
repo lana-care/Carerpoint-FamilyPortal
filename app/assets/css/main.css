@@ -3,34 +3,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300..700&display=swap');
 
 /* ============================================================
-   Scan the shared @lana-care/ui component sources for Tailwind.
-
-   Tailwind v4 automatic content detection EXCLUDES node_modules, so the
-   utility classes baked into the shared Button / Card / Badge / Tabs / etc.
-   (e.g. `h-10 px-6`, `btn-pill-primary`, `rounded-full px-2.5 py-0.5`,
-   `p-6`, `inline-flex`) are never emitted unless we point Tailwind at the
-   package explicitly. The dashboard happens to use nearly every utility in
-   its own large source so it gets away without this; this small portal does
-   not, which left buttons with no spacing, cards with no padding and status
-   badges that were not pills. `@source` overrides the node_modules ignore.
-   ============================================================ */
-@source "../../../node_modules/@lana-care/ui/src";
-
-/* ============================================================
    Design tokens — single source of truth.
    All brand scales (@theme), the shadcn semantic bridge
    (@theme inline), :root/.dark token values, the @layer base
    reset, and every Liquid Glass recipe (.glass-*, .btn-pill-*,
-   .glow-*, .tint-*, .hairline-border, .font-display, etc.) come
-   from the shared package — do NOT re-declare them here.
+   .glow-*, .tint-*, .hairline-border, .font-display, etc.).
+
+   VENDORED locally (./vendor/*) instead of imported from
+   `@lana-care/design-tokens` because the package CSS subpath import
+   was not being bundled in the Cloudflare Workers build — the whole
+   design system (semantic colours, brand tokens, pill/glass recipes)
+   was silently dropped, leaving the portal effectively unstyled
+   (no card backgrounds/borders, no brand colours, unstyled buttons).
+   These files are byte-for-byte @lana-care/design-tokens@0.1.4
+   (same version the website/dashboard ship); re-sync on token bumps.
 
    tokens.css  — required core token layer.
    effects.css — ambient decorative effects (.aurora-bg + the
                  interactive .beam-grid* spotlight stack) used by
                  <ShellBackground>.
    ============================================================ */
-@import "@lana-care/design-tokens/tokens.css";
-@import "@lana-care/design-tokens/effects.css";
+@import "./vendor/tokens.css";
+@import "./vendor/effects.css";
 
 /* ============================================================
    App-specific styles NOT shipped by the design-tokens package.

@@ -20,8 +20,8 @@
   "dependencies": {
     "@headlessui/vue": "^1.7.23",
     "@heroicons/vue": "^2.2.0",
-    "@lana-care/design-tokens": "^0.1.4",
-    "@lana-care/ui": "^0.1.4",
+    "@lana-care/design-tokens": "^0.1.8",
+    "@lana-care/ui": "^0.1.8",
     "@nuxtjs/i18n": "^10.2.3",
     "@pinia/nuxt": "^0.11.3",
     "@tailwindcss/postcss": "^4.2.0",

@@ -27,6 +27,24 @@
 @import "./vendor/effects.css";
 
 /* ============================================================
+   Scan the shared design-system components so Tailwind generates
+   the utility classes they use (padding/height/gap/spacing, e.g.
+   the Button's `h-10`, the Card/GlassCard's `p-6 sm:p-8`, the
+   Tabs' `px-3.5 py-1.5`, `space-y-1.5`, `gap-2`, `size-4`, ...).
+
+   Tailwind v4 auto-detects sources but SKIPS node_modules, so
+   classes used ONLY inside @lana-care/ui were never emitted —
+   leaving those components with no padding / wrong spacing.
+   An explicit @source opts the package back in. Path is relative
+   to this file (app/assets/css → app root node_modules).
+
+   NOTE: @source must sit AFTER every @import — the CSS spec requires
+   @import rules to precede all other at-rules, so an @source placed
+   above these imports would silently drop the token/recipe layer.
+   ============================================================ */
+@source "../../../node_modules/@lana-care/ui/src";
+
+/* ============================================================
    App-specific styles NOT shipped by the design-tokens package.
    ============================================================ */
 

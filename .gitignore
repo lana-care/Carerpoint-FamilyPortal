@@ -27,3 +27,15 @@ npm-debug.log*
 
 # Testing
 coverage/
+
+# AI assistant / workflow files
+.claude/
+.cursor/
+.windsurf/
+.aider*
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+.mcp.json
+docs/superpowers/
+handoff/

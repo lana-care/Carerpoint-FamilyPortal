@@ -1,1 +1,1 @@
-export { default as PillButton } from './PillButton.vue'
+export { default as PillButton } from '@lana-care/ui/components/pill-button/PillButton.vue'

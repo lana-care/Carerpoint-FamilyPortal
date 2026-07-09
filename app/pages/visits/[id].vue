@@ -9,14 +9,16 @@
         <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
       </div>
       <Card v-else-if="visit">
-        <CardHeader>
-          <CardTitle class="text-base">{{ formatDate(visit.date) }}</CardTitle>
-          <Badge>{{ visit.status }}</Badge>
+        <CardHeader class="space-y-2">
+          <div class="flex items-start justify-between gap-3">
+            <CardTitle class="text-base">{{ formatDate(visit.date) }}</CardTitle>
+            <SharedStatusBadge :status="visit.status" class="shrink-0" />
+          </div>
+          <p v-if="visit.start || visit.end" class="text-sm text-muted-foreground tabular-nums">
+            {{ formatTimeRange(visit.start, visit.end) }}
+          </p>
         </CardHeader>
         <CardContent class="space-y-3 text-sm">
-          <p v-if="visit.start || visit.end" class="text-muted-foreground">
-            {{ visit.start || '—' }} – {{ visit.end || '—' }}
-          </p>
           <div v-if="visit.mood">
             <span class="text-xs font-semibold text-muted-foreground uppercase">Mood</span>
             <p>{{ visit.mood }}</p>
@@ -51,14 +53,14 @@
               rows="3"
               placeholder="Leave a note for the care team…"
             />
-            <button
-              type="button"
-              class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
+            <Button
+              size="sm"
+              class="w-full sm:w-auto"
               :disabled="noteSaving || !noteDraft.trim()"
               @click="submitNote"
             >
               {{ noteSaving ? 'Saving…' : 'Submit note' }}
-            </button>
+            </Button>
           </template>
         </CardContent>
       </Card>
@@ -68,7 +70,7 @@
 
 <script setup lang="ts">
 import { toast } from 'vue-sonner'
-import { Badge } from '~/components/ui/badge'
+import { Button } from '~/components/ui/button'
 import { Card, CardHeader, CardTitle, CardContent } from '~/components/ui/card'
 import { Textarea } from '~/components/ui/textarea'
 import type { FamilyPortalVisit } from '~/composables/usePortalAuth'

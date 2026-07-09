@@ -18,11 +18,11 @@
           <div class="flex justify-between items-start gap-2">
             <div>
               <p class="font-medium">{{ formatDate(v.date) }}</p>
-              <p v-if="v.start || v.end" class="text-xs text-muted-foreground">
-                {{ v.start || '' }} – {{ v.end || '' }}
+              <p v-if="v.start || v.end" class="text-xs text-muted-foreground tabular-nums">
+                {{ formatTimeRange(v.start, v.end) }}
               </p>
             </div>
-            <Badge variant="secondary">{{ v.status }}</Badge>
+            <SharedStatusBadge :status="v.status" class="shrink-0" />
           </div>
         </NuxtLink>
       </div>
@@ -32,7 +32,6 @@
 </template>
 
 <script setup lang="ts">
-import { Badge } from '~/components/ui/badge'
 import type { FamilyPortalVisit } from '~/composables/usePortalAuth'
 
 definePageMeta({ layout: false })

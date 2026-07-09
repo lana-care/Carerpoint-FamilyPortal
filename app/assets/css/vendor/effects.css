@@ -1,0 +1,206 @@
+/* ============================================================================
+   @lana-care/design-tokens — effects.css  (OPTIONAL)
+
+   Landing / ambient decorative effects extracted from Luna-Website's main.css
+   so general apps (dashboard, family portal) can opt OUT. Import only on
+   surfaces that want them:
+
+       import '@lana-care/design-tokens/tokens.css';   // required core
+       import '@lana-care/design-tokens/effects.css';  // optional ambience
+
+   Effects included: .aurora-bg, .dot-grid-bg, the interactive .beam-grid*
+   cursor-spotlight stack, and the .reveal staggered entrance.
+
+   All motion is guarded by `prefers-reduced-motion: reduce`. Ambient blur reads
+   --blur-ambient from tokens.css (falls back to 120px if loaded standalone).
+   ============================================================================ */
+
+@layer utilities {
+  /* ---- Aurora glow background — two large radial blobs.
+         Designed to drop into both the hero and the CTA bookend. ---- */
+  .aurora-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .aurora-bg::before,
+  .aurora-bg::after {
+    content: '';
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(var(--blur-ambient, 120px));
+    will-change: transform;
+  }
+  .aurora-bg::before {
+    width: 70%;
+    height: 70%;
+    top: -20%;
+    right: -10%;
+    background: radial-gradient(circle at center, rgba(30, 92, 171, 0.55), rgba(30, 92, 171, 0));
+    animation: auroraDriftA 24s ease-in-out infinite alternate;
+  }
+  .aurora-bg::after {
+    width: 60%;
+    height: 60%;
+    bottom: -20%;
+    left: -10%;
+    background: radial-gradient(circle at center, rgba(219, 242, 109, 0.28), rgba(219, 242, 109, 0));
+    animation: auroraDriftB 28s ease-in-out infinite alternate;
+  }
+  /* Light-mode aurora is softer so cream backgrounds don't blow out. */
+  :root .aurora-bg::before {
+    background: radial-gradient(circle at center, rgba(85, 131, 183, 0.30), rgba(85, 131, 183, 0));
+  }
+  :root .aurora-bg::after {
+    background: radial-gradient(circle at center, rgba(219, 242, 109, 0.40), rgba(219, 242, 109, 0));
+  }
+  .dark .aurora-bg::before {
+    background: radial-gradient(circle at center, rgba(85, 131, 183, 0.55), rgba(85, 131, 183, 0));
+  }
+  .dark .aurora-bg::after {
+    background: radial-gradient(circle at center, rgba(219, 242, 109, 0.22), rgba(219, 242, 109, 0));
+  }
+
+  @keyframes auroraDriftA {
+    0%   { transform: translate3d(0, 0, 0) scale(1); }
+    100% { transform: translate3d(-6%, 4%, 0) scale(1.08); }
+  }
+  @keyframes auroraDriftB {
+    0%   { transform: translate3d(0, 0, 0) scale(1); }
+    100% { transform: translate3d(5%, -6%, 0) scale(1.12); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .aurora-bg::before,
+    .aurora-bg::after {
+      animation: none;
+    }
+  }
+
+  /* ---- Subtle dot grid — kept for legacy callers. Prefer .beam-grid below. ---- */
+  .dot-grid-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: 0 0;
+    opacity: 0.06;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+  .dark .dot-grid-bg {
+    opacity: 0.08;
+  }
+
+  /* ===========================================================
+     Beam grid — interactive bars background with mouse spotlight.
+     Three stacked layers inside .beam-grid-wrap:
+       1. .beam-grid           — base hairline grid (always visible, soft)
+       2. .beam-grid-spotlight — luna-tinted bars revealed only inside a
+          radial mask centered on the cursor (--mouse-x / --mouse-y)
+       3. .beam-grid-halo      — soft luminous glow under the cursor
+     =========================================================== */
+  .beam-grid-wrap {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+  }
+  /* Light-mode subtle darkening so the bars stand out against the cream bg */
+  .beam-grid-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: color-mix(in oklab, var(--foreground) 3%, transparent);
+    mask-image: radial-gradient(ellipse at center, black 35%, transparent 90%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 35%, transparent 90%);
+    pointer-events: none;
+  }
+  .dark .beam-grid-wrap::before {
+    background: transparent;
+  }
+
+  .beam-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, currentColor 1px, transparent 1px),
+      linear-gradient(to bottom, currentColor 1px, transparent 1px);
+    background-size: 56px 56px;
+    opacity: 0.10;
+    mask-image: radial-gradient(ellipse at center, black 28%, transparent 88%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 28%, transparent 88%);
+  }
+  .dark .beam-grid {
+    opacity: 0.10;
+  }
+
+  .beam-grid-spotlight {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, var(--color-luna-500) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-luna-500) 1px, transparent 1px);
+    background-size: 56px 56px;
+    opacity: 0.6;
+    mask-image: radial-gradient(circle 260px at var(--mouse-x) var(--mouse-y), black 0%, rgba(0,0,0,0.4) 40%, transparent 75%);
+    -webkit-mask-image: radial-gradient(circle 260px at var(--mouse-x) var(--mouse-y), black 0%, rgba(0,0,0,0.4) 40%, transparent 75%);
+    transition: opacity 250ms ease;
+  }
+  .dark .beam-grid-spotlight {
+    background-image:
+      linear-gradient(to right, var(--color-luna-300) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-luna-300) 1px, transparent 1px);
+    opacity: 0.45;
+  }
+
+  .beam-grid-halo {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle 340px at var(--mouse-x) var(--mouse-y),
+      color-mix(in oklab, var(--color-luna-400) 22%, transparent) 0%,
+      color-mix(in oklab, var(--color-luna-400) 8%, transparent) 35%,
+      transparent 70%
+    );
+    mix-blend-mode: screen;
+    transition: opacity 250ms ease;
+  }
+  .dark .beam-grid-halo {
+    background: radial-gradient(
+      circle 340px at var(--mouse-x) var(--mouse-y),
+      color-mix(in oklab, var(--color-luna-400) 16%, transparent) 0%,
+      color-mix(in oklab, var(--color-luna-400) 6%, transparent) 35%,
+      transparent 70%
+    );
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .beam-grid-spotlight,
+    .beam-grid-halo {
+      display: none;
+    }
+  }
+
+  /* ---- Staggered reveal helper — applies a one-time fade+rise.
+         Author the delay via inline style (--reveal-delay). ---- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: revealUp 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+  @keyframes revealUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+  }
+}

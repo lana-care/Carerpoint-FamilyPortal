@@ -6,67 +6,71 @@
     </header>
     <div class="max-w-md mx-auto px-4 py-8 space-y-6">
       <p class="text-sm text-muted-foreground text-center">
-        Share a compliment, concern, or feedback about care. Max 5 fields per step.
+        Share a compliment, concern, or feedback about care.
       </p>
 
-      <!-- Step 1: category + rating (2 fields) -->
-      <div v-if="step === 1" class="space-y-4">
-        <div>
-          <label class="text-xs font-medium">Category</label>
-          <Select v-model="category">
-            <SelectTrigger class="mt-1 w-full">
-              <SelectValue placeholder="Select category" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="visit_feedback">Visit feedback</SelectItem>
-              <SelectItem value="compliment">Compliment</SelectItem>
-              <SelectItem value="complaint">Complaint</SelectItem>
-              <SelectItem value="general">General</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <label class="text-xs font-medium">Rating (1–5)</label>
-          <Input v-model.number="rating" type="number" min="1" max="5" class="mt-1" />
-        </div>
-        <Button class="w-full" @click="step = 2">Next</Button>
-      </div>
+      <Card>
+        <CardContent class="pt-6">
+          <!-- Step 1: category + rating -->
+          <div v-if="step === 1" class="space-y-4">
+            <div class="space-y-1.5">
+              <label class="text-xs font-medium">Category</label>
+              <Select v-model="category">
+                <SelectTrigger class="w-full">
+                  <SelectValue placeholder="Select category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="visit_feedback">Visit feedback</SelectItem>
+                  <SelectItem value="compliment">Compliment</SelectItem>
+                  <SelectItem value="complaint">Complaint</SelectItem>
+                  <SelectItem value="general">General</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div class="space-y-1.5">
+              <label class="text-xs font-medium">Rating (1–5)</label>
+              <Input v-model.number="rating" type="number" min="1" max="5" />
+            </div>
+            <Button class="w-full" @click="step = 2">Next</Button>
+          </div>
 
-      <!-- Step 2: message + contact preference (2 fields) -->
-      <div v-else class="space-y-4">
-        <div>
-          <label class="text-xs font-medium">Your message</label>
-          <Textarea
-            v-model="message"
-            rows="5"
-            class="mt-1"
-            placeholder="Tell us more…"
-          />
-        </div>
-        <div>
-          <label class="text-xs font-medium">Contact preference</label>
-          <Select v-model="contactPreference">
-            <SelectTrigger class="mt-1 w-full">
-              <SelectValue placeholder="Select preference" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="email">Email</SelectItem>
-              <SelectItem value="phone">Phone</SelectItem>
-              <SelectItem value="none">No follow-up needed</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <div class="flex gap-2">
-          <Button variant="outline" class="flex-1" @click="step = 1">Back</Button>
-          <Button class="flex-1" :disabled="submitting || !message.trim()" @click="submit">Submit</Button>
-        </div>
-      </div>
+          <!-- Step 2: message + contact preference -->
+          <div v-else class="space-y-4">
+            <div class="space-y-1.5">
+              <label class="text-xs font-medium">Your message</label>
+              <Textarea
+                v-model="message"
+                rows="5"
+                placeholder="Tell us more…"
+              />
+            </div>
+            <div class="space-y-1.5">
+              <label class="text-xs font-medium">Contact preference</label>
+              <Select v-model="contactPreference">
+                <SelectTrigger class="w-full">
+                  <SelectValue placeholder="Select preference" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="email">Email</SelectItem>
+                  <SelectItem value="phone">Phone</SelectItem>
+                  <SelectItem value="none">No follow-up needed</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div class="flex gap-2 pt-1">
+              <Button variant="outline" class="flex-1" @click="step = 1">Back</Button>
+              <Button class="flex-1" :disabled="submitting || !message.trim()" @click="submit">Submit</Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { Button } from '~/components/ui/button'
+import { Card, CardContent } from '~/components/ui/card'
 import { Input } from '~/components/ui/input'
 import { Textarea } from '~/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'

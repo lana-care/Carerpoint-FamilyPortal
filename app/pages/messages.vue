@@ -164,8 +164,8 @@ async function load() {
     }
   } catch (e: unknown) {
     thread.value = []
-    const err = e as { data?: { message?: string }; message?: string }
-    toast.error(err?.data?.message || err?.message || 'Could not load messages.')
+    const err = e as { data?: { message?: unknown }; message?: string }
+    toast.error(normalizePortalError(err?.data?.message) || err?.message || 'Could not load messages.')
   } finally {
     loading.value = false
   }
@@ -215,8 +215,8 @@ async function send() {
     await load()
     await fetchPortal()
   } catch (e: unknown) {
-    const err = e as { data?: { message?: string }; message?: string }
-    toast.error(err?.data?.message || err?.message || 'Could not send message.')
+    const err = e as { data?: { message?: unknown }; message?: string }
+    toast.error(normalizePortalError(err?.data?.message) || err?.message || 'Could not send message.')
   } finally {
     sending.value = false
   }

@@ -117,8 +117,8 @@ onMounted(async () => {
       rows.value = Array.isArray(res.data) ? res.data : []
     }
   } catch (e: unknown) {
-    const err = e as { data?: { message?: string }; message?: string }
-    error.value = err?.data?.message || err?.message || 'Could not load documents.'
+    const err = e as { data?: { message?: unknown }; message?: string }
+    error.value = normalizePortalError(err?.data?.message) || err?.message || 'Could not load documents.'
     rows.value = []
   } finally {
     loading.value = false

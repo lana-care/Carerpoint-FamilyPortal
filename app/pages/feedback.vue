@@ -96,22 +96,29 @@ async function submit() {
   submitting.value = true
   try {
     const base = String(config.public.apiUrl || '').replace(/\/+$/, '')
-    await $fetch(`${base}/api/v1/auth/family-portal/feedback`, {
-      method: 'POST',
-      body: {
-        token: token.value,
-        category: category.value,
-        rating: rating.value,
-        message: message.value.trim(),
-        contactPreference: contactPreference.value,
+    const res = await $fetch<{ success?: boolean; error?: string }>(
+      `${base}/api/v1/auth/family-portal/feedback`,
+      {
+        method: 'POST',
+        body: {
+          token: token.value,
+          category: category.value,
+          rating: rating.value,
+          message: message.value.trim(),
+          contactPreference: contactPreference.value,
+        },
       },
-    })
+    )
+    if (!res?.success) {
+      toast.error(res?.error || 'Failed to submit')
+      return
+    }
     toast.success('Thank you — your feedback was submitted.')
     message.value = ''
     step.value = 1
   } catch (e: unknown) {
-    const err = e as { data?: { message?: string }; message?: string }
-    toast.error(err?.data?.message || err?.message || 'Failed to submit')
+    const err = e as { data?: { message?: unknown }; message?: string }
+    toast.error(normalizePortalError(err?.data?.message) || err?.message || 'Failed to submit')
   } finally {
     submitting.value = false
   }

@@ -2,6 +2,11 @@
 node_modules/
 .pnpm-store/
 
+# Bun — lockfile intentionally NOT committed: Cloudflare deploys run a fresh
+# `bun install` (committed .npmrc provides GitHub Packages auth), so new
+# @lana-care/* releases are picked up within range without lockfile churn.
+bun.lock
+
 # Nuxt
 .nuxt/
 .output/

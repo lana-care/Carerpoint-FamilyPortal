@@ -28,9 +28,12 @@ jobs:
         run: bun install
         env:
           # .npmrc references ${GITHUB_PACKAGES_TOKEN} for the @lana-care scope.
-          # Requires the @lana-care/* packages to grant this repo read access
-          # (package settings → Manage Actions access), or an org read:packages PAT.
-          GITHUB_PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # The automatic GITHUB_TOKEN cannot read @lana-care/* from GitHub
+          # Packages — a cross-repo package read needs an explicit grant — so
+          # every run died at install with a 403. LANA_PACKAGES_TOKEN is a PAT
+          # that can read the scope; the fallback keeps forks from erroring on
+          # a missing secret (they still cannot resolve the packages).
+          GITHUB_PACKAGES_TOKEN: ${{ secrets.LANA_PACKAGES_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Unit tests
         run: bunx vitest run --passWithNoTests

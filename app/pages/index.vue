@@ -43,7 +43,7 @@
       </div>
       <h2 class="text-lg font-bold mb-2">Access Denied</h2>
       <p class="text-sm text-muted-foreground mb-4">{{ error }}</p>
-      <NuxtLink to="/login" class="text-sm text-primary underline">Use access link</NuxtLink>
+      <NuxtLink to="/login" class="text-sm text-primary underline">Enter your access code</NuxtLink>
     </div>
 
     <div v-else-if="portalData?.valid" class="max-w-5xl mx-auto px-4 py-8 space-y-10 pb-16">
@@ -328,7 +328,7 @@ onMounted(async () => {
   } else if (token.value) {
     await fetchPortal()
   } else {
-    error.value = 'No access token. Open the link from your email or sign in below.'
+    error.value = 'You are not signed in yet. Open the link in your invitation email, or enter your access code below.'
   }
 
   if (portalData.value && !portalData.value.valid) {

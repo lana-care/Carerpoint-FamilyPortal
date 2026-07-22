@@ -111,7 +111,7 @@ export default defineNuxtConfig({
     public: {
       apiUrl,
       appName: 'Carerpoint Family Portal',
-      appVersion: 'v1.4.0',
+      appVersion: 'v1.4.1',
     },
   },
 

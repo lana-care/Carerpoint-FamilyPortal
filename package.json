@@ -1,7 +1,7 @@
 {
   "name": "carerpoint-family-portal",
-  "version": "1.4.0",
-  "description": "Carerpoint Family Portal v1.4.0",
+  "version": "1.4.1",
+  "description": "Carerpoint Family Portal v1.4.1",
   "private": true,
   "type": "module",
   "scripts": {

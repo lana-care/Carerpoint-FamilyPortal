@@ -35,6 +35,18 @@
       </Card>
       <p v-else class="text-sm text-muted-foreground text-center py-12">Visit not found.</p>
 
+      <Card v-if="visit && photos.length">
+        <CardHeader>
+          <CardTitle class="text-sm">Photos from this visit</CardTitle>
+          <p class="text-xs text-muted-foreground font-normal">
+            Shared by the care team.
+          </p>
+        </CardHeader>
+        <CardContent>
+          <SharedVisitPhotoGallery :photos="photos" />
+        </CardContent>
+      </Card>
+
       <Card v-if="visit && token">
         <CardHeader>
           <CardTitle class="text-sm">Your notes on this visit</CardTitle>
@@ -74,6 +86,7 @@ import { Button } from '~/components/ui/button'
 import { Card, CardHeader, CardTitle, CardContent } from '~/components/ui/card'
 import { Textarea } from '~/components/ui/textarea'
 import type { FamilyPortalVisit } from '~/composables/usePortalAuth'
+import type { VisitPhoto } from '~/components/shared/VisitPhotoGallery.vue'
 
 definePageMeta({ layout: false })
 
@@ -83,6 +96,7 @@ const { token, portalData, fetchPortal } = usePortalAuth()
 const loading = ref(true)
 const visit = ref<(FamilyPortalVisit & { id?: string }) | null>(null)
 const familyNotes = ref<{ id: string; note: string; created_at: string }[]>([])
+const photos = ref<VisitPhoto[]>([])
 const noteDraft = ref('')
 const noteSaving = ref(false)
 
@@ -120,6 +134,21 @@ async function loadNotes(visitId: string) {
     familyNotes.value = res?.valid && Array.isArray(res.data) ? res.data : []
   } catch {
     familyNotes.value = []
+  }
+}
+
+async function loadPhotos(visitId: string) {
+  if (!token.value) return
+  try {
+    const base = String(config.public.apiUrl || '').replace(/\/+$/, '')
+    // Signed URLs are short-lived — always fetch fresh, never cache.
+    const res = await $fetch<{ valid?: boolean; data?: VisitPhoto[] }>(
+      `${base}/api/v1/family-portal/visits/${visitId}/photos`,
+      { headers: { Authorization: `Bearer ${token.value}` } },
+    )
+    photos.value = res?.valid && Array.isArray(res.data) ? res.data : []
+  } catch {
+    photos.value = []
   }
 }
 
@@ -165,7 +194,7 @@ onMounted(async () => {
       )
       if (summary?.valid && summary.visit) {
         visit.value = { ...summary.visit, id }
-        await loadNotes(id)
+        await Promise.all([loadNotes(id), loadPhotos(id)])
         loading.value = false
         return
       }
@@ -178,7 +207,9 @@ onMounted(async () => {
     ...(portalData.value?.upcomingVisits || []),
   ] as FamilyPortalVisit[]
   visit.value = all.find((v) => v.id === id) || null
-  if (visit.value?.id && token.value) await loadNotes(visit.value.id as string)
+  if (visit.value?.id && token.value) {
+    await Promise.all([loadNotes(visit.value.id as string), loadPhotos(visit.value.id as string)])
+  }
   loading.value = false
 })
 </script>

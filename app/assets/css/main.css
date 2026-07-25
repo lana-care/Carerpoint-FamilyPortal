@@ -9,22 +9,19 @@
    reset, and every Liquid Glass recipe (.glass-*, .btn-pill-*,
    .glow-*, .tint-*, .hairline-border, .font-display, etc.).
 
-   VENDORED locally (./vendor/*) instead of imported from
-   `@lana-care/design-tokens` because the package CSS subpath import
-   was not being bundled in the Cloudflare Workers build — the whole
-   design system (semantic colours, brand tokens, pill/glass recipes)
-   was silently dropped, leaving the portal effectively unstyled
-   (no card backgrounds/borders, no brand colours, unstyled buttons).
-   These files are byte-for-byte @lana-care/design-tokens@0.1.4
-   (same version the website/dashboard ship); re-sync on token bumps.
-
    tokens.css  — required core token layer.
    effects.css — ambient decorative effects (.aurora-bg + the
                  interactive .beam-grid* spotlight stack) used by
                  <ShellBackground>.
+
+   These were vendored into ./vendor/ for a while because the bare
+   subpath import was not bundled in the Cloudflare Workers build,
+   shipping an unstyled portal. That was a symptom of Tailwind running
+   through `@tailwindcss/postcss`; the build now goes through the
+   `@tailwindcss/vite` plugin, which resolves bare `@import`s itself.
    ============================================================ */
-@import "./vendor/tokens.css";
-@import "./vendor/effects.css";
+@import "@lana-care/design-tokens/tokens.css";
+@import "@lana-care/design-tokens/effects.css";
 
 /* ============================================================
    Scan the shared design-system components so Tailwind generates

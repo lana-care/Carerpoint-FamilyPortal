@@ -1,9 +1,5 @@
 <template>
-  <div class="min-h-screen bg-background">
-    <header class="glass-bar border-b border-border/60 px-4 py-3 flex items-center gap-3 sticky top-0 z-10">
-      <NuxtLink to="/" class="text-sm text-primary">← Home</NuxtLink>
-      <h1 class="text-sm font-semibold">Messages</h1>
-    </header>
+  <div class="relative">
     <div class="max-w-3xl mx-auto px-4 py-6 space-y-4">
       <div v-if="!token" class="text-sm text-muted-foreground text-center py-12">
         <NuxtLink to="/login" class="text-primary underline">Sign in with your access link</NuxtLink>
@@ -94,7 +90,8 @@ import { toast } from 'vue-sonner'
 import { Button } from '~/components/ui/button'
 import { Textarea } from '~/components/ui/textarea'
 
-definePageMeta({ layout: false })
+// Title is rendered by the shared header in layouts/default.vue.
+definePageMeta({ title: "Messages" })
 
 type MsgRow = {
   id?: string

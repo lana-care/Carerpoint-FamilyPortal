@@ -18,8 +18,8 @@
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {
-    "@lana-care/design-tokens": "^0.1.12",
-    "@lana-care/ui": "^0.1.12",
+    "@lana-care/design-tokens": "^0.1.15",
+    "@lana-care/ui": "^0.1.15",
     "@nuxtjs/i18n": "^10.5.0",
     "@pinia/nuxt": "^1.0.1",
     "@tailwindcss/vite": "^4.3.3",

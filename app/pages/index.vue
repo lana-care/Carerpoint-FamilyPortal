@@ -1,34 +1,5 @@
 <template>
   <div class="relative min-h-screen">
-    <header class="sticky top-0 z-10 px-3 sm:px-6 pt-3 pb-2">
-      <div class="glass-pill max-w-5xl mx-auto shadow-[0_8px_30px_-12px_rgba(8,26,56,0.18)] dark:shadow-[0_8px_30px_-10px_rgba(0,0,0,0.45)]">
-      <div class="px-4 py-3 flex flex-wrap items-center justify-between gap-3">
-        <div class="flex items-center gap-3 min-w-0">
-          <div class="w-9 h-9 rounded-xl bg-primary/15 flex items-center justify-center shrink-0">
-            <LucideHeart class="w-4 h-4 text-primary" />
-          </div>
-          <div class="min-w-0">
-            <h1 class="text-sm font-bold tracking-tight">Carerpoint Family Portal</h1>
-            <p v-if="portalData?.familyMember" class="text-[10px] text-muted-foreground truncate">
-              Welcome, {{ portalData.familyMember.name || 'Family Member' }}
-            </p>
-          </div>
-        </div>
-        <template v-if="portalData?.valid">
-          <Separator class="hidden sm:block h-6 shrink-0" orientation="vertical" />
-          <nav class="flex flex-wrap gap-1 text-xs font-medium">
-            <NuxtLink to="/schedule" class="px-3 py-1.5 rounded-full text-foreground/75 hover:text-foreground hover:bg-foreground/[0.06] transition-colors">Schedule</NuxtLink>
-            <NuxtLink to="/calendar" class="px-3 py-1.5 rounded-full text-foreground/75 hover:text-foreground hover:bg-foreground/[0.06] transition-colors">Calendar</NuxtLink>
-            <NuxtLink to="/messages" class="px-3 py-1.5 rounded-full text-foreground/75 hover:text-foreground hover:bg-foreground/[0.06] transition-colors">Messages</NuxtLink>
-            <NuxtLink to="/care-plan" class="px-3 py-1.5 rounded-full text-foreground/75 hover:text-foreground hover:bg-foreground/[0.06] transition-colors">Care plan</NuxtLink>
-            <NuxtLink to="/medications" class="px-3 py-1.5 rounded-full text-foreground/75 hover:text-foreground hover:bg-foreground/[0.06] transition-colors">Medications</NuxtLink>
-            <NuxtLink to="/documents" class="px-3 py-1.5 rounded-full text-foreground/75 hover:text-foreground hover:bg-foreground/[0.06] transition-colors">Documents</NuxtLink>
-            <NuxtLink to="/feedback" class="px-3 py-1.5 rounded-full text-foreground/75 hover:text-foreground hover:bg-foreground/[0.06] transition-colors">Feedback</NuxtLink>
-          </nav>
-        </template>
-      </div>
-      </div>
-    </header>
 
     <div v-if="loading" class="max-w-5xl mx-auto px-4 py-10 space-y-6">
       <Skeleton class="h-56 w-full rounded-2xl" />
@@ -223,7 +194,6 @@
 
 <script setup lang="ts">
 import {
-  Heart as LucideHeart,
   ShieldAlert as LucideShieldAlert,
   ClipboardList as LucideClipboardList,
   Calendar as LucideCalendar,
@@ -244,7 +214,8 @@ import { Skeleton } from '~/components/ui/skeleton'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
 import { CalendarMonth } from '~/components/ui/calendar'
 
-definePageMeta({ layout: false })
+// Home uses the shared layout; its header variant is keyed on the route.
+// (no definePageMeta needed)
 
 const route = useRoute()
 const router = useRouter()

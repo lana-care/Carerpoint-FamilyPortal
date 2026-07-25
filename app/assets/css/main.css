@@ -22,6 +22,9 @@
    ============================================================ */
 @import "@lana-care/design-tokens/tokens.css";
 @import "@lana-care/design-tokens/effects.css";
+/* Powers the circular reveal of <ThemeToggle> (@lana-care/ui). Without it the
+   theme still switches, just instantly. */
+@import "@lana-care/design-tokens/theme-transition.css";
 
 /* ============================================================
    Scan the shared design-system components so Tailwind generates

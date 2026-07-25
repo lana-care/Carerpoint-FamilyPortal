@@ -1,9 +1,5 @@
 <template>
-  <div class="min-h-screen bg-background pb-12">
-    <header class="glass-bar border-b border-border/60 px-4 py-3 flex items-center gap-3 sticky top-0 z-10">
-      <NuxtLink to="/" class="text-sm text-primary">← Home</NuxtLink>
-      <h1 class="text-sm font-semibold">Feedback</h1>
-    </header>
+  <div class="relative pb-12">
     <div class="max-w-md mx-auto px-4 py-8 space-y-6">
       <p class="text-sm text-muted-foreground text-center">
         Share a compliment, concern, or feedback about care.
@@ -76,7 +72,8 @@ import { Textarea } from '~/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
 import { toast } from 'vue-sonner'
 
-definePageMeta({ layout: false })
+// Title is rendered by the shared header in layouts/default.vue.
+definePageMeta({ title: "Feedback" })
 
 const step = ref(1)
 const category = ref('visit_feedback')

@@ -1,9 +1,5 @@
 <template>
-  <div class="min-h-screen bg-background">
-    <header class="glass-bar border-b border-border/60 px-4 py-3 flex items-center gap-3 sticky top-0 z-10">
-      <NuxtLink to="/" class="text-sm text-primary">← Home</NuxtLink>
-      <h1 class="text-sm font-semibold">Calendar</h1>
-    </header>
+  <div class="relative">
     <div class="max-w-3xl mx-auto px-4 py-6">
       <div class="flex items-center justify-between gap-2 mb-4">
         <Button variant="ghost" size="sm" @click="prevMonth">
@@ -51,7 +47,8 @@ import { ChevronLeft as LucideChevronLeft, ChevronRight as LucideChevronRight } 
 import { Button } from '~/components/ui/button'
 import type { FamilyPortalVisit } from '~/composables/usePortalAuth'
 
-definePageMeta({ layout: false })
+// Title is rendered by the shared header in layouts/default.vue.
+definePageMeta({ title: "Calendar" })
 
 const { portalData, fetchPortal, token } = usePortalAuth()
 const config = useRuntimeConfig()

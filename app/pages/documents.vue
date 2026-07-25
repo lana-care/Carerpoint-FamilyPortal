@@ -1,9 +1,5 @@
 <template>
-  <div class="min-h-screen bg-background">
-    <header class="glass-bar border-b border-border/60 px-4 py-3 flex items-center gap-3 sticky top-0 z-10">
-      <NuxtLink to="/" class="text-sm text-primary">← Home</NuxtLink>
-      <h1 class="text-sm font-semibold">Shared documents</h1>
-    </header>
+  <div class="relative">
 
     <div class="max-w-3xl mx-auto px-4 py-8">
       <div v-if="loading" class="flex justify-center py-16">
@@ -53,7 +49,8 @@
 <script setup lang="ts">
 import { FileText as LucideFileText } from 'lucide-vue-next'
 
-definePageMeta({ layout: false })
+// Title is rendered by the shared header in layouts/default.vue.
+definePageMeta({ title: "Shared documents" })
 
 interface DocRow {
   id: string

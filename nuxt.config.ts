@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindcss from '@tailwindcss/vite'
 
 /**
  * Single source of truth for the backend origin: feeds both
@@ -73,10 +74,15 @@ export default defineNuxtConfig({
   build: { transpile: ['@lana-care/ui'] },
   compatibilityDate: '2024-12-01',
   ssr: true,
-  future: {
-    compatibilityVersion: 4,
-  },
   devtools: { enabled: true },
+
+  // Perf opt-ins new in Nuxt 4.5 (see the dashboard config for the rationale;
+  // experimental.ssrStreaming is deliberately left off — it changes when headers
+  // can still be mutated and this app sets a CSP per route).
+  experimental: {
+    prefetchPreloadTags: true,
+    watcher: 'builder',
+  },
 
   // Defense-in-depth security headers on every route. This is an externally
   // facing portal handling health data: deny framing (clickjacking), prevent
@@ -142,12 +148,6 @@ export default defineNuxtConfig({
     typeCheck: false,
   },
 
-  postcss: {
-    plugins: {
-      '@tailwindcss/postcss': {},
-    },
-  },
-
   nitro: {
     preset: 'cloudflare-module',
     cloudflare: {
@@ -158,6 +158,10 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    // Tailwind v4 as a Vite plugin instead of via PostCSS: it resolves the bare
+    // `@import "tailwindcss"` / `@import "tw-animate-css"` itself, which the
+    // PostCSS path failed to do under Vite 8 (ENOENT during the SSR build).
+    plugins: [tailwindcss()],
     ssr: {
       external: [
         'vue',
@@ -171,7 +175,7 @@ export default defineNuxtConfig({
     build: {
       chunkSizeWarningLimit: 1500,
       sourcemap: false,
-      minify: 'esbuild',
+      // minify left at the Vite 8 default (Rolldown/oxc, faster than esbuild).
     },
   },
 })

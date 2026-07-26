@@ -1,50 +1,68 @@
 <template>
   <div class="relative">
     <div class="max-w-3xl mx-auto px-4 py-6 space-y-3">
-      <div v-if="loading" class="flex justify-center py-12">
-        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+      <div v-if="loading" class="space-y-3">
+        <div v-for="i in 3" :key="i" class="h-20 rounded-xl bg-muted animate-pulse" />
       </div>
-      <Card v-for="(m, i) in meds" v-else :key="(m as any).id || i">
-        <CardContent class="pt-4 text-sm">
-          <p class="font-medium">{{ (m as any).name }}</p>
-          <p v-if="(m as any).strength" class="text-muted-foreground text-xs">{{ (m as any).strength }}</p>
-          <p v-if="(m as any).instructions" class="text-muted-foreground mt-1">{{ (m as any).instructions }}</p>
-        </CardContent>
-      </Card>
-      <p v-if="!loading && !meds.length" class="text-sm text-muted-foreground text-center py-12">
-        No active medications listed.
-      </p>
+
+      <EmptyState
+        v-else-if="error"
+        title="Could not load medications"
+        :description="error"
+        size="sm"
+      />
+
+      <template v-else-if="meds.length">
+        <Card v-for="(m, i) in meds" :key="m.id || i">
+          <CardContent class="pt-4 text-sm">
+            <p class="font-medium">{{ m.name }}</p>
+            <p v-if="m.strength" class="text-muted-foreground text-xs">{{ m.strength }}</p>
+            <p v-if="m.instructions" class="text-muted-foreground mt-1">{{ m.instructions }}</p>
+          </CardContent>
+        </Card>
+      </template>
+
+      <EmptyState
+        v-else
+        title="No active medications"
+        description="No medications are listed for this person right now."
+        size="sm"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { toast } from 'vue-sonner'
 import { Card, CardContent } from '~/components/ui/card'
+import { usePortalResourcesStore } from '~/stores/portalResources'
+import { normalizePortalError } from '~/composables/usePortalAuth'
 
-// Title is rendered by the shared header in layouts/default.vue.
-definePageMeta({ title: "Medications" })
+definePageMeta({ title: 'Medications' })
 
-const config = useRuntimeConfig()
 const { token } = usePortalAuth()
-const loading = ref(true)
-const meds = ref<unknown[]>([])
+const resources = usePortalResourcesStore()
+
+const error = ref<string | null>(null)
+const ready = ref(resources.medications.initialized)
+const meds = computed(() => resources.getMedications)
+const loading = computed(() => (!ready.value || resources.isMedicationsLoading) && !error.value)
 
 onMounted(async () => {
   if (!token.value) {
-    loading.value = false
+    error.value = 'Sign in with your access link to view medications.'
+    ready.value = true
     return
   }
   try {
-    const base = String(config.public.apiUrl || '').replace(/\/+$/, '')
-    const res = await $fetch<{ valid?: boolean; data?: unknown[] }>(
-      `${base}/api/v1/family-portal/medications`,
-      { headers: { Authorization: `Bearer ${token.value}` } },
-    )
-    meds.value = res?.data || []
-  } catch {
-    meds.value = []
+    await resources.fetchMedications()
+    error.value = null
+  } catch (e: unknown) {
+    const err = e as { data?: { message?: unknown }; message?: string }
+    error.value = normalizePortalError(err?.data?.message) || err?.message || 'Could not load medications.'
+    toast.error(error.value)
   } finally {
-    loading.value = false
+    ready.value = true
   }
 })
 </script>

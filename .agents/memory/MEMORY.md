@@ -6,3 +6,4 @@
 
 *(no memories yet)*
 - [Layout + color mode du portail](portal-layout-and-color-mode.md) — `layouts/default.vue` existe enfin (avant : 9 headers dupliqués, tous en `layout:false`) ; `useColorMode` local shadow celui de VueUse ; cookie résolu en SSR (fini le FOUC)
+- [Pinia SWR anti-refetch](family-portal-pinia-swr.md) — `portalSession` + `portalResources` caches; `usePortalAuth` façade cookie; pas de bootstrap après send message

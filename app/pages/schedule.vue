@@ -1,61 +1,11 @@
-<template>
-  <div class="relative">
-    <div class="max-w-3xl mx-auto px-4 py-6">
-      <div v-if="loading" class="flex justify-center py-12">
-        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
-      </div>
-      <div v-else-if="upcoming.length" class="space-y-2">
-        <NuxtLink
-          v-for="v in upcoming"
-          :key="v.id || v.date + (v.start || '')"
-          :to="v.id ? `/visits/${v.id}` : '#'"
-          class="block p-4 rounded-lg border bg-card hover:bg-muted/30 transition-colors"
-        >
-          <div class="flex justify-between items-start gap-2">
-            <div>
-              <p class="font-medium">{{ formatDate(v.date) }}</p>
-              <p v-if="v.start || v.end" class="text-xs text-muted-foreground tabular-nums">
-                {{ formatTimeRange(v.start, v.end) }}
-              </p>
-            </div>
-            <SharedStatusBadge :status="v.status" class="shrink-0" />
-          </div>
-        </NuxtLink>
-      </div>
-      <p v-else class="text-sm text-muted-foreground text-center py-12">No upcoming visits scheduled.</p>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
-import type { FamilyPortalVisit } from '~/composables/usePortalAuth'
-
-// Title is rendered by the shared header in layouts/default.vue.
-definePageMeta({ title: "Upcoming schedule" })
-
-const { token, portalData, fetchPortal } = usePortalAuth()
-const loading = ref(true)
-
-const upcoming = computed(() => {
-  const list = portalData.value?.upcomingVisits || []
-  const today = new Date().toISOString().split('T')[0]
-  return list.filter((v: FamilyPortalVisit) => v.date >= today)
-})
-
-function formatDate(date: string) {
-  if (!date) return ''
-  return new Date(date).toLocaleDateString('en-GB', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  })
-}
-
-onMounted(async () => {
-  if (token.value && !portalData.value?.valid) {
-    await fetchPortal()
-  }
-  loading.value = false
-})
+/**
+ * Schedule is demoted — Calendar owns Day/Week/Month + upcoming visits.
+ * Keep this route as a redirect for old bookmarks / quick links.
+ */
+await navigateTo({ path: '/calendar', query: { view: 'week' } }, { replace: true })
 </script>
+
+<template>
+  <div />
+</template>

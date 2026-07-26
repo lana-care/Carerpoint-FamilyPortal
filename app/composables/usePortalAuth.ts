@@ -37,6 +37,10 @@ export interface FamilyPortalData {
   }>
 }
 
+/**
+ * Thin facade: cookie token + session/resources Pinia stores.
+ * Keeps the previous public API so pages/middleware stay unchanged.
+ */
 export function usePortalAuth() {
   const token = useCookie<string | null>(FAMILY_PORTAL_TOKEN_COOKIE, {
     maxAge: 60 * 60 * 24 * 30,
@@ -45,45 +49,37 @@ export function usePortalAuth() {
     secure: process.env.NODE_ENV === 'production',
   })
 
-  const portalData = useState<FamilyPortalData | null>('familyPortalData', () => null)
+  const session = usePortalSessionStore()
+  const resources = usePortalResourcesStore()
 
-  const config = useRuntimeConfig()
+  const portalData = computed(() => session.portalData)
 
   async function fetchPortal(t?: string | null): Promise<FamilyPortalData | null> {
-    const tok = t ?? token.value
-    if (!tok) {
-      portalData.value = null
+    if (t) {
+      token.value = t
+      resources.invalidateAll()
+      session.invalidate()
+      return session.fetchBootstrap({ force: true, token: t })
+    }
+    if (!token.value) {
+      session.clear()
       return null
     }
-    try {
-      const base = String(config.public.apiUrl || '').replace(/\/+$/, '')
-      const res = await $fetch<FamilyPortalData>(
-        `${base}/api/v1/auth/family-portal`,
-        { headers: { Authorization: `Bearer ${tok}` } },
-      )
-      if (res?.valid) {
-        portalData.value = res
-        return res
-      }
-      portalData.value = { valid: false, error: res?.error || 'Invalid or expired access link.' }
-      return portalData.value
-    } catch (e: unknown) {
-      const err = e as { data?: { message?: unknown }; message?: string }
-      portalData.value = {
-        valid: false,
-        error: normalizePortalError(err?.data?.message) || err?.message || 'Failed to load portal.',
-      }
-      return portalData.value
-    }
+    return session.fetchBootstrap({ force: false })
   }
 
   function setToken(t: string | null) {
+    if (t !== token.value) {
+      resources.invalidateAll()
+      session.invalidate()
+    }
     token.value = t
   }
 
   function clearSession() {
     token.value = null
-    portalData.value = null
+    session.clear()
+    resources.invalidateAll()
   }
 
   return {

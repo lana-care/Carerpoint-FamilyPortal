@@ -5,14 +5,23 @@
         Share a compliment, concern, or feedback about care.
       </p>
 
-      <Card>
+      <Card v-if="done">
+        <CardContent class="pt-8 pb-8 text-center space-y-3">
+          <p class="text-base font-semibold">Thank you</p>
+          <p class="text-sm text-muted-foreground">
+            Your feedback was submitted to the care agency.
+          </p>
+          <Button class="min-h-10" @click="resetForm">Send more feedback</Button>
+        </CardContent>
+      </Card>
+
+      <Card v-else>
         <CardContent class="pt-6">
-          <!-- Step 1: category + rating -->
           <div v-if="step === 1" class="space-y-4">
             <div class="space-y-1.5">
               <label class="text-xs font-medium">Category</label>
               <Select v-model="category">
-                <SelectTrigger class="w-full">
+                <SelectTrigger class="w-full min-h-10">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
@@ -23,14 +32,20 @@
                 </SelectContent>
               </Select>
             </div>
-            <div class="space-y-1.5">
-              <label class="text-xs font-medium">Rating (1–5)</label>
-              <Input v-model.number="rating" type="number" min="1" max="5" />
+            <div class="space-y-2">
+              <label class="text-xs font-medium">Rating</label>
+              <SegmentedControl
+                v-model="ratingStr"
+                :options="ratingOptions"
+                size="sm"
+                shape="square"
+                class="w-full"
+                aria-label="Rating from 1 to 5"
+              />
             </div>
-            <Button class="w-full" @click="step = 2">Next</Button>
+            <Button class="w-full min-h-10" @click="step = 2">Next</Button>
           </div>
 
-          <!-- Step 2: message + contact preference -->
           <div v-else class="space-y-4">
             <div class="space-y-1.5">
               <label class="text-xs font-medium">Your message</label>
@@ -43,7 +58,7 @@
             <div class="space-y-1.5">
               <label class="text-xs font-medium">Contact preference</label>
               <Select v-model="contactPreference">
-                <SelectTrigger class="w-full">
+                <SelectTrigger class="w-full min-h-10">
                   <SelectValue placeholder="Select preference" />
                 </SelectTrigger>
                 <SelectContent>
@@ -54,8 +69,10 @@
               </Select>
             </div>
             <div class="flex gap-2 pt-1">
-              <Button variant="outline" class="flex-1" @click="step = 1">Back</Button>
-              <Button class="flex-1" :disabled="submitting || !message.trim()" @click="submit">Submit</Button>
+              <Button variant="outline" class="flex-1 min-h-10" @click="step = 1">Back</Button>
+              <Button class="flex-1 min-h-10" :disabled="submitting || !message.trim()" @click="submit">
+                {{ submitting ? 'Submitting…' : 'Submit' }}
+              </Button>
             </div>
           </div>
         </CardContent>
@@ -67,29 +84,45 @@
 <script setup lang="ts">
 import { Button } from '~/components/ui/button'
 import { Card, CardContent } from '~/components/ui/card'
-import { Input } from '~/components/ui/input'
 import { Textarea } from '~/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
 import { toast } from 'vue-sonner'
 
-// Title is rendered by the shared header in layouts/default.vue.
-definePageMeta({ title: "Feedback" })
+definePageMeta({ title: 'Feedback' })
 
 const step = ref(1)
+const done = ref(false)
 const category = ref('visit_feedback')
-const rating = ref(5)
+const ratingStr = ref('5')
 const message = ref('')
 const contactPreference = ref('email')
 const submitting = ref(false)
 
+const ratingOptions = [
+  { value: '1', label: '1' },
+  { value: '2', label: '2' },
+  { value: '3', label: '3' },
+  { value: '4', label: '4' },
+  { value: '5', label: '5' },
+]
+
 const { token } = usePortalAuth()
 const config = useRuntimeConfig()
+
+function resetForm() {
+  done.value = false
+  step.value = 1
+  message.value = ''
+  ratingStr.value = '5'
+  category.value = 'visit_feedback'
+}
 
 async function submit() {
   if (!token.value) {
     toast.error('Not signed in')
     return
   }
+  const rating = Math.min(5, Math.max(1, Number(ratingStr.value) || 5))
   submitting.value = true
   try {
     const base = String(config.public.apiUrl || '').replace(/\/+$/, '')
@@ -100,7 +133,7 @@ async function submit() {
         body: {
           token: token.value,
           category: category.value,
-          rating: rating.value,
+          rating,
           message: message.value.trim(),
           contactPreference: contactPreference.value,
         },
@@ -110,9 +143,7 @@ async function submit() {
       toast.error(res?.error || 'Failed to submit')
       return
     }
-    toast.success('Thank you — your feedback was submitted.')
-    message.value = ''
-    step.value = 1
+    done.value = true
   } catch (e: unknown) {
     const err = e as { data?: { message?: unknown }; message?: string }
     toast.error(normalizePortalError(err?.data?.message) || err?.message || 'Failed to submit')

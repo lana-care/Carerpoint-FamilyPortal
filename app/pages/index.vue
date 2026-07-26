@@ -120,16 +120,18 @@
                 <LucideCalendar class="w-5 h-5 text-primary" />
                 Recent visits
               </CardTitle>
-              <NuxtLink to="/schedule" class="text-xs text-primary hover:underline">View all</NuxtLink>
+              <NuxtLink to="/calendar" class="text-xs text-primary hover:underline">View all</NuxtLink>
             </CardHeader>
             <CardContent class="pt-0">
               <div v-if="portalData.recentVisits?.length" class="space-y-2">
-                <NuxtLink
+                <button
                   v-for="(visit, i) in portalData.recentVisits"
                   :key="visit.id || i"
-                  :to="visit.id ? `/visits/${visit.id}` : '#'"
-                  class="flex items-start gap-3 p-3 rounded-xl border bg-muted/10 hover:bg-muted/30 transition-colors"
-                  :class="{ 'pointer-events-none opacity-60': !visit.id }"
+                  type="button"
+                  class="flex items-start gap-3 p-3 rounded-xl border bg-muted/10 hover:bg-muted/30 transition-colors w-full text-left min-h-14"
+                  :disabled="!visit.id"
+                  :class="{ 'opacity-60': !visit.id }"
+                  @click="visit.id && openVisit(String(visit.id))"
                 >
                   <div
                     class="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
@@ -149,7 +151,7 @@
                     </p>
                     <p v-if="visit.notes" class="text-xs text-muted-foreground mt-1 line-clamp-2">{{ visit.notes }}</p>
                   </div>
-                </NuxtLink>
+                </button>
               </div>
               <p v-else class="text-sm text-muted-foreground italic py-4 text-center">No recent visits</p>
             </CardContent>
@@ -165,10 +167,11 @@
             </CardHeader>
             <CardContent class="pt-0">
               <div v-if="portalData.messages?.length" class="space-y-2">
-                <div
+                <NuxtLink
                   v-for="msg in portalData.messages"
                   :key="msg.id || msg.content"
-                  class="p-3 rounded-xl text-sm"
+                  to="/messages"
+                  class="block p-3 rounded-xl text-sm transition-colors hover:bg-muted/40"
                   :class="
                     msg.direction === 'outbound'
                       ? 'bg-primary/5 border-l-4 border-primary'
@@ -177,7 +180,7 @@
                 >
                   <p>{{ msg.content }}</p>
                   <p class="text-[10px] text-muted-foreground mt-1">{{ formatDateTime(msg.createdAt || msg.created_at || '') }}</p>
-                </div>
+                </NuxtLink>
               </div>
               <p v-else class="text-sm text-muted-foreground italic py-4 text-center">No messages yet</p>
             </CardContent>
@@ -205,7 +208,7 @@ import {
   Pill as LucidePill,
   FileText as LucideFileText,
   MessageSquare as LucideMessageSquare,
-  LayoutGrid as LucideLayoutGrid,
+  MessageSquarePlus as LucideMessageSquarePlus,
 } from 'lucide-vue-next'
 import { Avatar, AvatarFallback } from '~/components/ui/avatar'
 import { Card, CardHeader, CardTitle, CardContent } from '~/components/ui/card'
@@ -223,6 +226,7 @@ const loading = ref(true)
 const error = ref<string | null>(null)
 
 const { token, portalData, fetchPortal, setToken } = usePortalAuth()
+const { openVisit } = useFamilyVisitDetail()
 
 const clientName = computed(() => {
   if (!portalData.value?.client) return ''
@@ -255,12 +259,12 @@ const markedVisitDays = computed(() => {
 })
 
 const quickLinks = computed(() => [
-  { to: '/calendar', label: 'Calendar', hint: 'Month view and visit markers', icon: LucideCalendarDays },
+  { to: '/calendar', label: 'Calendar', hint: 'Day, week and month visits', icon: LucideCalendarDays },
   { to: '/messages', label: 'Messages', hint: 'Chat with the agency', icon: LucideMessageSquare },
   { to: '/care-plan', label: 'Care plan', hint: 'Read-only goals and needs', icon: LucideFileText },
   { to: '/medications', label: 'Medications', hint: 'Current medication list', icon: LucidePill },
-  { to: '/schedule', label: 'Schedule', hint: 'Upcoming visits', icon: LucideCalendar },
-  { to: '/documents', label: 'Documents', hint: 'Shared files', icon: LucideLayoutGrid },
+  { to: '/documents', label: 'Documents', hint: 'Shared files', icon: LucideFileText },
+  { to: '/feedback', label: 'Feedback', hint: 'Share a compliment or concern', icon: LucideMessageSquarePlus },
 ])
 
 function formatList(val: unknown) {
@@ -292,10 +296,13 @@ function moodLabel(mood: string) {
 
 onMounted(async () => {
   const qToken = route.query.token as string | undefined
+  const visitQ = typeof route.query.visit === 'string' ? route.query.visit : ''
   if (qToken) {
     setToken(qToken)
     await fetchPortal(qToken)
-    await router.replace({ path: '/', query: {} })
+    const nextQuery: Record<string, string> = {}
+    if (visitQ) nextQuery.visit = visitQ
+    await router.replace({ path: '/', query: nextQuery })
   } else if (token.value) {
     await fetchPortal()
   } else {
@@ -308,5 +315,9 @@ onMounted(async () => {
     error.value = null
   }
   loading.value = false
+
+  if (visitQ && portalData.value?.valid) {
+    openVisit(visitQ)
+  }
 })
 </script>

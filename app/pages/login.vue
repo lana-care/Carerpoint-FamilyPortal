@@ -4,9 +4,13 @@
     <div class="relative w-full max-w-md">
       <GlassCard radius="2xl" padding="lg" glow="luna" class="space-y-6">
         <div class="text-center space-y-2">
-          <div class="w-12 h-12 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center">
-            <LucideHeart class="w-6 h-6 text-primary" />
-          </div>
+          <img
+            src="/icon.png"
+            alt="Carerpoint"
+            class="mx-auto size-12 rounded-2xl"
+            width="48"
+            height="48"
+          >
           <h1 class="text-xl font-bold font-display">Family Portal</h1>
           <p class="text-sm text-muted-foreground">
             Your care agency emailed you an invitation with a link. Open that link and you are signed in
@@ -29,7 +33,14 @@
               It is the long code at the end of the link in your invitation email.
             </p>
           </div>
-          <Button class="w-full" :disabled="!pasteToken?.trim()" @click="submit">Sign in</Button>
+          <Button
+            class="w-full min-h-11"
+            :disabled="!pasteToken?.trim() || signingIn"
+            :aria-busy="signingIn"
+            @click="submit"
+          >
+            {{ signingIn ? 'Signing in…' : 'Sign in' }}
+          </Button>
         </div>
         <p v-if="err" class="text-sm text-destructive text-center">{{ err }}</p>
         <p class="text-xs text-muted-foreground text-center">
@@ -41,7 +52,6 @@
 </template>
 
 <script setup lang="ts">
-import { Heart as LucideHeart } from 'lucide-vue-next'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 import { GlassCard } from '~/components/ui/glass-card'
@@ -53,6 +63,7 @@ const router = useRouter()
 const pasteToken = ref('')
 const err = ref<string | null>(null)
 const redirectTarget = ref('/')
+const signingIn = ref(false)
 
 const { setToken, fetchPortal } = usePortalAuth()
 
@@ -87,15 +98,20 @@ onMounted(() => {
 async function submit() {
   err.value = null
   const t = pasteToken.value.trim()
-  if (!t) return
+  if (!t || signingIn.value) return
+  signingIn.value = true
   setToken(t)
-  const res = await fetchPortal(t)
-  if (res?.valid) {
-    await router.push(redirectTarget.value)
-  } else {
-    err.value =
-      res?.error ||
-      'We could not recognise that access code. Please check it against your invitation email, or ask your care agency to send you a new link.'
+  try {
+    const res = await fetchPortal(t)
+    if (res?.valid) {
+      await router.push(redirectTarget.value)
+    } else {
+      err.value =
+        res?.error ||
+        'We could not recognise that access code. Please check it against your invitation email, or ask your care agency to send you a new link.'
+    }
+  } finally {
+    signingIn.value = false
   }
 }
 </script>

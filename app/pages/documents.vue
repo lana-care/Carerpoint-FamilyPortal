@@ -1,45 +1,49 @@
 <template>
   <div class="relative">
-
     <div class="max-w-3xl mx-auto px-4 py-8">
-      <div v-if="loading" class="flex justify-center py-16">
-        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+      <div v-if="loading" class="space-y-3">
+        <div v-for="i in 3" :key="i" class="h-16 rounded-xl bg-muted animate-pulse" />
       </div>
 
-      <div v-else-if="error" class="text-center text-sm text-destructive py-12">
-        {{ error }}
-      </div>
+      <EmptyState
+        v-else-if="error"
+        title="Could not load documents"
+        :description="error"
+        size="sm"
+      />
 
-      <div v-else-if="!rows.length" class="text-center text-sm text-muted-foreground">
-        <LucideFileText class="w-12 h-12 mx-auto mb-4 opacity-40" />
-        <p>No documents have been shared with you yet.</p>
-        <p class="mt-2 text-xs">Your care provider can publish reports and letters here when available.</p>
-      </div>
+      <EmptyState
+        v-else-if="!rows.length"
+        title="No documents shared yet"
+        description="Your care provider can publish reports and letters here when available."
+        :icon="LucideFileText"
+        size="sm"
+      />
 
       <ul v-else class="space-y-2">
         <li
           v-for="doc in rows"
           :key="doc.id"
-          class="rounded-lg border bg-card p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2"
+          class="rounded-lg border bg-card p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
         >
-          <div>
+          <div class="min-w-0">
             <p class="font-medium text-sm">{{ doc.title || 'Document' }}</p>
             <p v-if="doc.document_type || doc.documentType" class="text-xs text-muted-foreground capitalize">
               {{ doc.document_type || doc.documentType }}
             </p>
-            <p v-if="doc.created_at || doc.createdAt" class="text-[10px] text-muted-foreground mt-1">
+            <p v-if="doc.created_at || doc.createdAt" class="text-xs text-muted-foreground mt-1">
               {{ formatDate(doc.created_at || doc.createdAt) }}
             </p>
           </div>
-          <a
+          <Button
             v-if="fileUrl(doc)"
-            :href="fileUrl(doc)!"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-sm text-primary font-medium shrink-0 hover:underline"
+            variant="outline"
+            size="sm"
+            class="shrink-0 min-h-10"
+            @click="openDoc(doc)"
           >
             Open
-          </a>
+          </Button>
         </li>
       </ul>
     </div>
@@ -48,37 +52,28 @@
 
 <script setup lang="ts">
 import { FileText as LucideFileText } from 'lucide-vue-next'
+import { Button } from '~/components/ui/button'
+import { usePortalResourcesStore, type PortalDocRow } from '~/stores/portalResources'
+import { normalizePortalError } from '~/composables/usePortalAuth'
 
-// Title is rendered by the shared header in layouts/default.vue.
-definePageMeta({ title: "Shared documents" })
+definePageMeta({ title: 'Shared documents' })
 
-interface DocRow {
-  id: string
-  title?: string
-  file_url?: string
-  fileUrl?: string
-  document_type?: string
-  documentType?: string
-  created_at?: string
-  createdAt?: string
-}
-
-interface DocumentsResponse {
-  valid?: boolean
-  error?: string
-  data?: DocRow[]
-}
-
-const config = useRuntimeConfig()
 const { token, fetchPortal, portalData } = usePortalAuth()
+const resources = usePortalResourcesStore()
 
-const loading = ref(true)
 const error = ref<string | null>(null)
-const rows = ref<DocRow[]>([])
+const ready = ref(resources.documents.initialized)
+const rows = computed(() => resources.getDocuments)
+const loading = computed(() => (!ready.value || resources.isDocumentsLoading) && !error.value)
 
-function fileUrl(d: DocRow): string | null {
+function fileUrl(d: PortalDocRow): string | null {
   const u = d.file_url || d.fileUrl
   return u && String(u).trim() ? String(u) : null
+}
+
+function openDoc(d: PortalDocRow) {
+  const url = fileUrl(d)
+  if (url) window.open(url, '_blank', 'noopener,noreferrer')
 }
 
 function formatDate(d: string | undefined) {
@@ -89,7 +84,7 @@ function formatDate(d: string | undefined) {
 onMounted(async () => {
   if (!token.value) {
     error.value = 'No access token. Open the link from your email first.'
-    loading.value = false
+    ready.value = true
     return
   }
   if (!portalData.value?.valid) {
@@ -97,28 +92,18 @@ onMounted(async () => {
   }
   if (!portalData.value?.valid) {
     error.value = portalData.value?.error || 'Invalid or expired access link.'
-    loading.value = false
+    ready.value = true
     return
   }
 
   try {
-    const base = String(config.public.apiUrl || '').replace(/\/+$/, '')
-    const res = await $fetch<DocumentsResponse>(
-      `${base}/api/v1/family-portal/documents`,
-      { headers: { Authorization: `Bearer ${token.value}` } },
-    )
-    if (!res?.valid) {
-      error.value = res?.error || 'Could not load documents.'
-      rows.value = []
-    } else {
-      rows.value = Array.isArray(res.data) ? res.data : []
-    }
+    await resources.fetchDocuments()
+    error.value = null
   } catch (e: unknown) {
     const err = e as { data?: { message?: unknown }; message?: string }
     error.value = normalizePortalError(err?.data?.message) || err?.message || 'Could not load documents.'
-    rows.value = []
   } finally {
-    loading.value = false
+    ready.value = true
   }
 })
 </script>

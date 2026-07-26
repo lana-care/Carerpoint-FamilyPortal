@@ -10,5 +10,6 @@
   <div class="min-h-screen">
     <PortalHeader />
     <slot />
+    <SharedVisitDetailDialog />
   </div>
 </template>

@@ -1,66 +1,67 @@
 <template>
-  <div class="relative">
-    <div class="max-w-3xl mx-auto px-4 py-6 space-y-4">
+  <div class="relative flex flex-col" style="min-height: calc(100dvh - 5.5rem)">
+    <div class="max-w-3xl mx-auto w-full px-4 pt-4 pb-0 flex flex-col flex-1 min-h-0">
       <div v-if="!token" class="text-sm text-muted-foreground text-center py-12">
         <NuxtLink to="/login" class="text-primary underline">Sign in with your access link</NuxtLink>
       </div>
       <template v-else>
-        <div class="flex rounded-lg border p-1 bg-muted/30 gap-1">
-          <button
-            type="button"
-            class="flex-1 rounded-md px-3 py-2 text-xs font-medium transition-colors"
-            :class="
+        <div class="shrink-0 space-y-2 mb-3">
+          <SegmentedControl
+            v-model="activeChannel"
+            :options="channelOptions"
+            size="sm"
+            shape="square"
+            class="w-full"
+            aria-label="Message channel"
+          />
+          <p class="text-xs text-muted-foreground">
+            {{
               activeChannel === 'group'
-                ? 'bg-background shadow-sm text-foreground'
-                : 'text-muted-foreground hover:text-foreground'
-            "
-            @click="activeChannel = 'group'"
-          >
-            Family &amp; agency
-          </button>
-          <button
-            type="button"
-            class="flex-1 rounded-md px-3 py-2 text-xs font-medium transition-colors"
-            :class="
-              activeChannel === 'private'
-                ? 'bg-background shadow-sm text-foreground'
-                : 'text-muted-foreground hover:text-foreground'
-            "
-            @click="activeChannel = 'private'"
-          >
-            Private with agency
-          </button>
+                ? 'Messages visible to all linked family members and the agency.'
+                : 'Only you and the agency see this thread.'
+            }}
+          </p>
         </div>
-        <p class="text-[11px] text-muted-foreground">
-          {{
-            activeChannel === 'group'
-              ? 'Messages visible to all linked family members and the agency.'
-              : 'Only you and the agency see this thread.'
-          }}
-        </p>
-        <div v-if="loading" class="flex justify-center py-12">
-          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
-        </div>
-        <div v-else class="space-y-3">
-          <div
-            v-for="(m, i) in thread"
-            :key="m.id || i"
-            class="rounded-lg border p-3 text-sm"
-            :class="m.direction === 'inbound' ? 'bg-primary/5 border-primary/20' : 'bg-muted/30'"
-          >
-            <p class="text-xs font-semibold text-muted-foreground mb-1">
-              {{ messageFromLabel(m) }}
-            </p>
-            <p class="whitespace-pre-wrap">{{ m.content }}</p>
-            <p v-if="m.created_at" class="text-[10px] text-muted-foreground mt-2">
-              {{ formatDt(m.created_at) }}
-            </p>
+
+        <div
+          ref="threadEl"
+          class="flex-1 min-h-0 overflow-y-auto space-y-3 pr-1 pb-3"
+        >
+          <div v-if="loading" class="space-y-3 py-4">
+            <div v-for="i in 4" :key="i" class="h-16 rounded-2xl bg-muted animate-pulse" />
           </div>
-          <div v-if="!thread.length" class="text-sm text-muted-foreground text-center py-8">
-            No messages in this thread yet.
-          </div>
+          <template v-else>
+            <div
+              v-for="(m, i) in thread"
+              :key="m.id || i"
+              class="flex"
+              :class="m.direction === 'outbound' ? 'justify-start' : 'justify-end'"
+            >
+              <div
+                class="max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm"
+                :class="m.direction === 'outbound'
+                  ? 'bg-muted/60 border border-border/60 rounded-bl-md'
+                  : 'bg-luna-500/15 border border-luna-500/20 rounded-br-md'"
+              >
+                <p class="text-xs font-semibold text-muted-foreground mb-1">
+                  {{ messageFromLabel(m) }}
+                </p>
+                <p class="whitespace-pre-wrap">{{ m.content }}</p>
+                <p v-if="m.created_at || m.createdAt" class="text-xs text-muted-foreground mt-2">
+                  {{ formatDt(m.created_at || m.createdAt || '') }}
+                </p>
+              </div>
+            </div>
+            <EmptyState
+              v-if="!thread.length"
+              title="No messages yet"
+              description="Send a message to start the conversation with the agency."
+              size="sm"
+            />
+          </template>
         </div>
-        <div class="pt-4 border-t space-y-2">
+
+        <div class="shrink-0 sticky bottom-0 pt-3 pb-4 border-t bg-background space-y-2">
           <label class="text-xs font-medium text-muted-foreground">
             {{ activeChannel === 'private' ? 'Message the agency (private)' : 'Message the agency' }}
           </label>
@@ -68,10 +69,12 @@
             v-model="draft"
             rows="3"
             placeholder="Type your message…"
+            class="min-h-[5.5rem]"
           />
           <div class="flex justify-end">
             <Button
               size="sm"
+              class="min-h-10"
               :disabled="sending || !draft.trim()"
               @click="send"
             >
@@ -89,35 +92,40 @@ import { io, type Socket } from 'socket.io-client'
 import { toast } from 'vue-sonner'
 import { Button } from '~/components/ui/button'
 import { Textarea } from '~/components/ui/textarea'
+import {
+  usePortalResourcesStore,
+  type PortalMessageChannel,
+  type PortalMsgRow,
+} from '~/stores/portalResources'
+import { normalizePortalError } from '~/composables/usePortalAuth'
 
-// Title is rendered by the shared header in layouts/default.vue.
-definePageMeta({ title: "Messages" })
-
-type MsgRow = {
-  id?: string
-  content?: string
-  direction?: string
-  created_at?: string
-  channel_type?: string
-  sender_name?: string | null
-}
+definePageMeta({ title: 'Messages' })
 
 const config = useRuntimeConfig()
-const { token, fetchPortal, portalData } = usePortalAuth()
+const { token } = usePortalAuth()
+const resources = usePortalResourcesStore()
 
-const loading = ref(true)
 const sending = ref(false)
 const draft = ref('')
-const thread = ref<MsgRow[]>([])
-const activeChannel = ref<'group' | 'private'>('group')
+const activeChannel = ref<PortalMessageChannel>('group')
+const threadEl = ref<HTMLElement | null>(null)
+const loadError = ref(false)
+const ready = ref(Boolean(resources.messages.group?.initialized))
+
+const channelOptions = [
+  { value: 'group' as const, label: 'Family & agency' },
+  { value: 'private' as const, label: 'Private with agency' },
+]
 
 let socket: Socket | null = null
 
-function messageChannel(row: MsgRow): 'group' | 'private' {
-  return row.channel_type === 'private' ? 'private' : 'group'
-}
+const loading = computed(() => {
+  if (loadError.value) return false
+  return !ready.value || resources.isMessagesLoading(activeChannel.value)
+})
+const thread = computed(() => resources.getMessages(activeChannel.value))
 
-function messageFromLabel(m: MsgRow) {
+function messageFromLabel(m: PortalMsgRow) {
   if (m.direction === 'outbound') return 'Agency'
   const n = (m.sender_name || '').trim()
   return n || 'Family member'
@@ -131,40 +139,30 @@ function formatDt(s: string) {
   }
 }
 
-function mergeMessage(row: MsgRow) {
-  if (!row?.id && !row?.content) return
-  if (messageChannel(row) !== activeChannel.value) return
-  const exists = thread.value.some((m) => row.id && m.id === row.id)
-  if (exists) return
-  thread.value = [...thread.value, row]
+function scrollToBottom() {
+  nextTick(() => {
+    const el = threadEl.value
+    if (el) el.scrollTop = el.scrollHeight
+  })
 }
 
 async function load() {
   if (!token.value) {
-    loading.value = false
+    ready.value = true
     return
   }
-  loading.value = true
+  loadError.value = false
+  const ch = activeChannel.value
+  if (resources.messages[ch]?.initialized) ready.value = true
   try {
-    const base = String(config.public.apiUrl || '').replace(/\/+$/, '')
-    const ch = activeChannel.value
-    const res = await $fetch<{ valid?: boolean; messages?: MsgRow[] }>(
-      `${base}/api/v1/family-portal/messages?channel=${ch}`,
-      { headers: { Authorization: `Bearer ${token.value}` } },
-    )
-    if (res?.valid && Array.isArray(res.messages)) {
-      thread.value = res.messages
-    } else {
-      await fetchPortal()
-      const all = (portalData.value?.messages as MsgRow[]) || []
-      thread.value = all.filter((m) => messageChannel(m) === ch)
-    }
+    await resources.fetchMessages(ch)
+    scrollToBottom()
   } catch (e: unknown) {
-    thread.value = []
+    loadError.value = true
     const err = e as { data?: { message?: unknown }; message?: string }
     toast.error(normalizePortalError(err?.data?.message) || err?.message || 'Could not load messages.')
   } finally {
-    loading.value = false
+    ready.value = true
   }
 }
 
@@ -180,8 +178,10 @@ function connectSocket() {
     transports: ['websocket', 'polling'],
   })
   socket.on('family_message:new', (row: unknown) => {
-    const r = row as MsgRow
-    mergeMessage(r)
+    const msg = row as PortalMsgRow
+    const ch = msg.channel_type === 'private' ? 'private' : 'group'
+    resources.mergeMessage(ch, msg)
+    if (ch === activeChannel.value) scrollToBottom()
   })
   socket.on('connect_error', (err) => {
     console.warn('[Family portal WS]', err.message)
@@ -192,25 +192,9 @@ async function send() {
   if (!token.value || !draft.value.trim()) return
   sending.value = true
   try {
-    const base = String(config.public.apiUrl || '').replace(/\/+$/, '')
-    const res = await $fetch<{ success?: boolean; error?: string }>(
-      `${base}/api/v1/family-portal/messages`,
-      {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token.value}` },
-        body: {
-          message: draft.value.trim(),
-          channel_type: activeChannel.value,
-        },
-      },
-    )
-    if (!res?.success) {
-      toast.error(res?.error || 'Could not send message.')
-      return
-    }
+    await resources.postMessage(activeChannel.value, draft.value.trim())
     draft.value = ''
-    await load()
-    await fetchPortal()
+    scrollToBottom()
   } catch (e: unknown) {
     const err = e as { data?: { message?: unknown }; message?: string }
     toast.error(normalizePortalError(err?.data?.message) || err?.message || 'Could not send message.')
@@ -223,10 +207,11 @@ watch(activeChannel, () => {
   void load()
 })
 
+watch(thread, () => scrollToBottom(), { deep: true })
+
 onMounted(() => {
-  void load().then(() => {
-    connectSocket()
-  })
+  void load()
+  connectSocket()
 })
 
 onBeforeUnmount(() => {

@@ -18,12 +18,12 @@
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {
-    "@lana-care/design-tokens": "^0.2.0",
-    "@lana-care/ui": "^0.2.0",
+    "@lana-care/design-tokens": "^0.2.1",
+    "@lana-care/ui": "^0.2.1",
     "@nuxtjs/i18n": "^10.5.0",
     "@pinia/nuxt": "^1.0.1",
     "@tailwindcss/vite": "^4.3.3",
-    "@vue/devtools-api": "^8.1.5",
+    "@vue/devtools-api": "^8.2.1",
     "@vueuse/core": "^14.3.0",
     "@vueuse/nuxt": "^14.3.0",
     "class-variance-authority": "^0.7.1",
@@ -42,7 +42,7 @@
     "vue-sonner": "^2.0.9"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^3.2.1",
+    "@nuxt/devtools": "^3.3.1",
     "@nuxt/eslint": "^1.16.0",
     "@nuxt/test-utils": "^4.0.3",
     "@types/node": "^26.1.1",

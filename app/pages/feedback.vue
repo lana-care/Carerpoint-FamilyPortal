@@ -130,8 +130,10 @@ async function submit() {
       `${base}/api/v1/auth/family-portal/feedback`,
       {
         method: 'POST',
+        // Authorization header, like every other portal call. This route used to
+        // be the one exception, taking the token in the body.
+        headers: { Authorization: `Bearer ${token.value}` },
         body: {
-          token: token.value,
           category: category.value,
           rating,
           message: message.value.trim(),

@@ -2,7 +2,10 @@
 import { Separator } from '~/components/ui/separator'
 
 /**
- * The one header for the portal, mounted by `layouts/default.vue`.
+ * MOBILE chrome for the portal, mounted by `layouts/default.vue` as
+ * `md:hidden`. From `md` up, PortalSidebar + PortalTopBar take over — the same
+ * split the staff dashboard uses (AppSidebar + PageToolbar, with a drawer on
+ * small screens).
  *
  * Persistent glass-pill chrome on every route (not only home) so families
  * never need Home → nav to switch sections. Schedule is demoted — calendar

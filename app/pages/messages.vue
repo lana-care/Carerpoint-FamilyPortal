@@ -1,5 +1,7 @@
 <template>
-  <div class="relative flex flex-col" style="min-height: calc(100dvh - 5.5rem)">
+  <!-- `min-h-full` fills the layout scroller, so the composer pins to the bottom
+       without hardcoding the chrome height (it used to subtract 5.5rem). -->
+  <div class="relative flex flex-col min-h-full">
     <div class="max-w-3xl mx-auto w-full px-4 pt-4 pb-0 flex flex-col flex-1 min-h-0">
       <div v-if="!token" class="text-sm text-muted-foreground text-center py-12">
         <NuxtLink to="/login" class="text-primary underline">Sign in with your access link</NuxtLink>

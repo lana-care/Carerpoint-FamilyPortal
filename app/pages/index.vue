@@ -1,5 +1,7 @@
 <template>
-  <div class="relative min-h-screen">
+  <!-- The shell owns viewport height now; a second min-h-screen here would push
+       the page past the scroller and produce a stray scrollbar. -->
+  <div class="relative">
 
     <div v-if="loading" class="max-w-5xl mx-auto px-4 py-10 space-y-6">
       <Skeleton class="h-56 w-full rounded-2xl" />

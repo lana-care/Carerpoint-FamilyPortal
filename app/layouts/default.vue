@@ -43,6 +43,7 @@
     </div>
 
     <SharedVisitDetailDialog />
+    <SharedSupportWidget />
   </div>
 </template>
 

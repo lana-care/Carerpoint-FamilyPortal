@@ -4,13 +4,7 @@
     <div class="relative w-full max-w-md">
       <GlassCard radius="2xl" padding="lg" glow="luna" class="space-y-6">
         <div class="text-center space-y-2">
-          <img
-            src="/icon.png"
-            alt="Carerpoint"
-            class="mx-auto size-12 rounded-2xl"
-            width="48"
-            height="48"
-          >
+          <CarerpointLogo :size="48" class="mx-auto" aria-label="Carerpoint" />
           <h1 class="text-xl font-bold font-display">Family Portal</h1>
           <p class="text-sm text-muted-foreground">
             Your care agency emailed you an invitation with a link. Open that link and you are signed in

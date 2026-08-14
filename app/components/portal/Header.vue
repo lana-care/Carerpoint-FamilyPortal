@@ -44,13 +44,7 @@ function isActive(to: string) {
       <div class="px-4 py-3 flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center gap-3 min-w-0">
           <NuxtLink to="/" class="flex items-center gap-3 min-w-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-            <img
-              src="/icon.png"
-              alt="Carerpoint"
-              class="size-9 rounded-xl shrink-0"
-              width="36"
-              height="36"
-            >
+            <CarerpointLogo :size="36" class="shrink-0" aria-label="Carerpoint" />
             <div class="min-w-0">
               <p class="text-sm font-bold tracking-tight truncate">
                 {{ isHome ? 'Carerpoint Family Portal' : (pageTitle || 'Family Portal') }}

@@ -85,13 +85,8 @@ async function signOut() {
         :class="collapsed ? 'justify-center' : 'min-w-0 flex-1'"
         aria-label="Carerpoint Family Portal home"
       >
-        <img
-          src="/icon.png"
-          alt=""
-          class="size-8 w-8 h-8 max-w-8 max-h-8 object-contain rounded-lg shrink-0"
-          width="32"
-          height="32"
-        >
+        <!-- Labelled by the link, so the mark itself is left unnamed. -->
+        <CarerpointLogo :size="32" class="shrink-0" aria-label="" />
         <span
           v-if="!collapsed"
           class="text-base font-bold tracking-tight truncate"

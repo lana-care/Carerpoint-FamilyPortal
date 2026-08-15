@@ -1,7 +1,5 @@
 import { defineStore } from 'pinia'
-import type { FamilyPortalData } from '~/composables/usePortalAuth'
-import { normalizePortalError } from '~/composables/usePortalAuth'
-import { FAMILY_PORTAL_TOKEN_COOKIE } from '~/composables/usePortalAuth'
+import { normalizePortalError, FAMILY_PORTAL_TOKEN_COOKIE, type FamilyPortalData } from '~/composables/usePortalAuth'
 import {
   makeEntry,
   showLoading,

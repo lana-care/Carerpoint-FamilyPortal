@@ -106,7 +106,34 @@ export default defineNuxtConfig({
     host: 'localhost',
   },
 
-  modules: ['@vueuse/nuxt', '@nuxt/eslint', 'shadcn-nuxt', '@pinia/nuxt'],
+  modules: ['@vueuse/nuxt', '@nuxt/eslint', 'shadcn-nuxt', '@pinia/nuxt', '@nuxtjs/i18n'],
+
+  // i18n — the same setup as the dashboard (Carerpoint-Frontend), so a string
+  // moves between the two apps unchanged. `@nuxtjs/i18n` was already a
+  // dependency here but was never registered, which is why the chrome's strings
+  // were hardcoded English.
+  //
+  // strategy 'no_prefix' keeps every existing URL intact (no locale segment).
+  // langDir resolves relative to i18n/, so 'locales' => i18n/locales/, and
+  // i18n.config.ts is auto-detected from the same directory.
+  i18n: {
+    strategy: 'no_prefix',
+    defaultLocale: 'en',
+    langDir: 'locales',
+    locales: [
+      { code: 'en', language: 'en', file: 'en.json' },
+      { code: 'en-GB', language: 'en-GB', file: 'en-GB.json' },
+      { code: 'en-CA', language: 'en-CA', file: 'en-CA.json' },
+      { code: 'fr', language: 'fr', file: 'fr.json' },
+      { code: 'fr-FR', language: 'fr-FR', file: 'fr-FR.json' },
+      { code: 'fr-CA', language: 'fr-CA', file: 'fr-CA.json' },
+    ],
+    // Off for the same reason as the dashboard: the app is English-first and
+    // has no in-app switcher, so sniffing Accept-Language only strands a
+    // francophone reader on a half-French page they cannot change back. The FR
+    // locales stay translated and dormant until a switcher ships.
+    detectBrowserLanguage: false,
+  },
 
   shadcn: {
     prefix: '',

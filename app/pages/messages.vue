@@ -1,7 +1,7 @@
 <template>
-  <!-- `min-h-full` fills the layout scroller, so the composer pins to the bottom
-       without hardcoding the chrome height (it used to subtract 5.5rem). -->
   <div class="relative flex flex-col min-h-full">
+    <!-- `min-h-full` fills the layout scroller, so the composer pins to the
+         bottom without hardcoding the chrome height (it subtracted 5.5rem). -->
     <div class="max-w-3xl mx-auto w-full px-4 pt-4 pb-0 flex flex-col flex-1 min-h-0">
       <div v-if="!token" class="text-sm text-muted-foreground text-center py-12">
         <NuxtLink to="/login" class="text-primary underline">Sign in with your access link</NuxtLink>
@@ -13,7 +13,7 @@
             :options="channelOptions"
             size="sm"
             shape="square"
-            class="w-full"
+            class="w-full [&>button]:flex-1"
             aria-label="Message channel"
           />
           <p class="text-xs text-muted-foreground">
@@ -73,7 +73,11 @@
             placeholder="Type your message…"
             class="min-h-[5.5rem]"
           />
-          <div class="flex justify-end">
+          <!-- The support bubble is `fixed bottom-5 right-5` at 56px wide, which
+               lands exactly on top of Send at phone widths. Clearing it here
+               rather than moving the bubble keeps that widget identical on
+               every route. -->
+          <div class="flex justify-end pr-20 sm:pr-0">
             <Button
               size="sm"
               class="min-h-10"
@@ -101,7 +105,7 @@ import {
 } from '~/stores/portalResources'
 import { normalizePortalError } from '~/composables/usePortalAuth'
 
-definePageMeta({ title: 'Messages' })
+definePageMeta({ titleKey: 'nav.messages' })
 
 const config = useRuntimeConfig()
 const { token } = usePortalAuth()

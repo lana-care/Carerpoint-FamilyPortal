@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "sectionFamilyPortal": "Family portal",
+    "home": "Home",
+    "calendar": "Calendar",
+    "messages": "Messages",
+    "carePlan": "Care plan",
+    "medications": "Medications",
+    "documents": "Documents",
+    "feedback": "Feedback",
+    "openNavigation": "Open navigation",
+    "closeNavigation": "Close navigation",
+    "expandSidebar": "Expand sidebar",
+    "collapseSidebar": "Collapse sidebar",
+    "expand": "Expand",
+    "collapse": "Collapse",
+    "signOut": "Sign out",
+    "signedInAs": "Signed in as {name}"
+  },
+  "portal": {
+    "title": "Family Portal",
+    "brandTitle": "@:{'brand.name'} Family Portal",
+    "home": "@:{'brand.name'} Family Portal home",
+    "welcome": "Welcome, {name}",
+    "familyMember": "Family Member",
+    "documentsTitle": "Shared documents"
+  },
+  "theme": {
+    "toggle": "Toggle theme",
+    "toDark": "Switch to dark theme",
+    "toLight": "Switch to light theme"
+  }
+}

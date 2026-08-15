@@ -17,7 +17,7 @@ export function formatSlug(input: string | null | undefined): string {
     // camelCase / PascalCase → split into words
     .replace(/([a-z])([A-Z])/g, '$1 $2')
     // Normalise separators to a single space
-    .replace(/[_\-]+/g, ' ')
+    .replace(/[_-]+/g, ' ')
     // Collapse multiple spaces
     .replace(/\s+/g, ' ')
     .trim()

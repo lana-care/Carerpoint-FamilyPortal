@@ -1,29 +1,30 @@
 <template>
-  <!--
-    Same app shell as the staff dashboard (Carerpoint-Frontend/app/layouts/default.vue):
-    a fixed-height `h-dvh` row, a persistent sidebar, and ONE inner scroller so
-    the chrome stays put while only the page content moves.
-
-    This replaced a `min-h-screen` document-flow layout with a floating header.
-    Two consequences worth knowing:
-      - pages must not set their own full-height/scroll containers; the scroller
-        below owns that,
-      - the header is now the mobile chrome only (`md:hidden`), because the rail
-        replaces it from `md` up.
-  -->
   <div
     class="relative h-dvh flex overflow-hidden text-foreground bg-background layout-shell"
     :class="collapsed ? 'layout-shell--rail' : 'layout-shell--expanded'"
     :style="shellStyle"
   >
-    <PortalSidebar />
+    <!--
+      Same app shell as the staff dashboard (Carerpoint-Frontend/app/layouts/default.vue):
+      a fixed-height `h-dvh` row, a persistent sidebar, and ONE inner scroller so
+      the chrome stays put while only the page content moves.
+
+      This replaced a `min-h-screen` document-flow layout with a floating header.
+      Two consequences worth knowing:
+        - pages must not set their own full-height/scroll containers; the
+          scroller below owns that,
+        - there is ONE toolbar at every width. The mobile glass-pill header that
+          used to sit above it is gone: it carried a second copy of the nav, and
+          the two drifted. `LayoutAppSidebar` renders the rail from `md` up and a
+          drawer below it, and `LayoutPageToolbar` carries the trigger.
+    -->
+    <LayoutAppSidebar />
 
     <div class="relative z-0 flex-1 flex flex-col min-w-0 min-h-0 w-full">
       <div
         class="main-surface flex-1 flex flex-col min-h-0 min-w-0 w-full overflow-hidden bg-background md:border-l md:border-border/60"
       >
-        <PortalHeader class="shrink-0 md:hidden" />
-        <PortalTopBar />
+        <LayoutPageToolbar />
 
         <main class="flex-1 min-w-0 flex flex-col min-h-0 overflow-hidden">
           <div class="flex-1 flex flex-col min-h-0 overflow-y-auto overflow-x-hidden">

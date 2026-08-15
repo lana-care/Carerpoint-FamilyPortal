@@ -34,12 +34,17 @@
             </div>
             <div class="space-y-2">
               <label class="text-xs font-medium">Rating</label>
+              <!-- SegmentedControl's list is `inline-flex … justify-center`, so
+                   `w-full` alone widens the track and leaves the five options
+                   huddled in the middle at their intrinsic width — around 28px
+                   each on a phone, well under a thumb. Stretching the triggers
+                   turns the row into five equal targets across the full width. -->
               <SegmentedControl
                 v-model="ratingStr"
                 :options="ratingOptions"
                 size="sm"
                 shape="square"
-                class="w-full"
+                class="w-full [&>button]:flex-1"
                 aria-label="Rating from 1 to 5"
               />
             </div>
@@ -88,7 +93,7 @@ import { Textarea } from '~/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
 import { toast } from 'vue-sonner'
 
-definePageMeta({ title: 'Feedback' })
+definePageMeta({ titleKey: 'nav.feedback' })
 
 const step = ref(1)
 const done = ref(false)

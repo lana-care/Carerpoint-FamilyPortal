@@ -1,7 +1,7 @@
 <template>
-  <!-- The shell owns viewport height now; a second min-h-screen here would push
-       the page past the scroller and produce a stray scrollbar. -->
   <div class="relative">
+    <!-- The shell owns viewport height now; a second min-h-screen here would
+         push the page past the scroller and produce a stray scrollbar. -->
 
     <div v-if="loading" class="max-w-5xl mx-auto px-4 py-10 space-y-6">
       <Skeleton class="h-56 w-full rounded-2xl" />
@@ -219,8 +219,9 @@ import { Skeleton } from '~/components/ui/skeleton'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'
 import { CalendarMonth } from '~/components/ui/calendar'
 
-// Home uses the shared layout; its header variant is keyed on the route.
-// (no definePageMeta needed)
+// On a phone the toolbar is the only place a heading appears, so home needs one
+// too — without it the bar fell back to the generic "Family Portal".
+definePageMeta({ titleKey: 'nav.home' })
 
 const route = useRoute()
 const router = useRouter()

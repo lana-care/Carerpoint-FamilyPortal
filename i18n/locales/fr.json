@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "sectionFamilyPortal": "Espace famille",
+    "home": "Accueil",
+    "calendar": "Calendrier",
+    "messages": "Messages",
+    "carePlan": "Plan de soins",
+    "medications": "Médicaments",
+    "documents": "Documents",
+    "feedback": "Avis",
+    "openNavigation": "Ouvrir la navigation",
+    "closeNavigation": "Fermer la navigation",
+    "expandSidebar": "Déplier le menu",
+    "collapseSidebar": "Replier le menu",
+    "expand": "Déplier",
+    "collapse": "Replier",
+    "signOut": "Se déconnecter",
+    "signedInAs": "Connecté en tant que {name}"
+  },
+  "portal": {
+    "title": "Espace famille",
+    "brandTitle": "Espace famille @:{'brand.name'}",
+    "home": "Accueil de l'espace famille @:{'brand.name'}",
+    "welcome": "Bienvenue, {name}",
+    "familyMember": "Proche",
+    "documentsTitle": "Documents partagés"
+  },
+  "theme": {
+    "toggle": "Basculer le thème",
+    "toDark": "Passer en thème sombre",
+    "toLight": "Passer en thème clair"
+  }
+}

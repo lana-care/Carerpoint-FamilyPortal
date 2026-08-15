@@ -56,7 +56,7 @@ import { Button } from '~/components/ui/button'
 import { usePortalResourcesStore, type PortalDocRow } from '~/stores/portalResources'
 import { normalizePortalError } from '~/composables/usePortalAuth'
 
-definePageMeta({ title: 'Shared documents' })
+definePageMeta({ titleKey: 'portal.documentsTitle' })
 
 const { token, fetchPortal, portalData } = usePortalAuth()
 const resources = usePortalResourcesStore()

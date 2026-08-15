@@ -119,7 +119,7 @@ import { Badge } from '~/components/ui/badge'
 import { usePortalResourcesStore } from '~/stores/portalResources'
 import { normalizePortalError } from '~/composables/usePortalAuth'
 
-definePageMeta({ title: 'Care plan' })
+definePageMeta({ titleKey: 'nav.carePlan' })
 
 const { token, portalData, fetchPortal } = usePortalAuth()
 const resources = usePortalResourcesStore()

@@ -65,7 +65,7 @@ import { Badge } from '~/components/ui/badge'
 import { usePortalResourcesStore } from '~/stores/portalResources'
 import { normalizePortalError } from '~/composables/usePortalAuth'
 
-definePageMeta({ title: 'Medications' })
+definePageMeta({ titleKey: 'nav.medications' })
 
 /** "2 tablets" from dose_quantity + dose_unit, either of which may be absent. */
 function doseOf(m: Record<string, unknown>): string {

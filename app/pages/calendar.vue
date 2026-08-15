@@ -288,7 +288,7 @@ import type { FamilyPortalVisit } from '~/composables/usePortalAuth'
 import { usePortalResourcesStore } from '~/stores/portalResources'
 import { formatTime, formatTimeRange } from '~/utils/formatTime'
 
-definePageMeta({ title: 'Calendar' })
+definePageMeta({ titleKey: 'nav.calendar' })
 
 type ViewMode = 'day' | 'week' | 'month'
 const MAX_VISIBLE_VISITS = 3

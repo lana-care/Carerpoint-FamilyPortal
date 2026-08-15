@@ -13,7 +13,7 @@
             :options="channelOptions"
             size="sm"
             shape="square"
-            class="w-full [&>button]:flex-1"
+            class="w-full h-12 sm:h-8 [&>button]:flex-1"
             aria-label="Message channel"
           />
           <p class="text-xs text-muted-foreground">

@@ -22,18 +22,22 @@
           </div>
 
           <div class="flex flex-wrap items-center gap-2 shrink-0">
+            <!-- Day/Week/Month and the period stepper are the two things a
+                 family member actually taps on this page; `size="sm"` is a 32px
+                 track, so both grow to 44 below `sm`. -->
             <SegmentedControl
               v-model="viewMode"
               :options="viewOptions"
               size="sm"
               shape="pill"
+              class="h-12 sm:h-8"
               aria-label="Calendar view"
             />
             <div class="inline-flex items-center rounded-full border border-border/60 bg-muted/40 p-0.5">
               <Button
                 variant="ghost"
                 size="icon"
-                class="h-8 w-8 rounded-full"
+                class="h-10 w-10 sm:h-8 sm:w-8 rounded-full"
                 :aria-label="prevLabel"
                 @click="goPrev"
               >
@@ -42,7 +46,7 @@
               <Button
                 variant="ghost"
                 size="sm"
-                class="h-8 rounded-full px-3 text-xs font-semibold"
+                class="h-10 sm:h-8 rounded-full px-3 text-xs font-semibold"
                 @click="goToday"
               >
                 Today
@@ -50,7 +54,7 @@
               <Button
                 variant="ghost"
                 size="icon"
-                class="h-8 w-8 rounded-full"
+                class="h-10 w-10 sm:h-8 sm:w-8 rounded-full"
                 :aria-label="nextLabel"
                 @click="goNext"
               >

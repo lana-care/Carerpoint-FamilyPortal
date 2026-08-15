@@ -37,14 +37,15 @@
               <!-- SegmentedControl's list is `inline-flex … justify-center`, so
                    `w-full` alone widens the track and leaves the five options
                    huddled in the middle at their intrinsic width — around 28px
-                   each on a phone, well under a thumb. Stretching the triggers
-                   turns the row into five equal targets across the full width. -->
+                   square on a phone, well under a thumb. Stretching the triggers
+                   and raising the track below `sm` turns the row into five equal
+                   44px targets across the full width. -->
               <SegmentedControl
                 v-model="ratingStr"
                 :options="ratingOptions"
                 size="sm"
                 shape="square"
-                class="w-full [&>button]:flex-1"
+                class="w-full h-12 sm:h-8 [&>button]:flex-1"
                 aria-label="Rating from 1 to 5"
               />
             </div>

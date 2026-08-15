@@ -35,9 +35,10 @@ const memberName = computed(() => portalData.value?.familyMember?.name || '')
   <div
     class="page-toolbar flex items-center shrink-0 gap-2 px-3 sm:px-4 border-b border-border/50 bg-background/80 backdrop-blur-sm min-h-14 py-1.5"
   >
-    <!-- Mobile: open nav drawer -->
+    <!-- Mobile: open nav drawer. 44px square — it is the only way to the nav on
+         a phone, and `p-2` around a 20px icon made it 36. -->
     <LayoutNavButton
-      class="md:hidden p-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg shrink-0"
+      class="md:hidden inline-flex size-11 items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg shrink-0"
       :aria-label="t('nav.openNavigation')"
       @click="openMobile"
     >
@@ -56,8 +57,10 @@ const memberName = computed(() => portalData.value?.familyMember?.name || '')
       </p>
     </div>
 
+    <!-- `lg` is 40px. `sm` is 32, which is a small thing to hit on a phone and
+         this bar is the only place the toggle lives. -->
     <ThemeToggle
-      size="sm"
+      size="lg"
       class="shrink-0"
       :aria-label="t('theme.toggle')"
       :to-dark-label="t('theme.toDark')"

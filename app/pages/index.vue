@@ -71,9 +71,11 @@
       <Separator />
 
       <Tabs default-value="overview" class="w-full">
-        <TabsList class="grid w-full max-w-md grid-cols-2 h-11">
-          <TabsTrigger value="overview" class="text-sm">Overview</TabsTrigger>
-          <TabsTrigger value="updates" class="text-sm">Updates</TabsTrigger>
+        <!-- `h-11` on the list only sizes the track; the triggers keep their own
+             32px height and leave 6px of dead strip above and below each. -->
+        <TabsList class="grid w-full max-w-md grid-cols-2 h-12">
+          <TabsTrigger value="overview" class="text-sm h-full">Overview</TabsTrigger>
+          <TabsTrigger value="updates" class="text-sm h-full">Updates</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" class="mt-8 space-y-8">

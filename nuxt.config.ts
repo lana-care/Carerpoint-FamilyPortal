@@ -43,9 +43,9 @@ const connectSources = [
  * control: even with an injected script, PHI cannot be POSTed to a third party.
  *
  * What the app actually loads:
- *  • its own JS/CSS/fonts (`'self'`, `/fonts/Oddval-*.ttf`)
- *  • Google Fonts — stylesheet from fonts.googleapis.com (`@import` in
- *    app/assets/css/main.css), font files from fonts.gstatic.com
+ *  • its own JS/CSS/fonts (`'self'`, `/fonts/Oddval-*.ttf`, shipped in public/fonts)
+ *  • Google Fonts — stylesheet from fonts.googleapis.com (a <link> in `app.head`
+ *    below, not a CSS `@import`), font files from fonts.gstatic.com
  *  • the NestJS API (`$fetch`) and its socket.io websocket at `${apiUrl}/ws`
  *    (transports: websocket + polling, so both http(s) and ws(s) are needed)
  *  • no third-party scripts, no analytics, no iframes, no remote images
@@ -97,6 +97,10 @@ export default defineNuxtConfig({
         'Referrer-Policy': 'no-referrer',
         'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
         'Content-Security-Policy': csp,
+        // The portal is a private, token-gated page about someone's health: it
+        // must never be indexed, even if a link leaks. Same signal as the
+        // <meta name="robots"> below, but it also covers non-HTML responses.
+        'X-Robots-Tag': 'noindex, nofollow',
       },
     },
   },
@@ -156,6 +160,8 @@ export default defineNuxtConfig({
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { name: 'description', content: 'Family portal for home care' },
         { name: 'theme-color', content: '#1e5cab' },
+        // Private portal — keep it out of search results (see also robots.txt).
+        { name: 'robots', content: 'noindex, nofollow' },
       ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' },
@@ -164,6 +170,14 @@ export default defineNuxtConfig({
         { rel: 'apple-touch-icon', href: '/icon.png' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+        // Instrument Serif + Space Grotesk, loaded the way the dashboard does. It
+        // lived as an `@import url(...)` in main.css, which the build drops (an
+        // @import that follows other rules is invalid CSS), so the portal fell
+        // back to system fonts in production.
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300..700&display=swap',
+        },
       ],
     },
     pageTransition: { name: 'page-slide', mode: 'out-in' },

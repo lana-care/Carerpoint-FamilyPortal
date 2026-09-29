@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300..700&display=swap');
+/* Google Fonts (Instrument Serif, Space Grotesk) are linked from `app.head` in
+   nuxt.config.ts. An `@import url(...)` here came after `@import "tailwindcss"`
+   expanded, which makes it invalid CSS — the build dropped it and the fonts never
+   loaded. */
 
 /* ============================================================
    Design tokens — single source of truth.
@@ -48,7 +51,7 @@
    App-specific styles NOT shipped by the design-tokens package.
    ============================================================ */
 
-/* Brand display face — bundled locally (served from /public/fonts). */
+/* Brand display face — bundled locally (public/fonts/Oddval-*.ttf, the same files the dashboard ships). */
 @font-face {
   font-family: 'Oddval';
   src: url('/fonts/Oddval-SemiBold.ttf') format('truetype');

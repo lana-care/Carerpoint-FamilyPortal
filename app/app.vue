@@ -33,8 +33,16 @@ if (persistedMode.value === 'dark' || persistedMode.value === 'light') {
   colorMode.value = persistedMode.value
 }
 
+// <html lang>: screen readers choose their pronunciation voice from it (WCAG
+// 3.1.1) and browsers offer translation from it. It used to ship empty. The
+// active i18n locale is already a BCP 47 tag (en, en-GB, fr-FR…); fall back to
+// English so it can never render blank.
+const { locale } = useI18n()
+const htmlLang = computed(() => locale.value || 'en')
+
 useHead({
   htmlAttrs: {
+    lang: htmlLang,
     class: computed(() => (colorMode.value === 'dark' ? 'dark' : '')),
   },
 })

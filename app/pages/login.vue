@@ -1,5 +1,7 @@
 <template>
-  <div class="relative min-h-screen flex flex-col items-center justify-center px-4">
+  <main class="relative min-h-screen flex flex-col items-center justify-center px-4">
+    <!-- This page opts out of the default layout, so it has to provide its own
+         <main> landmark: without one, assistive tech finds no main content. -->
     <SharedShellBackground intensity="normal" />
     <div class="relative w-full max-w-md">
       <GlassCard radius="2xl" padding="lg" glow="luna" class="space-y-6">
@@ -36,13 +38,15 @@
             {{ signingIn ? 'Signing in…' : 'Sign in' }}
           </Button>
         </div>
-        <p v-if="err" class="text-sm text-destructive text-center">{{ err }}</p>
+        <!-- role="alert": announced as soon as it appears, so a screen-reader user
+             learns the code was rejected without having to find the message. -->
+        <p v-if="err" role="alert" class="text-sm text-destructive text-center">{{ err }}</p>
         <p class="text-xs text-muted-foreground text-center">
           Cannot find your invitation email? Contact your care agency and ask them to send it again.
         </p>
       </GlassCard>
     </div>
-  </div>
+  </main>
 </template>
 
 <script setup lang="ts">

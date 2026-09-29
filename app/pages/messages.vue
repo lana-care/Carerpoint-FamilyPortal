@@ -104,11 +104,12 @@ import {
   type PortalMsgRow,
 } from '~/stores/portalResources'
 import { normalizePortalError } from '~/composables/usePortalAuth'
+import { isForeignInboundMessage } from '~/utils/portalMessages'
 
 definePageMeta({ titleKey: 'nav.messages' })
 
 const config = useRuntimeConfig()
-const { token } = usePortalAuth()
+const { token, portalData } = usePortalAuth()
 const resources = usePortalResourcesStore()
 
 const sending = ref(false)
@@ -185,6 +186,9 @@ function connectSocket() {
   })
   socket.on('family_message:new', (row: unknown) => {
     const msg = row as PortalMsgRow
+    // Server-side filtering is the real control; this drops a stray post by
+    // another relative if one ever arrives (see utils/portalMessages.ts).
+    if (isForeignInboundMessage(msg, portalData.value?.familyMember?.id)) return
     const ch = msg.channel_type === 'private' ? 'private' : 'group'
     resources.mergeMessage(ch, msg)
     if (ch === activeChannel.value) scrollToBottom()

@@ -29,5 +29,27 @@
     "toggle": "Basculer le thème",
     "toDark": "Passer en thème sombre",
     "toLight": "Passer en thème clair"
+  },
+  "portalHome": {
+    "sessionInactiveTitle": "Ce lien n'est plus actif",
+    "sessionInactiveBody": "Les liens d'accès expirent régulièrement pour protéger les informations de santé : vous n'avez rien fait de mal. Contactez votre agence de soins pour qu'elle vous envoie un nouveau lien.",
+    "signedOutTitle": "Veuillez vous connecter",
+    "signedOutBody": "Ouvrez le lien de votre e-mail d'invitation, ou saisissez votre code d'accès.",
+    "enterCode": "Saisir votre code d'accès",
+    "nextVisit": {
+      "title": "Prochaine visite",
+      "none": "Aucune visite à venir n'est planifiée pour le moment.",
+      "with": "avec {name}",
+      "today": "Aujourd'hui",
+      "tomorrow": "Demain",
+      "calendar": "Calendrier",
+      "status": {
+        "scheduled": "Planifiée",
+        "confirmed": "Confirmée",
+        "en_route": "En route",
+        "checked_in": "Soignant arrivé",
+        "in_progress": "En cours"
+      }
+    }
   }
 }

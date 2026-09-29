@@ -7,6 +7,7 @@
 
       <EmptyState
         v-else-if="error"
+        role="alert"
         title="Could not load medications"
         :description="error"
         size="sm"

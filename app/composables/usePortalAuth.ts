@@ -16,12 +16,14 @@ export interface FamilyPortalVisit {
   notes?: string
   mood?: string
   foodIntake?: string
+  /** First name only of the assigned carer, when the API provides it. */
+  carerFirstName?: string | null
 }
 
 export interface FamilyPortalData {
   valid: boolean
   error?: string
-  familyMember?: { name?: string; relationship?: string }
+  familyMember?: { id?: string; name?: string; relationship?: string }
   client?: Record<string, unknown>
   carePlan?: Record<string, unknown> | null
   recentVisits?: FamilyPortalVisit[]

@@ -24,6 +24,8 @@ describe('pickNextVisit', () => {
       [
         v({ id: 'c', status: 'cancelled', start: '13:00', end: '14:00' }),
         v({ id: 'm', status: 'missed', start: '13:00', end: '14:00' }),
+        // What the overdue sweep actually writes for a missed visit.
+        v({ id: 'u', status: 'uncompleted', start: '13:00', end: '14:00' }),
         v({ id: 'd', status: 'draft', start: '13:00', end: '14:00' }),
         v({ id: 'ok', date: '2026-10-01' }),
       ],

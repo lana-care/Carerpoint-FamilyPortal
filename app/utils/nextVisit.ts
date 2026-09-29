@@ -20,8 +20,10 @@ export interface NextVisitLike {
  * Visits that will not happen (or already did, or are not published) are never
  * "the next visit". `draft` is the agency's unpublished rota: the API can still
  * list it, and showing a relative a visit nobody has confirmed would mislead.
+ * `uncompleted` is what the overdue sweep writes for a missed visit (it never
+ * writes `missed` itself), possibly before the planned end time has passed.
  */
-const NOT_UPCOMING = new Set(['cancelled', 'canceled', 'missed', 'draft', 'completed', 'reviewed'])
+const NOT_UPCOMING = new Set(['cancelled', 'canceled', 'missed', 'uncompleted', 'draft', 'completed', 'reviewed'])
 
 /** Statuses that mean "the carer is there right now", even past the planned end. */
 const HAPPENING_NOW = new Set(['in_progress', 'checked_in'])

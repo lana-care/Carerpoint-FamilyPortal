@@ -8,6 +8,7 @@
 
       <EmptyState
         v-else-if="error"
+        role="alert"
         title="Could not load care plan"
         :description="error"
         size="sm"

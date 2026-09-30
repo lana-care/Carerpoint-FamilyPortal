@@ -20,6 +20,8 @@ export type PortalMsgRow = {
   createdAt?: string
   channel_type?: string
   sender_name?: string | null
+  family_portal_member_id?: string | null
+  family_link_id?: string | null
 }
 
 export type PortalMedRow = {

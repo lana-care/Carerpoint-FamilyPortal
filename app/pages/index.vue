@@ -10,16 +10,27 @@
       </div>
     </div>
 
-    <div v-else-if="error" class="max-w-md mx-auto px-4 py-24 text-center">
-      <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-destructive/10 flex items-center justify-center">
-        <LucideShieldAlert class="w-8 h-8 text-destructive" />
+    <!-- A relative who lands here almost always followed an old or withdrawn link.
+         "Access Denied" read as an accusation; say what is really going on and who
+         to call. The API's own wording ("Token has expired", "Invalid or expired
+         token") is deliberately not shown. -->
+    <div v-else-if="error" role="alert" class="max-w-md mx-auto px-4 py-24 text-center">
+      <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+        <LucideLinkOff class="w-8 h-8 text-primary" aria-hidden="true" />
       </div>
-      <h2 class="text-lg font-bold mb-2">Access Denied</h2>
-      <p class="text-sm text-muted-foreground mb-4">{{ error }}</p>
-      <NuxtLink to="/login" class="text-sm text-primary underline">Enter your access code</NuxtLink>
+      <h2 class="text-lg font-bold mb-2">
+        {{ error === 'signedOut' ? t('portalHome.signedOutTitle') : t('portalHome.sessionInactiveTitle') }}
+      </h2>
+      <p class="text-sm text-muted-foreground mb-4">
+        {{ error === 'signedOut' ? t('portalHome.signedOutBody') : t('portalHome.sessionInactiveBody') }}
+      </p>
+      <NuxtLink to="/login" class="text-sm text-primary underline">{{ t('portalHome.enterCode') }}</NuxtLink>
     </div>
 
     <div v-else-if="portalData?.valid" class="max-w-5xl mx-auto px-4 py-8 space-y-10 pb-16">
+      <!-- Next visit: first thing a relative wants to know. -->
+      <SharedNextVisitCard :visits="portalData.upcomingVisits" />
+
       <!-- Hero -->
       <div class="glass-card hairline-border rounded-2xl overflow-hidden glow-luna">
         <div class="bg-gradient-to-br from-primary/12 via-card to-card px-6 sm:px-8 pt-8 pb-6">
@@ -201,7 +212,7 @@
 
 <script setup lang="ts">
 import {
-  ShieldAlert as LucideShieldAlert,
+  Link2Off as LucideLinkOff,
   ClipboardList as LucideClipboardList,
   Calendar as LucideCalendar,
   Check as LucideCheck,
@@ -227,8 +238,12 @@ definePageMeta({ titleKey: 'nav.home' })
 
 const route = useRoute()
 const router = useRouter()
+const { t } = useI18n()
 const loading = ref(true)
-const error = ref<string | null>(null)
+// Not the API's wording: `'signedOut'` (no token at all) or `'inactive'` (a token
+// the API refused — expired, withdrawn or mistyped). Each maps to a reassuring
+// message in the template.
+const error = ref<'signedOut' | 'inactive' | null>(null)
 
 const { token, portalData, fetchPortal, setToken } = usePortalAuth()
 const { openVisit } = useFamilyVisitDetail()
@@ -311,13 +326,17 @@ onMounted(async () => {
   } else if (token.value) {
     await fetchPortal()
   } else {
-    error.value = 'You are not signed in yet. Open the link in your invitation email, or enter your access code below.'
+    error.value = 'signedOut'
   }
 
   if (portalData.value && !portalData.value.valid) {
-    error.value = portalData.value.error || 'Invalid session.'
+    error.value = 'inactive'
   } else if (portalData.value?.valid) {
     error.value = null
+  } else if (!error.value) {
+    // A token was present but the bootstrap yielded nothing usable (e.g. the API
+    // refused the request outright): same reassuring message, not a blank page.
+    error.value = 'inactive'
   }
   loading.value = false
 

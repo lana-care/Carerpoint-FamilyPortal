@@ -29,5 +29,27 @@
     "toggle": "Toggle theme",
     "toDark": "Switch to dark theme",
     "toLight": "Switch to light theme"
+  },
+  "portalHome": {
+    "sessionInactiveTitle": "This link is no longer active",
+    "sessionInactiveBody": "Access links expire from time to time to keep health information safe, so nothing is wrong on your side. Please contact your care agency and ask them to send you a new link.",
+    "signedOutTitle": "Please sign in",
+    "signedOutBody": "Open the link in your invitation email, or enter your access code.",
+    "enterCode": "Enter your access code",
+    "nextVisit": {
+      "title": "Next visit",
+      "none": "No upcoming visit is scheduled yet.",
+      "with": "with {name}",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "calendar": "Calendar",
+      "status": {
+        "scheduled": "Scheduled",
+        "confirmed": "Confirmed",
+        "en_route": "On the way",
+        "checked_in": "Carer arrived",
+        "in_progress": "In progress"
+      }
+    }
   }
 }

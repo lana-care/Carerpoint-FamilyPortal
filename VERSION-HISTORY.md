@@ -6,7 +6,7 @@
 >
 > The customer-facing surfaces are the **Website changelog page** (`Carerpoint-Website` → `changelogPage.entries`) and the **public roadmap** (`Carerpoint-Docs` → `content/3.roadmap/`). **Nothing here goes into either** — this repo serves health data to families, and its open questions are not marketing copy.
 >
-> Last updated: 20 July 2026.
+> Last updated: 20 October 2026.
 
 ---
 
@@ -14,6 +14,7 @@
 
 | Version | Date | What changed in the Family Portal |
 |---|---|---|
+| [1.6.0](#160--invoices-in-the-portal) | 20 Oct 2026 | Invoices list + PDF for families; all three version fields realigned |
 | [1.3.5](#135--no-functional-change) | 20 Jul 2026 | **Version bump only** |
 | [1.3.0](#130--ci-and-a-version-bump) | 11–13 Jul 2026 | Version bump + first CI workflow |
 | [1.2.5](#125--security-design-system-alignment) | 9 Jul 2026 | Route guarding, header-based token, `@lana-care/ui` adoption, version cleanup |
@@ -23,11 +24,22 @@
 
 ---
 
+## 1.6.0 — Invoices in the portal
+
+**Shipped 20 October 2026.**
+
+- **Invoices**: families see their relative's issued care invoices and download the PDF (`/family-portal/invoices`, read by `client_id`).
+- **Version fields realigned**: `package.json` (was 1.5.2), `nuxt.config.ts` `appVersion` (was v1.5.2) and `app/app.config.ts` (had drifted to v1.4.3) now all read 1.6.0.
+
+Gates: typecheck 0 errors, vitest 30 tests, build ok.
+
+---
+
 ## 1.3.5 — No functional change
 
 **Nothing shipped in this repo for 1.3.5.** The only commit is `chore(release): v1.3.5 (#17)` on 20 Jul — a version bump so the portal stays aligned with the other apps.
 
-The 1.3.5 release was Capoai credits and human oversight: Backend, Frontend, Website and Docs. The family portal has no AI surface, no billing surface and no automation surface, so there was nothing for it to do. Stated explicitly here so nobody goes looking for a credits feature that was never built.
+The 1.3.5 release was CapoAI credits and human oversight: Backend, Frontend, Website and Docs. The family portal has no AI surface, no billing surface and no automation surface, so there was nothing for it to do. Stated explicitly here so nobody goes looking for a credits feature that was never built.
 
 ---
 

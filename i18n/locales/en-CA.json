@@ -15,7 +15,8 @@
     "expand": "Expand",
     "collapse": "Collapse",
     "signOut": "Sign out",
-    "signedInAs": "Signed in as {name}"
+    "signedInAs": "Signed in as {name}",
+    "invoices": "Invoices"
   },
   "portal": {
     "title": "Family Portal",
@@ -23,7 +24,8 @@
     "home": "@:{'brand.name'} Family Portal home",
     "welcome": "Welcome, {name}",
     "familyMember": "Family Member",
-    "documentsTitle": "Shared documents"
+    "documentsTitle": "Shared documents",
+    "invoicesTitle": "Invoices"
   },
   "theme": {
     "toggle": "Toggle theme",
@@ -51,5 +53,29 @@
         "in_progress": "In progress"
       }
     }
+  },
+  "invoices": {
+    "intro": "Invoices from your care provider for care you pay for yourself. They appear here once they have been issued.",
+    "emptyTitle": "No invoices to show",
+    "emptyBody": "If your care is paid for by a local authority or the NHS, the invoices go to them and do not appear here.",
+    "errorTitle": "Could not load invoices",
+    "loadFailed": "Could not load invoices.",
+    "noToken": "No access token. Open the link from your email first.",
+    "invalidLink": "Invalid or expired access link.",
+    "invoice": "Invoice",
+    "creditNote": "Credit note",
+    "period": "{from} to {to}",
+    "due": "Due {date}",
+    "balance": "{amount} still to pay",
+    "status": {
+      "issued": "Issued",
+      "sent": "Issued",
+      "part_paid": "Part paid",
+      "paid": "Paid",
+      "overdue": "Overdue"
+    },
+    "download": "PDF",
+    "downloadLabel": "Download PDF of {number}",
+    "downloadFailed": "The PDF could not be downloaded. Please try again."
   }
 }

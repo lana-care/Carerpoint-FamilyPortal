@@ -15,7 +15,8 @@
     "expand": "Déplier",
     "collapse": "Replier",
     "signOut": "Se déconnecter",
-    "signedInAs": "Connecté en tant que {name}"
+    "signedInAs": "Connecté en tant que {name}",
+    "invoices": "Factures"
   },
   "portal": {
     "title": "Espace famille",
@@ -23,7 +24,8 @@
     "home": "Accueil de l'espace famille @:{'brand.name'}",
     "welcome": "Bienvenue, {name}",
     "familyMember": "Proche",
-    "documentsTitle": "Documents partagés"
+    "documentsTitle": "Documents partagés",
+    "invoicesTitle": "Factures"
   },
   "theme": {
     "toggle": "Basculer le thème",
@@ -51,5 +53,29 @@
         "in_progress": "En cours"
       }
     }
+  },
+  "invoices": {
+    "intro": "Les factures de votre prestataire de soins pour les soins que vous réglez vous-même. Elles apparaissent ici une fois émises.",
+    "emptyTitle": "Aucune facture à afficher",
+    "emptyBody": "Si vos soins sont pris en charge par une collectivité locale ou le NHS, les factures leur sont adressées et n'apparaissent pas ici.",
+    "errorTitle": "Impossible de charger les factures",
+    "loadFailed": "Impossible de charger les factures.",
+    "noToken": "Aucun jeton d'accès. Ouvrez d'abord le lien reçu par e-mail.",
+    "invalidLink": "Lien d'accès invalide ou expiré.",
+    "invoice": "Facture",
+    "creditNote": "Avoir",
+    "period": "Du {from} au {to}",
+    "due": "À régler avant le {date}",
+    "balance": "{amount} restant à payer",
+    "status": {
+      "issued": "Émise",
+      "sent": "Émise",
+      "part_paid": "Partiellement payée",
+      "paid": "Payée",
+      "overdue": "En retard"
+    },
+    "download": "PDF",
+    "downloadLabel": "Télécharger le PDF de {number}",
+    "downloadFailed": "Le PDF n'a pas pu être téléchargé. Veuillez réessayer."
   }
 }

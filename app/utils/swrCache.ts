@@ -19,6 +19,7 @@ export const PORTAL_TTL = {
   carePlan: 5 * 60 * 1000,
   medications: 5 * 60 * 1000,
   documents: 5 * 60 * 1000,
+  invoices: 2 * 60 * 1000,
   visit: 2 * 60 * 1000,
   visitNotes: 60 * 1000,
   visitPhotos: 5 * 60 * 1000,

@@ -5,6 +5,7 @@ import {
   ClipboardList as LucideClipboardList,
   Pill as LucidePill,
   FolderClosed as LucideFolderClosed,
+  Receipt as LucideReceipt,
   Star as LucideStar,
 } from 'lucide-vue-next'
 import type { Component } from 'vue'
@@ -38,6 +39,7 @@ export const PORTAL_NAV: readonly PortalNavItem[] = [
   { to: '/care-plan', labelKey: 'nav.carePlan', icon: LucideClipboardList },
   { to: '/medications', labelKey: 'nav.medications', icon: LucidePill },
   { to: '/documents', labelKey: 'nav.documents', icon: LucideFolderClosed },
+  { to: '/invoices', labelKey: 'nav.invoices', icon: LucideReceipt },
   { to: '/feedback', labelKey: 'nav.feedback', icon: LucideStar },
 ] as const
 

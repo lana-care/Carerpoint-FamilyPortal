@@ -42,6 +42,24 @@ export type PortalDocRow = {
   createdAt?: string
 }
 
+/** One invoice or credit note shared with the family (private payer, already issued). */
+export type PortalInvoiceRow = {
+  id: string
+  kind: 'invoice' | 'credit_note'
+  number: string | null
+  status: string
+  display_status: string
+  issue_date: string | null
+  due_date: string | null
+  period_start: string | null
+  period_end: string | null
+  total_pence: number
+  paid_pence: number
+  credited_pence: number
+  balance_pence: number
+  currency: string
+}
+
 export type PortalVisitNote = {
   id: string
   note: string
@@ -86,6 +104,7 @@ export const usePortalResourcesStore = defineStore('portalResources', {
     carePlan: makeEntry<Record<string, unknown> | null>(null) as CacheEntry<Record<string, unknown> | null>,
     medications: makeEntry<PortalMedRow[]>([]) as CacheEntry<PortalMedRow[]>,
     documents: makeEntry<PortalDocRow[]>([]) as CacheEntry<PortalDocRow[]>,
+    invoices: makeEntry<PortalInvoiceRow[]>([]) as CacheEntry<PortalInvoiceRow[]>,
     visits: {} as Record<string, CacheEntry<(FamilyPortalVisit & { id?: string }) | null>>,
     visitNotes: {} as Record<string, CacheEntry<PortalVisitNote[]>>,
     visitPhotos: {} as Record<string, CacheEntry<PortalVisitPhoto[]>>,
@@ -115,6 +134,9 @@ export const usePortalResourcesStore = defineStore('portalResources', {
     isDocumentsLoading: (state) => showLoading(state.documents),
     getDocuments: (state) => state.documents.data,
     documentsError: (state) => state.documents.error,
+
+    isInvoicesLoading: (state) => showLoading(state.invoices),
+    getInvoices: (state) => state.invoices.data,
 
     isVisitLoading: (state) => (id: string) => {
       const e = state.visits[id]
@@ -296,6 +318,41 @@ export const usePortalResourcesStore = defineStore('portalResources', {
       )
     },
 
+    async fetchInvoices(opts: { force?: boolean } = {}) {
+      requireToken()
+      const base = apiBase()
+      return swrFetch(
+        this.invoices,
+        async () => {
+          const res = await $fetch<{ valid?: boolean; data?: PortalInvoiceRow[]; error?: string }>(
+            `${base}/api/v1/family-portal/invoices`,
+            { headers: authHeaders() },
+          )
+          if (!res?.valid) {
+            throw new Error(res?.error || 'Could not load invoices.')
+          }
+          return Array.isArray(res.data) ? res.data : []
+        },
+        { force: opts.force, ttlMs: PORTAL_TTL.invoices },
+      )
+    },
+
+    /** The PDF sits behind the token, so it is fetched with the header and saved as a file. */
+    async downloadInvoicePdf(invoice: Pick<PortalInvoiceRow, 'id' | 'number'>) {
+      requireToken()
+      const base = apiBase()
+      const blob = await $fetch<Blob>(`${base}/api/v1/family-portal/invoices/${invoice.id}/pdf`, {
+        headers: authHeaders(),
+        responseType: 'blob',
+      })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `${invoice.number ?? 'invoice'}.pdf`
+      a.click()
+      URL.revokeObjectURL(url)
+    },
+
     async fetchVisit(visitId: string, opts: { force?: boolean; seed?: FamilyPortalVisit | null } = {}) {
       requireToken()
       const entry = this.ensureVisitEntry(visitId)
@@ -384,6 +441,7 @@ export const usePortalResourcesStore = defineStore('portalResources', {
       this.carePlan = makeEntry(null)
       this.medications = makeEntry([])
       this.documents = makeEntry([])
+      this.invoices = makeEntry([])
       this.visits = {}
       this.visitNotes = {}
       this.visitPhotos = {}

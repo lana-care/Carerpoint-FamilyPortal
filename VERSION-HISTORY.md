@@ -27,7 +27,7 @@
 
 **Nothing shipped in this repo for 1.3.5.** The only commit is `chore(release): v1.3.5 (#17)` on 20 Jul — a version bump so the portal stays aligned with the other apps.
 
-The 1.3.5 release was Capoai credits and human oversight: Backend, Frontend, Website and Docs. The family portal has no AI surface, no billing surface and no automation surface, so there was nothing for it to do. Stated explicitly here so nobody goes looking for a credits feature that was never built.
+The 1.3.5 release was CapoAI credits and human oversight: Backend, Frontend, Website and Docs. The family portal has no AI surface, no billing surface and no automation surface, so there was nothing for it to do. Stated explicitly here so nobody goes looking for a credits feature that was never built.
 
 ---
 

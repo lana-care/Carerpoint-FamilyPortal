@@ -4,6 +4,7 @@
   "description": "Carerpoint Family Portal v1.4.3",
   "private": true,
   "type": "module",
+  "packageManager": "bun@1.4.3",
   "scripts": {
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=4096 nuxt build",
     "dev": "cross-env NODE_OPTIONS=--max-http-header-size=32768 nuxt dev --port 3003",

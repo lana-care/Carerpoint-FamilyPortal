@@ -6,7 +6,7 @@
 >
 > The customer-facing surfaces are the **Website changelog page** (`Carerpoint-Website` → `changelogPage.entries`) and the **public roadmap** (`Carerpoint-Docs` → `content/3.roadmap/`). **Nothing here goes into either** — this repo serves health data to families, and its open questions are not marketing copy.
 >
-> Last updated: 20 July 2026.
+> Last updated: 20 October 2026.
 
 ---
 
@@ -14,12 +14,24 @@
 
 | Version | Date | What changed in the Family Portal |
 |---|---|---|
+| [1.6.0](#160--invoices-in-the-portal) | 20 Oct 2026 | Invoices list + PDF for families; all three version fields realigned |
 | [1.3.5](#135--no-functional-change) | 20 Jul 2026 | **Version bump only** |
 | [1.3.0](#130--ci-and-a-version-bump) | 11–13 Jul 2026 | Version bump + first CI workflow |
 | [1.2.5](#125--security-design-system-alignment) | 9 Jul 2026 | Route guarding, header-based token, `@lana-care/ui` adoption, version cleanup |
 | [1.1.x](#11x--the-repo-itself) | Mar 2026 | The entire portal: pages, auth, realtime messaging, documents |
 
 **71 commits total**, first on **28 March 2026**. This repo has **no 1.0.0 and no 1.1.0** — it did not exist yet. It also has no 1.2.1 (mobile-only). `main` is in sync with `origin/main`; tags `v1.2.5` and `v1.3.0` are both ancestors of `main`; the working tree is clean.
+
+---
+
+## 1.6.0 — Invoices in the portal
+
+**Shipped 20 October 2026.**
+
+- **Invoices**: families see their relative's issued care invoices and download the PDF (`/family-portal/invoices`, read by `client_id`).
+- **Version fields realigned**: `package.json` (was 1.5.2), `nuxt.config.ts` `appVersion` (was v1.5.2) and `app/app.config.ts` (had drifted to v1.4.3) now all read 1.6.0.
+
+Gates: typecheck 0 errors, vitest 30 tests, build ok.
 
 ---
 

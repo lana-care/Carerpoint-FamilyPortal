@@ -75,6 +75,7 @@
                   v-for="(a, i) in allergies"
                   :key="i"
                   variant="destructive"
+                  class="text-red-700 dark:text-red-300"
                 >
                   {{ a }}
                 </Badge>

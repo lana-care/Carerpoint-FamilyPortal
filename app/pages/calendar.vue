@@ -200,7 +200,7 @@
                 <button
                   v-if="day.extraCount > 0"
                   type="button"
-                  class="px-1.5 text-[10px] font-medium text-primary hover:underline"
+                  class="px-1.5 text-[10px] font-medium text-primary dark:text-luna-300 hover:underline"
                   @click="openDay(day.dateStr)"
                 >
                   +{{ day.extraCount }} more…

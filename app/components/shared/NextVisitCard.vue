@@ -34,7 +34,7 @@
 
     <NuxtLink
       to="/calendar"
-      class="text-xs text-primary font-medium inline-flex items-center gap-1 hover:underline"
+      class="text-xs text-primary dark:text-luna-300 font-medium inline-flex items-center gap-1 hover:underline"
     >
       {{ t('portalHome.nextVisit.calendar') }}
       <LucideChevronRight class="w-3 h-3" aria-hidden="true" />

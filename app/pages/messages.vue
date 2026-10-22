@@ -4,7 +4,7 @@
          bottom without hardcoding the chrome height (it subtracted 5.5rem). -->
     <div class="max-w-3xl mx-auto w-full px-4 pt-4 pb-0 flex flex-col flex-1 min-h-0">
       <div v-if="!token" class="text-sm text-muted-foreground text-center py-12">
-        <NuxtLink to="/login" class="text-primary underline">Sign in with your access link</NuxtLink>
+        <NuxtLink to="/login" class="text-primary dark:text-luna-300 underline">Sign in with your access link</NuxtLink>
       </div>
       <template v-else>
         <div class="shrink-0 space-y-2 mb-3">
@@ -46,7 +46,7 @@
                 class="max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm"
                 :class="m.direction === 'outbound'
                   ? 'bg-muted/60 border border-border/60 rounded-bl-md'
-                  : 'bg-luna-500/15 border border-luna-500/20 rounded-br-md'"
+                  : 'bg-luna-500/15 border border-luna-500/20 rounded-br-md [&_.text-muted-foreground]:text-foreground/75'"
               >
                 <p class="text-xs font-semibold text-muted-foreground mb-1">
                   {{ messageFromLabel(m) }}

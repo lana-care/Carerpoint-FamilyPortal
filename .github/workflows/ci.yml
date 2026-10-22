@@ -35,6 +35,9 @@ jobs:
           # a missing secret (they still cannot resolve the packages).
           GITHUB_PACKAGES_TOKEN: ${{ secrets.LANA_PACKAGES_TOKEN || secrets.GITHUB_TOKEN }}
 
+      - name: Typecheck (bun check + nuxt typecheck)
+        run: bun run typecheck
+
       - name: Unit tests
         run: bunx vitest run --passWithNoTests
 

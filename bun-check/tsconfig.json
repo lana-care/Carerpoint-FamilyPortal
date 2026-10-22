@@ -1,0 +1,6 @@
+{
+  // `bun check -p bun-check`: the .ts half of `bun run typecheck`. Kept out of the repo
+  // root because Nuxt's app program includes `../*.d.ts` (vue-tsc must not see the shim).
+  "extends": "../tsconfig.json",
+  "files": ["./shim.d.ts"]
+}

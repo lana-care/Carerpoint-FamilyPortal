@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <div class="max-w-3xl mx-auto px-4 py-6 space-y-4">
-      <div class="rounded-2xl border border-border/60 bg-card overflow-hidden shadow-sm">
+      <div class="glass-card hairline-border rounded-2xl overflow-hidden">
         <div class="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b border-border/50">
           <div class="flex items-center gap-3 min-w-0">
             <div
@@ -33,7 +33,7 @@
               class="h-12 sm:h-8"
               aria-label="Calendar view"
             />
-            <div class="inline-flex items-center rounded-full border border-border/60 bg-muted/40 p-0.5">
+            <div class="glass-pill inline-flex items-center p-0.5">
               <Button
                 variant="ghost"
                 size="icon"
@@ -271,7 +271,7 @@
             <span
               v-for="chip in statusChips"
               :key="chip.key"
-              class="inline-flex items-center gap-1.5 rounded-full border border-border/50 bg-background px-2.5 py-1 text-[11px] text-muted-foreground"
+              class="glass-pill inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] text-muted-foreground"
             >
               <span class="size-1.5 rounded-full shrink-0" :class="chip.dot" />
               <span class="font-semibold text-foreground tabular-nums">{{ chip.count }}</span>

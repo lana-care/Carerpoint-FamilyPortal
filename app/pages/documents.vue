@@ -6,6 +6,7 @@
       </div>
 
       <EmptyState
+        class="glass-card hairline-border rounded-2xl"
         v-else-if="error"
         role="alert"
         title="Could not load documents"
@@ -14,6 +15,7 @@
       />
 
       <EmptyState
+        class="glass-card hairline-border rounded-2xl"
         v-else-if="!rows.length"
         title="No documents shared yet"
         description="Your care provider can publish reports and letters here when available."
@@ -21,11 +23,11 @@
         size="sm"
       />
 
-      <ul v-else class="space-y-2">
+      <ul v-else class="glass-card hairline-border rounded-2xl divide-y divide-border/50 overflow-hidden">
         <li
           v-for="doc in rows"
           :key="doc.id"
-          class="rounded-lg border bg-card p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
+          class="p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
         >
           <div class="min-w-0">
             <p class="font-medium text-sm">{{ doc.title || 'Document' }}</p>

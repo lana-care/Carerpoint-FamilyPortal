@@ -5,7 +5,7 @@
         Share a compliment, concern, or feedback about care.
       </p>
 
-      <Card v-if="done">
+      <GlassCard padding="none" radius="xl" v-if="done">
         <CardContent class="pt-8 pb-8 text-center space-y-3">
           <p class="text-base font-semibold">Thank you</p>
           <p class="text-sm text-muted-foreground">
@@ -13,9 +13,9 @@
           </p>
           <Button class="min-h-10" @click="resetForm">Send more feedback</Button>
         </CardContent>
-      </Card>
+      </GlassCard>
 
-      <Card v-else>
+      <GlassCard padding="none" radius="xl" v-else>
         <CardContent class="pt-6">
           <div v-if="step === 1" class="space-y-4">
             <div class="space-y-1.5">
@@ -82,14 +82,15 @@
             </div>
           </div>
         </CardContent>
-      </Card>
+      </GlassCard>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { Button } from '~/components/ui/button'
-import { Card, CardContent } from '~/components/ui/card'
+import { CardContent } from '~/components/ui/card'
+import { GlassCard } from '~/components/ui/glass-card'
 import { Textarea } from '~/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select'
 import { toast } from 'vue-sonner'

@@ -33,7 +33,7 @@
 
       <!-- Hero -->
       <div class="glass-card hairline-border rounded-2xl overflow-hidden glow-luna">
-        <div class="bg-gradient-to-br from-primary/12 via-card to-card px-6 sm:px-8 pt-8 pb-6">
+        <div class="bg-gradient-to-br from-primary/12 via-transparent to-transparent px-6 sm:px-8 pt-8 pb-6">
           <div class="flex flex-col sm:flex-row sm:items-start gap-6">
             <Avatar class="h-24 w-24 shrink-0 ring-4 ring-background shadow-lg">
               <AvatarFallback class="text-2xl font-bold bg-primary/20 text-primary">
@@ -116,7 +116,7 @@
             </div>
             <div class="space-y-3">
               <h3 class="text-sm font-semibold text-foreground">This month</h3>
-              <CalendarMonth :year="calendarYear" :month="calendarMonth" :marked-days="markedVisitDays" />
+              <CalendarMonth glass :year="calendarYear" :month="calendarMonth" :marked-days="markedVisitDays" />
               <NuxtLink
                 to="/calendar"
                 class="text-xs text-primary font-medium inline-flex items-center gap-1 hover:underline"
@@ -129,7 +129,7 @@
         </TabsContent>
 
         <TabsContent value="updates" class="mt-8 space-y-8">
-          <Card>
+          <GlassCard padding="none" radius="xl">
             <CardHeader class="pb-2 flex flex-row items-center justify-between">
               <CardTitle class="text-base font-semibold flex items-center gap-2">
                 <LucideCalendar class="w-5 h-5 text-primary" />
@@ -170,9 +170,9 @@
               </div>
               <p v-else class="text-sm text-muted-foreground italic py-4 text-center">No recent visits</p>
             </CardContent>
-          </Card>
+          </GlassCard>
 
-          <Card>
+          <GlassCard padding="none" radius="xl">
             <CardHeader class="pb-2 flex flex-row items-center justify-between">
               <CardTitle class="text-base font-semibold flex items-center gap-2">
                 <LucideMessageCircle class="w-5 h-5 text-primary" />
@@ -199,7 +199,7 @@
               </div>
               <p v-else class="text-sm text-muted-foreground italic py-4 text-center">No messages yet</p>
             </CardContent>
-          </Card>
+          </GlassCard>
         </TabsContent>
       </Tabs>
     </div>
@@ -226,7 +226,8 @@ import {
   MessageSquarePlus as LucideMessageSquarePlus,
 } from 'lucide-vue-next'
 import { Avatar, AvatarFallback } from '~/components/ui/avatar'
-import { Card, CardHeader, CardTitle, CardContent } from '~/components/ui/card'
+import { CardHeader, CardTitle, CardContent } from '~/components/ui/card'
+import { GlassCard } from '~/components/ui/glass-card'
 import { Separator } from '~/components/ui/separator'
 import { Skeleton } from '~/components/ui/skeleton'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'

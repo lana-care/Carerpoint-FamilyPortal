@@ -15,11 +15,14 @@ const props = withDefaults(
     selectedDay?: number | null
     /** Hide the built-in month heading when the parent toolbar already shows it */
     showLabel?: boolean
+    /** Frosted Liquid Glass panel (standalone use) instead of the solid card (nested in another card) */
+    glass?: boolean
   }>(),
   {
     markedDays: () => new Set<number>(),
     selectedDay: null,
     showLabel: true,
+    glass: false,
   },
 )
 
@@ -68,7 +71,7 @@ function dayClass(d: number) {
 </script>
 
 <template>
-  <div class="rounded-2xl border border-border/60 bg-card p-4 shadow-sm">
+  <div :class="['rounded-2xl p-4', glass ? 'glass-card hairline-border' : 'border border-border/60 bg-card shadow-sm']">
     <p v-if="showLabel" class="text-sm font-semibold text-foreground mb-3">{{ label }}</p>
     <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-medium text-muted-foreground mb-2">
       <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>

@@ -4,10 +4,12 @@ This app shares one design language with the rest of the CarerPoint ecosystem:
 the **website** (`Luna-Website`, the visual reference), the **dashboard**
 (`Luna-Frontend`) and the **mobile app** (`Carerpoint-mobile`, Flutter).
 
-The family portal is the simplest, friendliest surface of the product, so glass
-is used sparingly — on the sticky page headers and the login hero — while the
-content (visits, care plan, medications, messages) stays on solid, readable
-cards.
+The family portal is the simplest, friendliest surface of the product, and Liquid
+Glass is its design concept: the shell (sidebar, toolbar) is frosted over a static
+ambient backdrop, and cards, panels, list containers, empty states, tabs and chips
+are glass. Readability comes first, because many relatives are older: text stays at
+AA contrast (4.5:1) on the glass in light and dark, and anything stacked over content
+(drawer, dialogs, selects, toasts, the support panel) stays opaque.
 
 ## Where the tokens live
 
@@ -30,19 +32,33 @@ Base radius `0.625rem` (10px). Fonts: **Space Grotesk** (body), **Oddval**
 
 ## Liquid Glass
 
-"Liquid Glass" = soft translucency + light blur + subtle border + soft shadow,
-used **only on elevated surfaces**.
+"Liquid Glass" = soft translucency + light blur + subtle border + soft shadow.
+It needs something to blur, so `<SharedShellBackground>` (in `app.vue`, and on the
+login page) paints two low-contrast aurora blobs, **static** (no animation on app
+screens). Nothing between it and the page may have an opaque background: do not put
+`bg-background` on the layout wrappers.
 
 | Class / component | Use for |
 |---|---|
-| `.glass-bar` | Frosted sticky page header (used by every page) |
-| `.glass-card` / `<GlassCard>` | Frosted card (login hero) |
-| `.glass-pill` | Frosted pill |
+| `.glass-bar` | Sidebar (expanded) and the page toolbar |
+| `.glass-card` / `<GlassCard>` | Cards, panels, the messages thread and composer, document/invoice list containers, empty states, login |
+| `.glass-pill` | Tabs, segmented controls, the calendar stepper and status chips |
 | `<PillButton>` | Pill CTA (`primary` / `glass` / `ghost`) |
+| `.surface-overlay` + `.dialog-scrim` | The mobile drawer, dialogs, selects, the support panel: **opaque** |
 | `.glow-luna` / `.glow-lime`, `.hairline-border`, `.tint-*` | Depth & tints |
 
-Each utility has a `@supports not (backdrop-filter…)` solid fallback and a
-`.dark` variant.
+Rules we keep:
+
+- One blurred container per list (documents, invoices, the thread), never a
+  blurred row each. Dense grids (the week view) keep opaque cell backgrounds inside
+  the glass container.
+- No opaque `bg-card` / `via-card` fills on top of a glass surface: they hide it.
+- Form inputs stay readable (kit fill); the feedback rating stays a square
+  segmented control.
+- `@media (prefers-reduced-transparency: reduce)` (in `assets/css/main.css`) turns
+  glass into the opaque `--card` / `--background` surfaces and hides the backdrop;
+  `tokens.css` already has the `@supports not (backdrop-filter)` fallback.
+- The collapsed sidebar rail is a solid brand tint (white icons), not glass.
 
 ```vue
 <script setup lang="ts">
@@ -50,7 +66,7 @@ import { GlassCard } from '~/components/ui/glass-card'
 </script>
 
 <template>
-  <GlassCard radius="2xl" padding="lg" glow="luna">
+  <GlassCard radius="xl" padding="none">
     <slot />
   </GlassCard>
 </template>
@@ -59,14 +75,15 @@ import { GlassCard } from '~/components/ui/glass-card'
 `GlassCard` props: `glow` (`luna|lime|none`), `radius` (`lg|xl|2xl|3xl`),
 `padding` (`none|sm|md|lg`). `PillButton` props: `variant`, `size`, `to`, `glow`.
 
-The standard shadcn `Button`, `Card`, `Input`, `Badge`, `Dialog` etc. are the
-same components (and variants) used in the dashboard and website.
+The standard shadcn `Button`, `Input`, `Badge`, `Dialog` etc. are the same
+components (and variants) used in the dashboard and website.
 
 ## Accessibility
 
-- Keep important content off overly transparent backgrounds.
-- No glass on long forms — solid cards/inputs there.
-- Test light **and** dark mode.
+- Body text ≥ 4.5:1 on the glass, in **both** themes, over the real backdrop.
+  Links on glass use `text-primary dark:text-luna-300`.
+- No glass on dialogs, dropdowns or toasts.
+- Test light **and** dark mode, and with reduced transparency on.
 
 ## Cross-platform parity
 

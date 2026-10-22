@@ -7,5 +7,6 @@
 *(no memories yet)*
 - [Layout + color mode du portail](portal-layout-and-color-mode.md) — `layouts/default.vue` existe enfin (avant : 9 headers dupliqués, tous en `layout:false`) ; `useColorMode` local shadow celui de VueUse ; cookie résolu en SSR (fini le FOUC)
 - [Pinia SWR anti-refetch](family-portal-pinia-swr.md) — `portalSession` + `portalResources` caches; `usePortalAuth` façade cookie; pas de bootstrap après send message
+- [Icons: @lana-care/icons](icons-carerpoint-pack.md) — Lucide replaced by `Cp*` components; lucide stays installed only as a peer of @lana-care/ui
 - [bun check = moitié .ts du typecheck](bun-check-ts-half-of-typecheck.md) — `typecheck` = `bun check -p bun-check && nuxt typecheck` ; shim `*.vue` ; vue-tsc reste le superset
 - [Le verre exige des ancêtres transparents](glass-needs-transparent-ancestors.md) — aucun `bg-background` entre l'aurora et les `.glass-*` ; `:global(.dark) .x` scopé compile en `.dark` nu ; `Card` → `GlassCard`

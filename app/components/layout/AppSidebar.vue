@@ -69,8 +69,8 @@ async function signOut() {
   <aside
     class="portal-sidebar relative z-40 hidden md:flex flex-col shrink-0 h-dvh transition-[width,background-color,border-color,color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
     :class="collapsed
-      ? 'border-r-0 bg-transparent text-white'
-      : 'border-r border-border/50 bg-muted/30 dark:bg-muted/20'"
+      ? 'portal-sidebar--rail border-r-0 text-white'
+      : 'glass-bar border-r border-border/50'"
     :style="{ width: 'var(--layout-sidebar-width)' }"
     :aria-label="t('nav.sectionFamilyPortal')"
   >
@@ -176,12 +176,12 @@ async function signOut() {
     >
       <button
         type="button"
-        class="absolute inset-0 bg-black/40 backdrop-blur-sm"
+        class="dialog-scrim absolute inset-0"
         :aria-label="t('nav.closeNavigation')"
         @click="closeMobile"
       />
       <aside
-        class="relative z-10 flex flex-col w-[min(18rem,88vw)] h-full bg-background border-r border-border shadow-xl"
+        class="relative z-10 flex flex-col w-[min(18rem,88vw)] h-full surface-overlay"
         :aria-label="t('nav.sectionFamilyPortal')"
       >
         <div class="flex items-center gap-2 h-14 px-3 shrink-0 border-b border-border/50">

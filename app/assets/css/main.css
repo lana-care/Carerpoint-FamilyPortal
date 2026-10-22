@@ -13,9 +13,8 @@
    .glow-*, .tint-*, .hairline-border, .font-display, etc.).
 
    tokens.css  — required core token layer.
-   effects.css — ambient decorative effects (.aurora-bg + the
-                 interactive .beam-grid* spotlight stack) used by
-                 <ShellBackground>.
+   effects.css — ambient decorative effects (.aurora-bg) used by
+                 <ShellBackground> (static here, see the end of this file).
 
    These were vendored into ./vendor/ for a while because the bare
    subpath import was not bundled in the Cloudflare Workers build,
@@ -127,4 +126,50 @@
 }
 [data-sonner-toast] [data-description] {
   opacity: 0.85;
+}
+
+/* ============================================================
+   Liquid Glass — app-level additions
+   ============================================================ */
+
+/* Collapsed sidebar rail: solid brand tint behind the white icon strip, matching
+   the dashboard. Plain (not scoped) CSS on purpose: a scoped `:global(.dark) .x`
+   compiled to a bare `.dark` rule, which painted the tint on <html> in dark mode
+   and hid the ambient backdrop. */
+.portal-sidebar--rail {
+  background-color: color-mix(in oklab, var(--primary) 72%, #0b1a33);
+}
+.dark .portal-sidebar--rail {
+  background-color: color-mix(in oklab, var(--primary) 45%, #050b14);
+}
+
+/* Static backdrop: app screens do not animate (the website may). The blobs from
+   effects.css still drift by default, so freeze them here. */
+.aurora-bg::before,
+.aurora-bg::after {
+  animation: none;
+}
+
+/* Reduced transparency: users who ask the OS for it (and older people often do)
+   get the opaque --card / --background surfaces, no blur, text on a flat fill.
+   shortcut: move to @lana-care/design-tokens once published (tokens.css has the
+   `@supports not (backdrop-filter)` fallback but not this media query). */
+@media (prefers-reduced-transparency: reduce) {
+  .glass-card,
+  .glass-pill,
+  .dark .glass-card,
+  .dark .glass-pill {
+    background: var(--card);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .glass-bar,
+  .dark .glass-bar {
+    background: var(--background);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .aurora-bg {
+    display: none;
+  }
 }

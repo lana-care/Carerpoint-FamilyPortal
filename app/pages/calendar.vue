@@ -41,7 +41,7 @@
                 :aria-label="prevLabel"
                 @click="goPrev"
               >
-                <LucideChevronLeft class="h-4 w-4" />
+                <CpChevronLeft class="h-4 w-4" />
               </Button>
               <Button
                 variant="ghost"
@@ -58,7 +58,7 @@
                 :aria-label="nextLabel"
                 @click="goNext"
               >
-                <LucideChevronRight class="h-4 w-4" />
+                <CpChevronRight class="h-4 w-4" />
               </Button>
             </div>
           </div>
@@ -285,7 +285,7 @@
 </template>
 
 <script setup lang="ts">
-import { ChevronLeft as LucideChevronLeft, ChevronRight as LucideChevronRight } from 'lucide-vue-next'
+import { CpChevronLeft, CpChevronRight } from '@lana-care/icons'
 import { Button } from '~/components/ui/button'
 import { CalendarMonth } from '~/components/ui/calendar'
 import type { FamilyPortalVisit } from '~/composables/usePortalAuth'

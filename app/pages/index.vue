@@ -16,7 +16,7 @@
          token") is deliberately not shown. -->
     <div v-else-if="error" role="alert" class="max-w-md mx-auto px-4 py-24 text-center">
       <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-        <LucideLinkOff class="w-8 h-8 text-primary" aria-hidden="true" />
+        <CpLinkOff class="w-8 h-8 text-primary" aria-hidden="true" />
       </div>
       <h2 class="text-lg font-bold mb-2">
         {{ error === 'signedOut' ? t('portalHome.signedOutTitle') : t('portalHome.sessionInactiveTitle') }}
@@ -64,7 +64,7 @@
         </div>
         <div v-if="portalData.carePlan" class="px-6 sm:px-8 py-5 border-t bg-muted/15">
           <div class="flex items-start gap-3">
-            <LucideClipboardList class="w-5 h-5 text-primary shrink-0 mt-0.5" />
+            <CpClipboardList class="w-5 h-5 text-primary shrink-0 mt-0.5" />
             <div>
               <p class="text-xs font-semibold text-foreground">Active care plan</p>
               <p class="text-sm font-medium mt-0.5">{{ (portalData.carePlan as { title?: string }).title }}</p>
@@ -122,7 +122,7 @@
                 class="text-xs text-primary dark:text-luna-300 font-medium inline-flex items-center gap-1 hover:underline"
               >
                 Open full calendar
-                <LucideChevronRight class="w-3 h-3" />
+                <CpChevronRight class="w-3 h-3" />
               </NuxtLink>
             </div>
           </div>
@@ -132,7 +132,7 @@
           <GlassCard padding="none" radius="xl">
             <CardHeader class="pb-2 flex flex-row items-center justify-between">
               <CardTitle class="text-base font-semibold flex items-center gap-2">
-                <LucideCalendar class="w-5 h-5 text-primary" />
+                <CpCalendar class="w-5 h-5 text-primary" />
                 Recent visits
               </CardTitle>
               <NuxtLink to="/calendar" class="text-xs text-primary dark:text-luna-300 hover:underline">View all</NuxtLink>
@@ -152,8 +152,8 @@
                     class="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
                     :class="visit.status === 'completed' ? 'bg-emerald-100 dark:bg-emerald-900/30' : 'bg-muted'"
                   >
-                    <LucideCheck v-if="visit.status === 'completed'" class="w-4 h-4 text-emerald-600" />
-                    <LucideClock v-else class="w-4 h-4 text-muted-foreground" />
+                    <CpCheck v-if="visit.status === 'completed'" class="w-4 h-4 text-emerald-600" />
+                    <CpClock v-else class="w-4 h-4 text-muted-foreground" />
                   </div>
                   <div class="flex-1 min-w-0 text-left">
                     <div class="flex items-center gap-2 flex-wrap">
@@ -175,7 +175,7 @@
           <GlassCard padding="none" radius="xl">
             <CardHeader class="pb-2 flex flex-row items-center justify-between">
               <CardTitle class="text-base font-semibold flex items-center gap-2">
-                <LucideMessageCircle class="w-5 h-5 text-primary" />
+                <CpMessageCircle class="w-5 h-5 text-primary" />
                 Messages
               </CardTitle>
               <NuxtLink to="/messages" class="text-xs text-primary dark:text-luna-300 hover:underline">Open thread</NuxtLink>
@@ -212,19 +212,18 @@
 
 <script setup lang="ts">
 import {
-  Link2Off as LucideLinkOff,
-  ClipboardList as LucideClipboardList,
-  Calendar as LucideCalendar,
-  Check as LucideCheck,
-  Clock as LucideClock,
-  MessageCircle as LucideMessageCircle,
-  ChevronRight as LucideChevronRight,
-  CalendarDays as LucideCalendarDays,
-  Pill as LucidePill,
-  FileText as LucideFileText,
-  MessageSquare as LucideMessageSquare,
-  MessageSquarePlus as LucideMessageSquarePlus,
-} from 'lucide-vue-next'
+  CpLinkOff,
+  CpClipboardList,
+  CpCalendar,
+  CpCheck,
+  CpClock,
+  CpMessageCircle,
+  CpChevronRight,
+  CpPill,
+  CpFileText,
+  CpMessageSquare,
+  CpMessageSquarePlus,
+} from '@lana-care/icons'
 import { Avatar, AvatarFallback } from '~/components/ui/avatar'
 import { CardHeader, CardTitle, CardContent } from '~/components/ui/card'
 import { GlassCard } from '~/components/ui/glass-card'
@@ -280,12 +279,12 @@ const markedVisitDays = computed(() => {
 })
 
 const quickLinks = computed(() => [
-  { to: '/calendar', label: 'Calendar', hint: 'Day, week and month visits', icon: LucideCalendarDays },
-  { to: '/messages', label: 'Messages', hint: 'Chat with the agency', icon: LucideMessageSquare },
-  { to: '/care-plan', label: 'Care plan', hint: 'Read-only goals and needs', icon: LucideFileText },
-  { to: '/medications', label: 'Medications', hint: 'Current medication list', icon: LucidePill },
-  { to: '/documents', label: 'Documents', hint: 'Shared files', icon: LucideFileText },
-  { to: '/feedback', label: 'Feedback', hint: 'Share a compliment or concern', icon: LucideMessageSquarePlus },
+  { to: '/calendar', label: 'Calendar', hint: 'Day, week and month visits', icon: CpCalendar },
+  { to: '/messages', label: 'Messages', hint: 'Chat with the agency', icon: CpMessageSquare },
+  { to: '/care-plan', label: 'Care plan', hint: 'Read-only goals and needs', icon: CpFileText },
+  { to: '/medications', label: 'Medications', hint: 'Current medication list', icon: CpPill },
+  { to: '/documents', label: 'Documents', hint: 'Shared files', icon: CpFileText },
+  { to: '/feedback', label: 'Feedback', hint: 'Share a compliment or concern', icon: CpMessageSquarePlus },
 ])
 
 function formatList(val: unknown) {

@@ -24,7 +24,7 @@
           <CardContent class="pt-4 text-sm">
             <div class="flex items-start gap-3">
               <span class="grid size-9 shrink-0 place-items-center rounded-lg bg-luna-500/[0.1] text-luna-600 dark:text-luna-300">
-                <LucidePill class="size-4.5" />
+                <CpPill class="size-4.5" />
               </span>
               <div class="min-w-0 flex-1 space-y-1">
                 <div class="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
@@ -62,7 +62,7 @@
 
 <script setup lang="ts">
 import { toast } from 'vue-sonner'
-import { Pill as LucidePill } from 'lucide-vue-next'
+import { CpPill } from '@lana-care/icons'
 import { CardContent } from '~/components/ui/card'
 import { GlassCard } from '~/components/ui/glass-card'
 import { Badge } from '~/components/ui/badge'

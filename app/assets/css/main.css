@@ -27,6 +27,9 @@
 /* Powers the circular reveal of <ThemeToggle> (@lana-care/ui). Without it the
    theme still switches, just instantly. */
 @import "@lana-care/design-tokens/theme-transition.css";
+/* Motion for @lana-care/icons (colours work without it). Hover animation plays on the
+   icon or on the button/link around it; reduced-motion stops everything. */
+@import "@lana-care/icons/icons.css";
 
 /* ============================================================
    Scan the shared design-system components so Tailwind generates

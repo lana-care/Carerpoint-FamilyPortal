@@ -21,7 +21,7 @@
         v-else-if="!rows.length"
         :title="$t('invoices.emptyTitle')"
         :description="$t('invoices.emptyBody')"
-        :icon="LucideReceipt"
+        :icon="CpInvoice"
         size="sm"
       />
 
@@ -64,7 +64,7 @@
               :aria-label="$t('invoices.downloadLabel', { number: inv.number })"
               @click="download(inv)"
             >
-              <LucideDownload class="h-4 w-4 mr-1.5" />{{ $t('invoices.download') }}
+              <CpDownload class="h-4 w-4 mr-1.5" />{{ $t('invoices.download') }}
             </Button>
           </div>
         </li>
@@ -75,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import { Receipt as LucideReceipt, Download as LucideDownload } from 'lucide-vue-next'
+import { CpInvoice, CpDownload } from '@lana-care/icons'
 import { Button } from '~/components/ui/button'
 import { usePortalResourcesStore, type PortalInvoiceRow } from '~/stores/portalResources'
 import { normalizePortalError } from '~/composables/usePortalAuth'

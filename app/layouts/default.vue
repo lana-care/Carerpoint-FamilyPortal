@@ -1,7 +1,6 @@
 <template>
   <div
-    class="relative h-dvh flex overflow-hidden text-foreground bg-background layout-shell"
-    :class="collapsed ? 'layout-shell--rail' : 'layout-shell--expanded'"
+    class="relative h-dvh flex overflow-hidden text-foreground"
     :style="shellStyle"
   >
     <!--
@@ -22,7 +21,7 @@
 
     <div class="relative z-0 flex-1 flex flex-col min-w-0 min-h-0 w-full">
       <div
-        class="main-surface flex-1 flex flex-col min-h-0 min-w-0 w-full overflow-hidden bg-background md:border-l md:border-border/60"
+        class="main-surface flex-1 flex flex-col min-h-0 min-w-0 w-full overflow-hidden md:border-l md:border-border/60"
       >
         <LayoutPageToolbar />
 
@@ -49,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-const { width: sidebarWidth, collapsed, readPersisted } = usePortalSidebar()
+const { width: sidebarWidth, readPersisted } = usePortalSidebar()
 
 const shellStyle = computed(() => ({
   '--layout-sidebar-width': sidebarWidth.value,
@@ -59,14 +58,3 @@ onMounted(() => {
   readPersisted()
 })
 </script>
-
-<style scoped>
-/* Collapsed rail: solid tint behind the icon strip, matching the dashboard. */
-.layout-shell--rail {
-  background-color: color-mix(in oklab, var(--primary) 72%, #0b1a33);
-}
-
-:global(.dark) .layout-shell--rail {
-  background-color: color-mix(in oklab, var(--primary) 45%, #050b14);
-}
-</style>

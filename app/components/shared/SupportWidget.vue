@@ -19,7 +19,7 @@
   <Transition name="chat-slide">
     <div
       v-if="isOpen"
-      class="fixed z-50 bottom-0 right-0 sm:bottom-5 sm:right-5 w-full sm:w-[380px] h-[100dvh] sm:h-auto sm:max-h-[calc(100dvh-40px)] rounded-none sm:rounded-2xl shadow-2xl shadow-black/15 dark:shadow-black/40 overflow-hidden flex flex-col bg-background border border-border"
+      class="fixed z-50 bottom-0 right-0 sm:bottom-5 sm:right-5 w-full sm:w-[380px] h-[100dvh] sm:h-auto sm:max-h-[calc(100dvh-40px)] rounded-none sm:rounded-2xl overflow-hidden flex flex-col surface-overlay"
     >
       <div class="support-header relative overflow-hidden shrink-0 px-5 pt-4 pb-5">
         <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-white/5" />

@@ -24,7 +24,7 @@
       <p class="text-sm text-muted-foreground mb-4">
         {{ error === 'signedOut' ? t('portalHome.signedOutBody') : t('portalHome.sessionInactiveBody') }}
       </p>
-      <NuxtLink to="/login" class="text-sm text-primary underline">{{ t('portalHome.enterCode') }}</NuxtLink>
+      <NuxtLink to="/login" class="text-sm text-primary dark:text-luna-300 underline">{{ t('portalHome.enterCode') }}</NuxtLink>
     </div>
 
     <div v-else-if="portalData?.valid" class="max-w-5xl mx-auto px-4 py-8 space-y-10 pb-16">
@@ -33,10 +33,10 @@
 
       <!-- Hero -->
       <div class="glass-card hairline-border rounded-2xl overflow-hidden glow-luna">
-        <div class="bg-gradient-to-br from-primary/12 via-card to-card px-6 sm:px-8 pt-8 pb-6">
+        <div class="bg-gradient-to-br from-primary/12 via-transparent to-transparent px-6 sm:px-8 pt-8 pb-6">
           <div class="flex flex-col sm:flex-row sm:items-start gap-6">
             <Avatar class="h-24 w-24 shrink-0 ring-4 ring-background shadow-lg">
-              <AvatarFallback class="text-2xl font-bold bg-primary/20 text-primary">
+              <AvatarFallback class="text-2xl font-bold bg-primary/20 text-primary dark:text-luna-300">
                 {{ clientInitials }}
               </AvatarFallback>
             </Avatar>
@@ -71,7 +71,7 @@
               <p v-if="(portalData.carePlan as { summary?: string }).summary" class="text-sm text-muted-foreground mt-1">
                 {{ (portalData.carePlan as { summary?: string }).summary }}
               </p>
-              <NuxtLink to="/care-plan" class="text-xs text-primary font-medium inline-block mt-2 hover:underline">
+              <NuxtLink to="/care-plan" class="text-xs text-primary dark:text-luna-300 font-medium inline-block mt-2 hover:underline">
                 View full care plan
               </NuxtLink>
             </div>
@@ -116,10 +116,10 @@
             </div>
             <div class="space-y-3">
               <h3 class="text-sm font-semibold text-foreground">This month</h3>
-              <CalendarMonth :year="calendarYear" :month="calendarMonth" :marked-days="markedVisitDays" />
+              <CalendarMonth glass :year="calendarYear" :month="calendarMonth" :marked-days="markedVisitDays" />
               <NuxtLink
                 to="/calendar"
-                class="text-xs text-primary font-medium inline-flex items-center gap-1 hover:underline"
+                class="text-xs text-primary dark:text-luna-300 font-medium inline-flex items-center gap-1 hover:underline"
               >
                 Open full calendar
                 <LucideChevronRight class="w-3 h-3" />
@@ -129,13 +129,13 @@
         </TabsContent>
 
         <TabsContent value="updates" class="mt-8 space-y-8">
-          <Card>
+          <GlassCard padding="none" radius="xl">
             <CardHeader class="pb-2 flex flex-row items-center justify-between">
               <CardTitle class="text-base font-semibold flex items-center gap-2">
                 <LucideCalendar class="w-5 h-5 text-primary" />
                 Recent visits
               </CardTitle>
-              <NuxtLink to="/calendar" class="text-xs text-primary hover:underline">View all</NuxtLink>
+              <NuxtLink to="/calendar" class="text-xs text-primary dark:text-luna-300 hover:underline">View all</NuxtLink>
             </CardHeader>
             <CardContent class="pt-0">
               <div v-if="portalData.recentVisits?.length" class="space-y-2">
@@ -170,15 +170,15 @@
               </div>
               <p v-else class="text-sm text-muted-foreground italic py-4 text-center">No recent visits</p>
             </CardContent>
-          </Card>
+          </GlassCard>
 
-          <Card>
+          <GlassCard padding="none" radius="xl">
             <CardHeader class="pb-2 flex flex-row items-center justify-between">
               <CardTitle class="text-base font-semibold flex items-center gap-2">
                 <LucideMessageCircle class="w-5 h-5 text-primary" />
                 Messages
               </CardTitle>
-              <NuxtLink to="/messages" class="text-xs text-primary hover:underline">Open thread</NuxtLink>
+              <NuxtLink to="/messages" class="text-xs text-primary dark:text-luna-300 hover:underline">Open thread</NuxtLink>
             </CardHeader>
             <CardContent class="pt-0">
               <div v-if="portalData.messages?.length" class="space-y-2">
@@ -199,7 +199,7 @@
               </div>
               <p v-else class="text-sm text-muted-foreground italic py-4 text-center">No messages yet</p>
             </CardContent>
-          </Card>
+          </GlassCard>
         </TabsContent>
       </Tabs>
     </div>
@@ -226,7 +226,8 @@ import {
   MessageSquarePlus as LucideMessageSquarePlus,
 } from 'lucide-vue-next'
 import { Avatar, AvatarFallback } from '~/components/ui/avatar'
-import { Card, CardHeader, CardTitle, CardContent } from '~/components/ui/card'
+import { CardHeader, CardTitle, CardContent } from '~/components/ui/card'
+import { GlassCard } from '~/components/ui/glass-card'
 import { Separator } from '~/components/ui/separator'
 import { Skeleton } from '~/components/ui/skeleton'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs'

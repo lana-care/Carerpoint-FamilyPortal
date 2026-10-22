@@ -33,7 +33,7 @@ const memberName = computed(() => portalData.value?.familyMember?.name || '')
 
 <template>
   <div
-    class="page-toolbar flex items-center shrink-0 gap-2 px-3 sm:px-4 border-b border-border/50 bg-background/80 backdrop-blur-sm min-h-14 py-1.5"
+    class="page-toolbar flex items-center shrink-0 gap-2 px-3 sm:px-4 glass-bar border-b border-border/50 min-h-14 py-1.5"
   >
     <!-- Mobile: open nav drawer. 44px square — it is the only way to the nav on
          a phone, and `p-2` around a 20px icon made it 36. -->

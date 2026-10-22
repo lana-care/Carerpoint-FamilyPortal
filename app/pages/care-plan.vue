@@ -7,6 +7,7 @@
       </div>
 
       <EmptyState
+        class="glass-card hairline-border rounded-2xl"
         v-else-if="error"
         role="alert"
         title="Could not load care plan"
@@ -15,7 +16,7 @@
       />
 
       <template v-else-if="carePlan">
-        <Card>
+        <GlassCard padding="none" radius="xl">
           <CardHeader>
             <CardTitle class="text-base">{{ String(carePlan.title || 'Care plan') }}</CardTitle>
             <CardDescription v-if="nextReview">
@@ -48,7 +49,7 @@
               This plan has no published summary or goals yet.
             </p>
           </CardContent>
-        </Card>
+        </GlassCard>
 
         <!--
           Client context. Every field here already ships to the portal in the
@@ -60,7 +61,7 @@
           are clinical records, and widening a family-facing PHI payload to
           include them is a governance decision, not a UI one.
         -->
-        <Card v-if="hasClientContext">
+        <GlassCard padding="none" radius="xl" v-if="hasClientContext">
           <CardHeader>
             <CardTitle class="text-base">About {{ firstName || 'your relative' }}</CardTitle>
           </CardHeader>
@@ -74,6 +75,7 @@
                   v-for="(a, i) in allergies"
                   :key="i"
                   variant="destructive"
+                  class="text-red-700 dark:text-red-300"
                 >
                   {{ a }}
                 </Badge>
@@ -99,10 +101,11 @@
               <span class="font-medium text-foreground">Mobility:</span> {{ mobility }}
             </p>
           </CardContent>
-        </Card>
+        </GlassCard>
       </template>
 
       <EmptyState
+        class="glass-card hairline-border rounded-2xl"
         v-else
         title="No active care plan"
         description="Your care provider has not published an active care plan yet."
@@ -115,7 +118,8 @@
 <script setup lang="ts">
 import { toast } from 'vue-sonner'
 import { Target as LucideTarget } from 'lucide-vue-next'
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '~/components/ui/card'
+import { CardHeader, CardTitle, CardDescription, CardContent } from '~/components/ui/card'
+import { GlassCard } from '~/components/ui/glass-card'
 import { Badge } from '~/components/ui/badge'
 import { usePortalResourcesStore } from '~/stores/portalResources'
 import { normalizePortalError } from '~/composables/usePortalAuth'

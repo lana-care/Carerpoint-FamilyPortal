@@ -6,6 +6,7 @@
       </div>
 
       <EmptyState
+        class="glass-card hairline-border rounded-2xl"
         v-else-if="error"
         role="alert"
         title="Could not load medications"
@@ -19,7 +20,7 @@
           list is maintained by the care team — contact them with any questions.
         </p>
 
-        <Card v-for="(m, i) in meds" :key="m.id || i">
+        <GlassCard padding="none" radius="xl" v-for="(m, i) in meds" :key="m.id || i">
           <CardContent class="pt-4 text-sm">
             <div class="flex items-start gap-3">
               <span class="grid size-9 shrink-0 place-items-center rounded-lg bg-luna-500/[0.1] text-luna-600 dark:text-luna-300">
@@ -45,10 +46,11 @@
               </div>
             </div>
           </CardContent>
-        </Card>
+        </GlassCard>
       </template>
 
       <EmptyState
+        class="glass-card hairline-border rounded-2xl"
         v-else
         title="No active medications"
         description="No medications are listed for this person right now."
@@ -61,7 +63,8 @@
 <script setup lang="ts">
 import { toast } from 'vue-sonner'
 import { Pill as LucidePill } from 'lucide-vue-next'
-import { Card, CardContent } from '~/components/ui/card'
+import { CardContent } from '~/components/ui/card'
+import { GlassCard } from '~/components/ui/glass-card'
 import { Badge } from '~/components/ui/badge'
 import { usePortalResourcesStore } from '~/stores/portalResources'
 import { normalizePortalError } from '~/composables/usePortalAuth'

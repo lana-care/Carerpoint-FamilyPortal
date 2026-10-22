@@ -8,6 +8,7 @@
       </div>
 
       <EmptyState
+        class="glass-card hairline-border rounded-2xl"
         v-else-if="error"
         role="alert"
         :title="$t('invoices.errorTitle')"
@@ -16,6 +17,7 @@
       />
 
       <EmptyState
+        class="glass-card hairline-border rounded-2xl"
         v-else-if="!rows.length"
         :title="$t('invoices.emptyTitle')"
         :description="$t('invoices.emptyBody')"
@@ -23,11 +25,11 @@
         size="sm"
       />
 
-      <ul v-else class="space-y-2">
+      <ul v-else class="glass-card hairline-border rounded-2xl divide-y divide-border/50 overflow-hidden">
         <li
           v-for="inv in rows"
           :key="inv.id"
-          class="rounded-lg border bg-card p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
+          class="p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
         >
           <div class="min-w-0 space-y-1">
             <p class="font-medium text-sm">

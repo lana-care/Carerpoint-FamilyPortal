@@ -1,6 +1,6 @@
 <template>
-  <div class="relative min-h-screen bg-background">
-    <SharedShellBackground intensity="soft" />
+  <div class="relative min-h-screen">
+    <SharedShellBackground intensity="normal" />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>

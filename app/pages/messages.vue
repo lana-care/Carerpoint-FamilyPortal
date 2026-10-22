@@ -4,7 +4,7 @@
          bottom without hardcoding the chrome height (it subtracted 5.5rem). -->
     <div class="max-w-3xl mx-auto w-full px-4 pt-4 pb-0 flex flex-col flex-1 min-h-0">
       <div v-if="!token" class="text-sm text-muted-foreground text-center py-12">
-        <NuxtLink to="/login" class="text-primary underline">Sign in with your access link</NuxtLink>
+        <NuxtLink to="/login" class="text-primary dark:text-luna-300 underline">Sign in with your access link</NuxtLink>
       </div>
       <template v-else>
         <div class="shrink-0 space-y-2 mb-3">
@@ -12,7 +12,7 @@
             v-model="activeChannel"
             :options="channelOptions"
             size="sm"
-            shape="square"
+            shape="pill"
             class="w-full h-12 sm:h-8 [&>button]:flex-1"
             aria-label="Message channel"
           />
@@ -25,9 +25,12 @@
           </p>
         </div>
 
+        <!-- One blurred container for the whole thread; the bubbles inside stay
+             plain (no per-message backdrop-filter). -->
+        <GlassCard padding="none" radius="xl" class="flex-1 min-h-0 flex flex-col mb-3">
         <div
           ref="threadEl"
-          class="flex-1 min-h-0 overflow-y-auto space-y-3 pr-1 pb-3"
+          class="flex-1 min-h-0 overflow-y-auto space-y-3 p-3 sm:p-4"
         >
           <div v-if="loading" class="space-y-3 py-4">
             <div v-for="i in 4" :key="i" class="h-16 rounded-2xl bg-muted animate-pulse" />
@@ -43,7 +46,7 @@
                 class="max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm"
                 :class="m.direction === 'outbound'
                   ? 'bg-muted/60 border border-border/60 rounded-bl-md'
-                  : 'bg-luna-500/15 border border-luna-500/20 rounded-br-md'"
+                  : 'bg-luna-500/15 border border-luna-500/20 rounded-br-md [&_.text-muted-foreground]:text-foreground/75'"
               >
                 <p class="text-xs font-semibold text-muted-foreground mb-1">
                   {{ messageFromLabel(m) }}
@@ -62,8 +65,9 @@
             />
           </template>
         </div>
+        </GlassCard>
 
-        <div class="shrink-0 sticky bottom-0 pt-3 pb-4 border-t bg-background space-y-2">
+        <div class="glass-card hairline-border rounded-2xl shrink-0 sticky bottom-0 p-3 sm:p-4 mb-3 space-y-2">
           <label class="text-xs font-medium text-muted-foreground">
             {{ activeChannel === 'private' ? 'Message the agency (private)' : 'Message the agency' }}
           </label>
@@ -98,6 +102,7 @@ import { io, type Socket } from 'socket.io-client'
 import { toast } from 'vue-sonner'
 import { Button } from '~/components/ui/button'
 import { Textarea } from '~/components/ui/textarea'
+import { GlassCard } from '~/components/ui/glass-card'
 import {
   usePortalResourcesStore,
   type PortalMessageChannel,

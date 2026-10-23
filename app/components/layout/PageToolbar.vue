@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Menu as LucideMenu } from 'lucide-vue-next'
+import { CpMenu } from '~/lib/cp-icons'
 import ThemeToggle from '@lana-care/ui/components/theme-toggle/ThemeToggle.vue'
 
 /**
@@ -42,7 +42,7 @@ const memberName = computed(() => portalData.value?.familyMember?.name || '')
       :aria-label="t('nav.openNavigation')"
       @click="openMobile"
     >
-      <LucideMenu class="w-5 h-5" />
+      <CpMenu class="w-5 h-5" />
     </LayoutNavButton>
 
     <div class="min-w-0 flex-1">

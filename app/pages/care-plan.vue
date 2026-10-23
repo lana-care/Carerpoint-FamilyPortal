@@ -39,7 +39,7 @@
                   :key="i"
                   class="flex gap-2 text-muted-foreground"
                 >
-                  <LucideTarget class="size-4 shrink-0 mt-0.5 text-luna-600 dark:text-luna-300" />
+                  <CpTarget class="size-4 shrink-0 mt-0.5 text-luna-600 dark:text-luna-300" />
                   <span>{{ goal }}</span>
                 </li>
               </ul>
@@ -117,7 +117,7 @@
 
 <script setup lang="ts">
 import { toast } from 'vue-sonner'
-import { Target as LucideTarget } from 'lucide-vue-next'
+import { CpTarget } from '~/lib/cp-icons'
 import { CardHeader, CardTitle, CardDescription, CardContent } from '~/components/ui/card'
 import { GlassCard } from '~/components/ui/glass-card'
 import { Badge } from '~/components/ui/badge'

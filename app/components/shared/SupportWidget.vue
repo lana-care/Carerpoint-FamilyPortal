@@ -7,7 +7,7 @@
       class="fixed z-40 bottom-5 right-5 sm:bottom-6 sm:right-6 w-14 h-14 rounded-full bg-luna-500 hover:bg-luna-600 text-white shadow-xl transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center"
       @click="open"
     >
-      <LucideMessageCircle class="w-6 h-6" />
+      <CpMessageCircle class="w-6 h-6" />
       <span
         v-if="unread > 0"
         class="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-red-500 text-white text-[11px] font-bold leading-5 text-center border-2 border-white dark:border-background"
@@ -31,7 +31,7 @@
               aria-label="Minimise support chat"
               @click="isOpen = false"
             >
-              <LucideChevronDown class="w-5 h-5 text-white" />
+              <CpChevronDown class="w-5 h-5 text-white" />
             </button>
           </div>
           <h2 class="text-white text-lg font-bold leading-tight">Need a hand?</h2>
@@ -93,7 +93,9 @@
                   v-if="msg.senderType !== 'visitor'"
                   class="w-7 h-7 rounded-full bg-lime-100 dark:bg-lime-900/40 flex items-center justify-center shrink-0 mt-0.5"
                 >
-                  <LucideHeadset class="w-3.5 h-3.5 text-lime-600 dark:text-lime-400" />
+                  <!-- A CapoAI reply carries the CapoAI mark; people get the headset. -->
+                  <CapoaiIcon v-if="msg.senderType === 'ai'" aria-hidden="true" class="w-3.5 h-3.5 text-lime-600 dark:text-lime-400" />
+                  <CpHeadset v-else class="w-3.5 h-3.5 text-lime-600 dark:text-lime-400" />
                 </div>
                 <div class="max-w-[78%] min-w-0">
                   <p v-if="msg.senderType !== 'visitor'" class="text-[10px] font-medium text-muted-foreground mb-0.5 px-1">
@@ -127,7 +129,7 @@
                 aria-label="Send"
                 class="w-10 h-10 rounded-xl bg-luna-500 hover:bg-luna-600 text-white disabled:opacity-40 flex items-center justify-center transition-colors shrink-0"
               >
-                <LucideSendHorizontal class="w-4 h-4" />
+                <CpSendHorizontal class="w-4 h-4" />
               </button>
             </form>
           </div>
@@ -139,11 +141,12 @@
 
 <script setup lang="ts">
 import {
-  MessageCircle as LucideMessageCircle,
-  ChevronDown as LucideChevronDown,
-  SendHorizontal as LucideSendHorizontal,
-  Headset as LucideHeadset,
-} from 'lucide-vue-next'
+  CpMessageCircle,
+  CpChevronDown,
+  CpSendHorizontal,
+  CpHeadset,
+} from '~/lib/cp-icons'
+import CapoaiIcon from '@lana-care/ui/components/capoai-icon/CapoaiIcon.vue'
 import { normalizePortalError, usePortalAuth } from '~/composables/usePortalAuth'
 
 /**

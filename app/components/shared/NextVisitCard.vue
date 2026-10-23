@@ -6,7 +6,7 @@
     aria-labelledby="next-visit-heading"
   >
     <div class="w-11 h-11 rounded-lg flex items-center justify-center shrink-0 bg-primary/10 text-primary">
-      <LucideCalendarClock class="w-5 h-5" aria-hidden="true" />
+      <CpCalendarClock class="w-5 h-5" aria-hidden="true" />
     </div>
 
     <div class="min-w-0 flex-1">
@@ -37,13 +37,13 @@
       class="text-xs text-primary dark:text-luna-300 font-medium inline-flex items-center gap-1 hover:underline"
     >
       {{ t('portalHome.nextVisit.calendar') }}
-      <LucideChevronRight class="w-3 h-3" aria-hidden="true" />
+      <CpChevronRight class="w-3 h-3" aria-hidden="true" />
     </NuxtLink>
   </section>
 </template>
 
 <script setup lang="ts">
-import { CalendarClock as LucideCalendarClock, ChevronRight as LucideChevronRight } from 'lucide-vue-next'
+import { CpCalendarClock, CpChevronRight } from '~/lib/cp-icons'
 import { pickNextVisit, relativeDay, visitStartsAt, type NextVisitLike } from '~/utils/nextVisit'
 import { formatTimeRange } from '~/utils/formatTime'
 

@@ -1,0 +1,216 @@
+/* ============================================================================
+   @lana-care/icons — icons.css
+   Motion for the CarerPoint icon set. Import once per app:
+
+       import '@lana-care/icons/icons.css'
+
+   Colours do NOT need this file: each layer is coloured inline through
+   --cp-icon-primary (default currentColor) and --cp-icon-secondary (default
+   --icon-accent from @lana-care/design-tokens, lime). Override either on any
+   ancestor:  .sidebar { --cp-icon-secondary: var(--color-lime-300); }
+
+   Motion rules
+   - Only transform, opacity and stroke-dashoffset are animated.
+   - `data-animate`: hover (default) plays on hover / focus-visible / active of
+     the icon or of the control that holds it; loop repeats; once plays on
+     mount; none never moves.
+   - `data-target="parts"`: only the `.cp-a` elements move (a tick draws, a lid
+     lifts); otherwise both layers move together (a bell swings).
+   - Origins are in the 24-unit grid (`transform-box: view-box`), set per icon
+     through --cp-o, so the motion scales with the icon.
+   - prefers-reduced-motion: nothing moves.
+
+   Plain CSS on purpose: the apps' Tailwind builds do not scan node_modules.
+   ============================================================================ */
+
+.cp-icon {
+  --cp-k: cp-pop;
+  --cp-d: 0.6s;
+  --cp-e: cubic-bezier(0.3, 0.7, 0.4, 1);
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.cp-icon > g,
+.cp-icon .cp-a {
+  transform-box: view-box;
+  transform-origin: var(--cp-o, 12px 12px);
+}
+
+/* ---- families: keyframes + timing ---------------------------------------- */
+.cp-icon[data-anim='pop'] { --cp-k: cp-pop; }
+.cp-icon[data-anim='nudge-r'] { --cp-k: cp-nudge-r; }
+.cp-icon[data-anim='nudge-l'] { --cp-k: cp-nudge-l; }
+.cp-icon[data-anim='nudge-u'] { --cp-k: cp-nudge-u; }
+.cp-icon[data-anim='nudge-d'] { --cp-k: cp-nudge-d; }
+.cp-icon[data-anim='nudge-ur'] { --cp-k: cp-nudge-ur; }
+.cp-icon[data-anim='nudge-ul'] { --cp-k: cp-nudge-ul; }
+.cp-icon[data-anim='spin-q'] { --cp-k: cp-spin-q; }
+.cp-icon[data-anim='spin'] { --cp-k: cp-spin; --cp-d: 0.8s; }
+.cp-icon[data-anim='spin-back'] { --cp-k: cp-spin-back; --cp-d: 0.8s; }
+.cp-icon[data-anim='spin-6'] { --cp-k: cp-spin-6; --cp-d: 0.7s; }
+.cp-icon[data-anim='draw'] { --cp-k: cp-draw; --cp-d: 0.55s; --cp-e: cubic-bezier(0.6, 0, 0.3, 1); }
+.cp-icon[data-anim='swing'] { --cp-k: cp-swing; --cp-d: 0.9s; --cp-e: ease-in-out; }
+.cp-icon[data-anim='ring'] { --cp-k: cp-ring; --cp-d: 0.7s; --cp-e: ease-in-out; }
+.cp-icon[data-anim='wiggle'] { --cp-k: cp-wiggle; --cp-d: 0.6s; --cp-e: ease-in-out; }
+.cp-icon[data-anim='shake'] { --cp-k: cp-shake; --cp-d: 0.5s; --cp-e: ease-in-out; }
+.cp-icon[data-anim='tilt'] { --cp-k: cp-tilt; }
+.cp-icon[data-anim='sway'] { --cp-k: cp-sway; --cp-d: 1.2s; --cp-e: ease-in-out; }
+.cp-icon[data-anim='turn'] { --cp-k: cp-turn; --cp-d: 0.7s; }
+.cp-icon[data-anim='tick'] { --cp-k: cp-spin; --cp-d: 1s; --cp-e: cubic-bezier(0.5, 0, 0.3, 1); }
+.cp-icon[data-anim='tick-back'] { --cp-k: cp-spin-back; --cp-d: 1s; --cp-e: cubic-bezier(0.5, 0, 0.3, 1); }
+.cp-icon[data-anim='flip'] { --cp-k: cp-flip; --cp-d: 0.8s; --cp-e: cubic-bezier(0.6, 0, 0.3, 1); }
+.cp-icon[data-anim='bounce'] { --cp-k: cp-bounce; --cp-d: 0.7s; }
+.cp-icon[data-anim='float'] { --cp-k: cp-float; --cp-d: 0.9s; --cp-e: ease-in-out; }
+.cp-icon[data-anim='beat'] { --cp-k: cp-beat; --cp-d: 0.9s; --cp-e: ease-out; }
+.cp-icon[data-anim='pulse'] { --cp-k: cp-pulse; --cp-d: 0.8s; --cp-e: ease-in-out; }
+.cp-icon[data-anim='level'] { --cp-k: cp-level; --cp-d: 0.9s; --cp-e: ease-in-out; }
+.cp-icon[data-anim='twinkle'] { --cp-k: cp-twinkle; --cp-d: 0.8s; }
+.cp-icon[data-anim='flash'] { --cp-k: cp-flash; --cp-d: 0.8s; --cp-e: linear; }
+.cp-icon[data-anim='flicker'] { --cp-k: cp-flicker; --cp-d: 0.8s; --cp-e: ease-in-out; }
+.cp-icon[data-anim='wave'] { --cp-k: cp-flash; --cp-d: 0.9s; --cp-e: linear; }
+.cp-icon[data-anim='typing'] { --cp-k: cp-typing; --cp-d: 0.6s; --cp-e: ease-in-out; }
+.cp-icon[data-anim='fly-ur'] { --cp-k: cp-fly-ur; --cp-d: 0.8s; --cp-e: ease-in-out; }
+.cp-icon[data-anim='fly-r'] { --cp-k: cp-fly-r; --cp-d: 0.8s; --cp-e: ease-in-out; }
+.cp-icon[data-anim='blink'] { --cp-k: cp-blink; --cp-d: 0.45s; --cp-e: ease-in-out; }
+.cp-icon[data-anim='lid'] { --cp-k: cp-lid; --cp-d: 0.7s; }
+.cp-icon[data-anim='shackle'] { --cp-k: cp-shackle; --cp-d: 0.6s; }
+.cp-icon[data-anim='shutter'] { --cp-k: cp-shutter; --cp-d: 0.45s; }
+.cp-icon[data-anim='slide'] { --cp-k: cp-slide; --cp-d: 0.8s; --cp-e: ease-in-out; }
+.cp-icon[data-anim='grow'] { --cp-k: cp-grow; --cp-d: 0.6s; }
+.cp-icon[data-anim='charge'] { --cp-k: cp-charge; --cp-d: 0.9s; --cp-e: ease-in-out; }
+
+/* ---- triggers ------------------------------------------------------------- */
+.cp-icon[data-animate='loop']:not([data-target]) > g,
+.cp-icon[data-animate='loop'][data-target] .cp-a {
+  animation: var(--cp-k) calc(var(--cp-d) * 2) var(--cp-e) var(--cp-delay, 0s) infinite;
+}
+
+.cp-icon[data-animate='once']:not([data-target]) > g,
+.cp-icon[data-animate='once'][data-target] .cp-a {
+  animation: var(--cp-k) var(--cp-d) var(--cp-e) var(--cp-delay, 0s) 1 both;
+}
+
+.cp-icon[data-animate='hover']:is(:hover, :active):not([data-target]) > g,
+.cp-icon[data-animate='hover']:is(:hover, :active)[data-target] .cp-a,
+:is(a, button, summary, label, [role='button'], [role='link'], [role='menuitem'], [role='tab'], [role='option'], [tabindex], .cp-icon-trigger):is(:hover, :focus-visible, :active)
+  .cp-icon[data-animate='hover']:not([data-target]) > g,
+:is(a, button, summary, label, [role='button'], [role='link'], [role='menuitem'], [role='tab'], [role='option'], [tabindex], .cp-icon-trigger):is(:hover, :focus-visible, :active)
+  .cp-icon[data-animate='hover'][data-target] .cp-a {
+  animation: var(--cp-k) var(--cp-d) var(--cp-e) var(--cp-delay, 0s) 1;
+}
+
+/* the spinner turns at an even pace */
+.cp-icon[data-anim='spin'][data-animate='loop'] { --cp-e: linear; --cp-d: 0.45s; }
+
+/* several moving parts follow one another */
+.cp-icon[data-target] .cp-a:nth-child(2) { --cp-delay: 70ms; }
+.cp-icon[data-target] .cp-a:nth-child(3) { --cp-delay: 140ms; }
+.cp-icon[data-target] .cp-a:nth-child(4) { --cp-delay: 210ms; }
+.cp-icon[data-anim='typing'][data-target] .cp-a:nth-child(2) { --cp-delay: 110ms; }
+.cp-icon[data-anim='typing'][data-target] .cp-a:nth-child(3) { --cp-delay: 220ms; }
+/* parts that move as one piece (an arrow's shaft and head, a lid and its handle) */
+.cp-icon:is([data-anim^='nudge'], [data-anim='lid'], [data-anim='spin-q'], [data-anim='spin'], [data-anim='spin-6'], [data-anim='tick'], [data-anim='tick-back'], [data-anim='shake'], [data-anim='bounce'], [data-anim='wiggle'])[data-target] .cp-a {
+  --cp-delay: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cp-icon > g,
+  .cp-icon .cp-a {
+    animation: none !important;
+  }
+}
+
+/* ---- keyframes ------------------------------------------------------------ */
+@keyframes cp-pop { 40% { transform: scale(1.18); } }
+@keyframes cp-nudge-r { 45% { transform: translateX(2.5px); } }
+@keyframes cp-nudge-l { 45% { transform: translateX(-2.5px); } }
+@keyframes cp-nudge-u { 45% { transform: translateY(-2.5px); } }
+@keyframes cp-nudge-d { 45% { transform: translateY(2.5px); } }
+@keyframes cp-nudge-ur { 45% { transform: translate(2px, -2px); } }
+@keyframes cp-nudge-ul { 45% { transform: translate(-2px, -2px); } }
+@keyframes cp-spin-q { to { transform: rotate(90deg); } }
+@keyframes cp-spin { to { transform: rotate(360deg); } }
+@keyframes cp-spin-back { to { transform: rotate(-360deg); } }
+@keyframes cp-spin-6 { to { transform: rotate(45deg); } }
+@keyframes cp-draw {
+  from { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  to { stroke-dasharray: 1; stroke-dashoffset: 0; }
+}
+@keyframes cp-swing {
+  20% { transform: rotate(14deg); }
+  40% { transform: rotate(-10deg); }
+  60% { transform: rotate(6deg); }
+  80% { transform: rotate(-3deg); }
+}
+@keyframes cp-ring {
+  15%, 45%, 75% { transform: rotate(-10deg); }
+  30%, 60% { transform: rotate(10deg); }
+}
+@keyframes cp-wiggle {
+  25% { transform: rotate(-8deg); }
+  60% { transform: rotate(6deg); }
+}
+@keyframes cp-shake {
+  20%, 60% { transform: rotate(-7deg); }
+  40%, 80% { transform: rotate(7deg); }
+}
+@keyframes cp-tilt { 45% { transform: rotate(-12deg) scale(1.06); } }
+@keyframes cp-sway {
+  30% { transform: rotate(-5deg); }
+  70% { transform: rotate(4deg); }
+}
+@keyframes cp-turn { 50% { transform: rotate(-25deg); } }
+@keyframes cp-flip { to { transform: rotate(180deg); } }
+@keyframes cp-bounce {
+  35% { transform: translateY(-2.5px); }
+  60% { transform: translateY(0); }
+  78% { transform: translateY(-1px); }
+}
+@keyframes cp-float {
+  50% { transform: translateY(-2px); opacity: 0.6; }
+}
+@keyframes cp-beat {
+  15% { transform: scale(1.14); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.09); }
+  70% { transform: scale(1); }
+}
+@keyframes cp-pulse {
+  50% { transform: scale(1.25); opacity: 0.65; }
+}
+@keyframes cp-level {
+  25% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1); }
+  75% { transform: scaleY(0.65); }
+}
+@keyframes cp-twinkle {
+  50% { transform: rotate(45deg) scale(0.55); opacity: 0.5; }
+}
+@keyframes cp-flash {
+  25%, 75% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+@keyframes cp-flicker {
+  30% { transform: scale(0.85, 1.1); }
+  60% { transform: scale(1.08, 0.92); }
+}
+@keyframes cp-typing { 40% { transform: translateY(-2px); } }
+@keyframes cp-fly-ur {
+  40% { transform: translate(6px, -6px); opacity: 0; }
+  41% { transform: translate(-6px, 6px); opacity: 0; }
+}
+@keyframes cp-fly-r {
+  40% { transform: translateX(8px); opacity: 0; }
+  41% { transform: translateX(-8px); opacity: 0; }
+}
+@keyframes cp-blink { 50% { transform: scaleY(0.1); } }
+@keyframes cp-lid { 40% { transform: translateY(-1.5px) rotate(-14deg); } }
+@keyframes cp-shackle { 40% { transform: translateY(-2px); } }
+@keyframes cp-shutter { 40% { transform: scale(0.7); } }
+@keyframes cp-slide {
+  35% { transform: translateX(5px); }
+  70% { transform: translateX(-1px); }
+}
+@keyframes cp-grow { from { transform: scaleY(0.2); } }
+@keyframes cp-charge { from { transform: scaleX(0.1); } }

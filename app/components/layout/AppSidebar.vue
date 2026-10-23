@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import {
-  PanelLeftClose as LucidePanelLeftClose,
-  PanelLeftOpen as LucidePanelLeftOpen,
-  LogOut as LucideLogOut,
-  X as LucideX,
-} from 'lucide-vue-next'
+  CpPanelLeftClose,
+  CpPanelLeftOpen,
+  CpLogOut,
+  CpX,
+} from '~/lib/cp-icons'
 import { PORTAL_NAV, isPortalNavActive, type PortalNavItem } from '~/components/layout/portalNav'
 
 /**
@@ -139,7 +139,7 @@ async function signOut() {
         @click="signOut"
       >
         <span class="relative grid size-5 shrink-0 place-items-center">
-          <LucideLogOut :size="20" class="size-5 block" />
+          <CpLogOut :size="20" class="size-5 block" />
         </span>
         <span
           v-show="!collapsed"
@@ -155,7 +155,7 @@ async function signOut() {
       >
         <span class="relative grid size-5 shrink-0 place-items-center">
           <component
-            :is="collapsed ? LucidePanelLeftOpen : LucidePanelLeftClose"
+            :is="collapsed ? CpPanelLeftOpen : CpPanelLeftClose"
             :size="20"
             class="size-5 block"
           />
@@ -199,7 +199,7 @@ async function signOut() {
             :aria-label="t('nav.closeNavigation')"
             @click="closeMobile"
           >
-            <LucideX class="w-5 h-5" />
+            <CpX class="w-5 h-5" />
           </LayoutNavButton>
         </div>
 
@@ -235,7 +235,7 @@ async function signOut() {
             @click="signOut"
           >
             <span class="grid size-5 shrink-0 place-items-center">
-              <LucideLogOut :size="20" class="size-5 block" />
+              <CpLogOut :size="20" class="size-5 block" />
             </span>
             <span class="text-sm font-medium leading-5 text-left">{{ t('nav.signOut') }}</span>
           </LayoutNavButton>

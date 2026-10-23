@@ -1,13 +1,13 @@
 import {
-  Home as LucideHome,
-  CalendarDays as LucideCalendarDays,
-  MessagesSquare as LucideMessagesSquare,
-  ClipboardList as LucideClipboardList,
-  Pill as LucidePill,
-  FolderClosed as LucideFolderClosed,
-  Receipt as LucideReceipt,
-  Star as LucideStar,
-} from 'lucide-vue-next'
+  CpHome,
+  CpCalendar,
+  CpMessages,
+  CpClipboardList,
+  CpPill,
+  CpFolder,
+  CpInvoice,
+  CpStar,
+} from '~/lib/cp-icons'
 import type { Component } from 'vue'
 
 /**
@@ -33,14 +33,14 @@ export interface PortalNavItem {
 }
 
 export const PORTAL_NAV: readonly PortalNavItem[] = [
-  { to: '/', labelKey: 'nav.home', icon: LucideHome, exact: true },
-  { to: '/calendar', labelKey: 'nav.calendar', icon: LucideCalendarDays },
-  { to: '/messages', labelKey: 'nav.messages', icon: LucideMessagesSquare },
-  { to: '/care-plan', labelKey: 'nav.carePlan', icon: LucideClipboardList },
-  { to: '/medications', labelKey: 'nav.medications', icon: LucidePill },
-  { to: '/documents', labelKey: 'nav.documents', icon: LucideFolderClosed },
-  { to: '/invoices', labelKey: 'nav.invoices', icon: LucideReceipt },
-  { to: '/feedback', labelKey: 'nav.feedback', icon: LucideStar },
+  { to: '/', labelKey: 'nav.home', icon: CpHome, exact: true },
+  { to: '/calendar', labelKey: 'nav.calendar', icon: CpCalendar },
+  { to: '/messages', labelKey: 'nav.messages', icon: CpMessages },
+  { to: '/care-plan', labelKey: 'nav.carePlan', icon: CpClipboardList },
+  { to: '/medications', labelKey: 'nav.medications', icon: CpPill },
+  { to: '/documents', labelKey: 'nav.documents', icon: CpFolder },
+  { to: '/invoices', labelKey: 'nav.invoices', icon: CpInvoice },
+  { to: '/feedback', labelKey: 'nav.feedback', icon: CpStar },
 ] as const
 
 /** Whether `path` should light `item` up. */

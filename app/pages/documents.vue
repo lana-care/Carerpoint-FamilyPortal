@@ -19,7 +19,7 @@
         v-else-if="!rows.length"
         title="No documents shared yet"
         description="Your care provider can publish reports and letters here when available."
-        :icon="LucideFileText"
+        :icon="CpFileText"
         size="sm"
       />
 
@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { FileText as LucideFileText } from 'lucide-vue-next'
+import { CpFileText } from '~/lib/cp-icons'
 import { Button } from '~/components/ui/button'
 import { usePortalResourcesStore, type PortalDocRow } from '~/stores/portalResources'
 import { normalizePortalError } from '~/composables/usePortalAuth'

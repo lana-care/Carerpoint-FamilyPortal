@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { CpCalendarClock, CpChevronRight } from '~/lib/cp-icons'
+import { CpCalendarClock, CpChevronRight } from '@lana-care/icons'
 import { pickNextVisit, relativeDay, visitStartsAt, type NextVisitLike } from '~/utils/nextVisit'
 import { formatTimeRange } from '~/utils/formatTime'
 

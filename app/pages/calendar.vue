@@ -285,7 +285,7 @@
 </template>
 
 <script setup lang="ts">
-import { CpChevronLeft, CpChevronRight } from '~/lib/cp-icons'
+import { CpChevronLeft, CpChevronRight } from '@lana-care/icons'
 import { Button } from '~/components/ui/button'
 import { CalendarMonth } from '~/components/ui/calendar'
 import type { FamilyPortalVisit } from '~/composables/usePortalAuth'

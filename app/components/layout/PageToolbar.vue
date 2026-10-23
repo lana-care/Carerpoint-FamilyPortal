@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CpMenu } from '~/lib/cp-icons'
+import { CpMenu } from '@lana-care/icons'
 import ThemeToggle from '@lana-care/ui/components/theme-toggle/ThemeToggle.vue'
 
 /**

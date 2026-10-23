@@ -75,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import { CpInvoice, CpDownload } from '~/lib/cp-icons'
+import { CpInvoice, CpDownload } from '@lana-care/icons'
 import { Button } from '~/components/ui/button'
 import { usePortalResourcesStore, type PortalInvoiceRow } from '~/stores/portalResources'
 import { normalizePortalError } from '~/composables/usePortalAuth'

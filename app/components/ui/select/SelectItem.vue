@@ -2,7 +2,7 @@
 import type { SelectItemProps } from "reka-ui"
 import type { HTMLAttributes } from "vue"
 import { reactiveOmit } from "@vueuse/core"
-import { CpCheck } from "~/lib/cp-icons"
+import { CpCheck } from "@lana-care/icons"
 import {
   SelectItem,
   SelectItemIndicator,

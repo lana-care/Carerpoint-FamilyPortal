@@ -2,7 +2,7 @@
 import type { SelectScrollDownButtonProps } from "reka-ui"
 import type { HTMLAttributes } from "vue"
 import { reactiveOmit } from "@vueuse/core"
-import { CpChevronDown } from "~/lib/cp-icons"
+import { CpChevronDown } from "@lana-care/icons"
 import { SelectScrollDownButton, useForwardProps } from "reka-ui"
 import { cn } from "~/lib/utils"
 

@@ -223,7 +223,7 @@ import {
   CpFileText,
   CpMessageSquare,
   CpMessageSquarePlus,
-} from '~/lib/cp-icons'
+} from '@lana-care/icons'
 import { Avatar, AvatarFallback } from '~/components/ui/avatar'
 import { CardHeader, CardTitle, CardContent } from '~/components/ui/card'
 import { GlassCard } from '~/components/ui/glass-card'

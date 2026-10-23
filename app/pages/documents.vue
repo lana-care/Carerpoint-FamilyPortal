@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { CpFileText } from '~/lib/cp-icons'
+import { CpFileText } from '@lana-care/icons'
 import { Button } from '~/components/ui/button'
 import { usePortalResourcesStore, type PortalDocRow } from '~/stores/portalResources'
 import { normalizePortalError } from '~/composables/usePortalAuth'

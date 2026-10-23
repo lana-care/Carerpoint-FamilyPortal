@@ -27,11 +27,11 @@
 /* Powers the circular reveal of <ThemeToggle> (@lana-care/ui). Without it the
    theme still switches, just instantly. */
 @import "@lana-care/design-tokens/theme-transition.css";
-/* Motion for the CarerPoint icons, vendored by scripts/vendor-cp-icons.ts (colours work
-   without it). Hover animation plays on the icon or on the button/link around it;
-   reduced-motion stops everything. */
-@import "./cp-icons.css";
-/* shortcut: --icon-accent ships in design-tokens 0.4.x; drop this block when the portal moves to it. */
+/* Motion for the CarerPoint icons (colours work without it). Hover animation plays on
+   the icon or on the button/link around it; reduced-motion stops everything. Imported
+   only here: the portal does not load @lana-care/ui's style.css, which imports it too. */
+@import "@lana-care/icons/icons.css";
+/* The lime icon accent; tokens 0.4.3 ships the same values. */
 :root { --icon-accent: #a9c020; }
 .dark { --icon-accent: #dbf26d; }
 

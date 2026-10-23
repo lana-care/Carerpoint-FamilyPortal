@@ -3,14 +3,14 @@ import { dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vitest'
 
-/** Icons are the vendored CarerPoint set (`~/lib/cp-icons`); Lucide must not come back. */
+/** Icons are the CarerPoint set (`@lana-care/icons`); Lucide must not come back. */
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 
-const walk = (dir: string): string[] =>
+const walk = (dir: string, ext = /\.(vue|ts)$/): string[] =>
   readdirSync(dir).flatMap((entry) => {
     const full = join(dir, entry)
-    if (statSync(full).isDirectory()) return walk(full)
-    return /\.(vue|ts)$/.test(entry) ? [full] : []
+    if (statSync(full).isDirectory()) return walk(full, ext)
+    return ext.test(entry) ? [full] : []
   })
 
 describe('icon library', () => {
@@ -23,5 +23,12 @@ describe('icon library', () => {
 
   it('package.json depends on no Lucide package', () => {
     expect(readFileSync(join(root, 'package.json'), 'utf8')).not.toMatch(/lucide/i)
+  })
+
+  it('loads @lana-care/icons/icons.css exactly once', () => {
+    // @lana-care/ui/style.css imports icons.css too, so loading it would be a second copy.
+    const css = walk(join(root, 'app'), /\.(css|vue|ts)$/).map((f) => readFileSync(f, 'utf8')).join('\n')
+    expect(css.match(/@lana-care\/icons\/icons\.css/g)).toHaveLength(1)
+    expect(css).not.toMatch(/@lana-care\/ui\/style\.css/)
   })
 })

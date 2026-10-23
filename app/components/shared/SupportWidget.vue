@@ -145,7 +145,7 @@ import {
   CpChevronDown,
   CpSendHorizontal,
   CpHeadset,
-} from '~/lib/cp-icons'
+} from '@lana-care/icons'
 import CapoaiIcon from '@lana-care/ui/components/capoai-icon/CapoaiIcon.vue'
 import { normalizePortalError, usePortalAuth } from '~/composables/usePortalAuth'
 

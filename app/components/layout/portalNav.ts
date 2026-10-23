@@ -7,7 +7,7 @@ import {
   CpFolder,
   CpInvoice,
   CpStar,
-} from '~/lib/cp-icons'
+} from '@lana-care/icons'
 import type { Component } from 'vue'
 
 /**

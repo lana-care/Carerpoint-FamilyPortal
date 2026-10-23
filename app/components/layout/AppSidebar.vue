@@ -4,7 +4,7 @@ import {
   CpPanelLeftOpen,
   CpLogOut,
   CpX,
-} from '~/lib/cp-icons'
+} from '@lana-care/icons'
 import { PORTAL_NAV, isPortalNavActive, type PortalNavItem } from '~/components/layout/portalNav'
 
 /**

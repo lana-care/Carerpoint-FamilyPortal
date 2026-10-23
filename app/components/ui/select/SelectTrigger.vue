@@ -2,7 +2,7 @@
 import type { SelectTriggerProps } from "reka-ui"
 import type { HTMLAttributes } from "vue"
 import { reactiveOmit } from "@vueuse/core"
-import { CpChevronDown } from "~/lib/cp-icons"
+import { CpChevronDown } from "@lana-care/icons"
 import { SelectIcon, SelectTrigger, useForwardProps } from "reka-ui"
 import { cn } from "~/lib/utils"
 

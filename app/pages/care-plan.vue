@@ -117,7 +117,7 @@
 
 <script setup lang="ts">
 import { toast } from 'vue-sonner'
-import { CpTarget } from '~/lib/cp-icons'
+import { CpTarget } from '@lana-care/icons'
 import { CardHeader, CardTitle, CardDescription, CardContent } from '~/components/ui/card'
 import { GlassCard } from '~/components/ui/glass-card'
 import { Badge } from '~/components/ui/badge'

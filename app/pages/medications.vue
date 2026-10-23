@@ -62,7 +62,7 @@
 
 <script setup lang="ts">
 import { toast } from 'vue-sonner'
-import { CpPill } from '~/lib/cp-icons'
+import { CpPill } from '@lana-care/icons'
 import { CardContent } from '~/components/ui/card'
 import { GlassCard } from '~/components/ui/glass-card'
 import { Badge } from '~/components/ui/badge'
